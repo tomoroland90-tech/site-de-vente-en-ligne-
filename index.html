@@ -108,11 +108,11 @@ const headers = {
   'Prefer': 'return=representation'
 };
 
-let role='client', mode='register', allProducts=[], boutiquesCache=[], sortOrder='recent';
+let role='client', mode='register', allProducts=[], sortOrder='recent';
 
 function getUser(){try{return JSON.parse(localStorage.getItem('shoponline_user'))}catch{return null}}
 function setUser(u){localStorage.setItem('shoponline_user',JSON.stringify(u))}
-function showError(id, msg){const el=document.getElementById(id); el.textContent=msg; el.classList.add('show'); setTimeout(()=>el.classList.remove('show'),5000);}
+function showError(id, msg){const el=document.getElementById(id); el.textContent=msg; el.classList.add('show'); setTimeout(()=>el.classList.remove('show'),6000);}
 
 function formatDateTime(dateStr){
   if(!dateStr) return {duree:'', full:''};
@@ -139,8 +139,8 @@ function commanderProduit(productName, boutiqueName, price, whatsapp){
   const nomClient = `${user.prenom||''} ${user.nom||''}`.trim() || user.phone;
   const villeClient = user.ville || 'Non renseignée';
   const phoneClient = user.phone;
-  const message = `Salut c'est ${nomClient} j'utilise SHOP ONLINE et je voudrais commander le produit : ${productName} de la boutique ${boutiqueName} je réside a ${villeClient} mon numéro est le +237 ${phoneClient}`;
-  const waNumber = whatsapp? `237${whatsapp}` : '';
+  const message = `Salut c'est ${nomClient} j'utilise SHOP ONLINE et je voudrais commander le produit : ${productName} de la boutique ${boutiqueName} je réside a ${villeClient} mon numéro est le ${phoneClient}`;
+  const waNumber = whatsapp? `${whatsapp}` : '';
   if(!waNumber){ alert('Numéro WhatsApp boutique non disponible'); return; }
   window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`, '_blank');
 }
@@ -149,17 +149,17 @@ async function renderAll(){
   const user=getUser();
   document.getElementById('addPostFrame').style.display = user?.role==='vendeur'? 'flex' : 'none';
   document.getElementById('logoutBtn').style.display = user? 'inline-block' : 'none';
-  document.querySelector('.btn-light').style.display = user? 'none' : 'inline-block';
-  document.querySelector('.btn-dark').style.display = user? 'none' : 'inline-block';
+  document.querySelectorAll('.header-inner.btn-light')[0].style.display = user? 'none' : 'inline-block';
+  document.querySelectorAll('.header-inner.btn-dark')[0].style.display = user? 'none' : 'inline-block';
   document.getElementById('userBadge').style.display = user? 'inline-block' : 'none';
-  if(user) document.getElementById('userBadge').textContent = '+237 '+user.phone+' • '+user.role;
+  if(user) document.getElementById('userBadge').textContent = `${user.phone} • ${user.role}`;
 
   if(user && user.role==='vendeur'){
     const boutiques = await fetch(`${SUPABASE_URL}/boutiques?user_id=eq.${user.id}`, {headers}).then(r=>r.json());
-    if(boutiques[0]) document.getElementById('accountInfo').innerHTML=`<b>${boutiques[0].name}</b><div style="font-size:12px">${boutiques[0].city} • ${boutiques[0].activite} • +237 ${boutiques[0].phone}</div>`;
+    if(boutiques[0]) document.getElementById('accountInfo').innerHTML=`<b>${boutiques[0].name}</b><div style="font-size:12px">${boutiques[0].city} • ${boutiques[0].activite} • ${boutiques[0].phone}</div>`;
     document.getElementById('accountInfo').style.display='block';
   } else if(user) {
-    document.getElementById('accountInfo').innerHTML=`<b>${user.prenom||''} ${user.nom||''}</b><div style="font-size:12px">${user.ville||''} • +237 ${user.phone} • ${user.role}</div>`;
+    document.getElementById('accountInfo').innerHTML=`<b>${user.prenom||''} ${user.nom||''}</b><div style="font-size:12px">${user.ville||''} • ${user.phone} • ${user.role}</div>`;
     document.getElementById('accountInfo').style.display='block';
   } else {
     document.getElementById('accountInfo').style.display='none';
@@ -209,19 +209,32 @@ function toggleMode(){mode=mode==='register'?'login':'register';upd()}
 function upd(){document.getElementById('rc').style.background=role==='client'?'#111':'transparent';document.getElementById('rc').style.color=role==='client'?'#fff':'#111';document.getElementById('rv').style.background=role==='vendeur'?'#111':'transparent';document.getElementById('rv').style.color=role==='vendeur'?'#fff':'#111';const isLogin=mode==='login';document.getElementById('f-client').style.display=!isLogin&&role==='client'?'block':'none';document.getElementById('f-vendeur').style.display=!isLogin&&role==='vendeur'?'block':'none';document.getElementById('loginBox').style.display=isLogin?'block':'none';document.getElementById('authTitle').textContent=isLogin?'Connexion':'Créer compte';document.getElementById('roleSwitch').style.display=isLogin?'none':'grid';document.getElementById('switchLink').textContent=isLogin?'Créer compte':'Se connecter'}
 
 async function register(e){
-  e.preventDefault();
-  const fd=new FormData(e.target); const data = Object.fromEntries(fd.entries()); data.role = role; data.phone = '237' + data.phone;
-  const res = await fetch(`${SUPABASE_URL}/users`, {method:'POST', headers, body:JSON.stringify(data)});
-  if(res.status!== 201) return showError('authError', `⛔ Ce numéro +237${data.phone} existe déjà. Connecte-toi.`);
-  const user = await res.json();
+  e.preventDefault(); // BLOQUE LE RECHARGEMENT
+  console.log("1. Register lancé");
+  const fd=new FormData(e.target); 
+  const data = Object.fromEntries(fd.entries()); 
+  data.role = role; 
+  data.phone = '237' + data.phone;
+  console.log("2. Data:", data);
+  
+  try{
+    const res = await fetch(`${SUPABASE_URL}/users`, {method:'POST', headers, body:JSON.stringify(data)});
+    const user = await res.json();
+    console.log("3. Réponse:", res.status, user);
+    
+    if(res.status!== 201) return showError('authError', `⛔ Erreur: ${user.message || 'Téléphone déjà utilisé'}`);
 
-  if(role==='vendeur'){
-    await fetch(`${SUPABASE_URL}/boutiques`, {method:'POST', headers, body:JSON.stringify({
-      user_id:user[0].id, name:data.boutiqueName, phone:data.phone, email:data.email,
-      whatsapp:data.whatsapp, city:data.city, activite:data.activite
-    })});
+    if(role==='vendeur'){
+      await fetch(`${SUPABASE_URL}/boutiques`, {method:'POST', headers, body:JSON.stringify({
+        user_id:user[0].id, name:data.boutiqueName, phone:data.phone, email:data.email,
+        whatsapp:'237' + data.whatsapp, city:data.city, activite:data.activite
+      })});
+    }
+    setUser(user[0]); closeAuth(); renderAll(); alert("Compte créé avec succès!");
+  }catch(err){
+    console.error(err);
+    showError('authError', '⛔ Erreur de connexion à Supabase. Vérifie RLS et ta clé API');
   }
-  setUser(user[0]); closeAuth(); renderAll();
 }
 
 async function doLogin(){
@@ -235,5 +248,3 @@ async function doLogin(){
 function logout(){localStorage.removeItem('shoponline_user');renderAll();}
 renderAll();
 </script>
-</body>
-</html>
