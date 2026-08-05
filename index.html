@@ -6,48 +6,33 @@
 <title>SHOP ONLINE - Supabase</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-/* MEME CSS QUE TOI */
-:root{--bg:#F0F2F5;--card:#fff;--line:#E4E6EB;--text:#050505;--muted:#65676B;--blue:#0866FF;--green:#25D366;--red:#E53E3E}
+:root{--bg:#F0F2F5;--card:#fff;--line:#E4E6EB;--text:#050505;--muted:#65676B;--green:#25D366}
 *{margin:0;padding:0;box-sizing:border-box}body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text)}
 .header{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line)}
 .header-inner{height:60px;display:flex;align-items:center;justify-content:space-between;max-width:1200px;margin:0 auto;padding:0 16px}
 .logo{font-weight:800;font-size:26px}
 .container{max-width:680px;margin:0 auto;padding:0 12px}
 .btn{padding:10px 16px;border-radius:20px;font-weight:600;font-size:14px;border:0;cursor:pointer}
-.btn-dark{background:#111;color:#fff}.btn-light{background:#E4E6EB}
-.btn-commander{background:var(--green);color:#fff;width:100%;padding:13px;border-radius:10px;font-weight:700;font-size:15px;margin-top:12px;display:flex;align-items:center;justify-content:center;gap:8px;border:0;cursor:pointer}
+.btn-dark{background:#000;color:#fff}.btn-light{background:#E4E6EB}
+.btn-commander{background:var(--green);color:#fff;width:100%;padding:13px;border-radius:10px;font-weight:700;font-size:15px;margin-top:12px;border:0;cursor:pointer}
 .error-box{background:#FFF5F5;border:1px solid #FED7D7;color:#C53030;padding:12px;border-radius:8px;font-size:13px;margin:10px 0;display:none}
 .error-box.show{display:block}
-.add-post-card{background:var(--card);border-radius:12px;box-shadow:0 1px 2px rgba(0,0,0,.1);padding:12px;display:flex;gap:10px;align-items:center;margin:16px 0;cursor:pointer;border:1px solid var(--line)}
-.avatar{width:40px;height:40px;border-radius:50%;background:#ddd;overflow:hidden;flex-shrink:0}
-.avatar img{width:100%;height:100%;object-fit:cover}
-.add-input{flex:1;background:#F0F2F5;padding:10px 14px;border-radius:20px;color:var(--muted);font-size:15px}
-.post-card{background:var(--card);border-radius:12px;box-shadow:0 1px 2px rgba(0,0,0,.1);margin-bottom:16px;overflow:hidden;border:1px solid var(--line)}
-.post-header{padding:12px 16px 8px;display:flex;gap:10px;align-items:flex-start}
-.post-shop{font-weight:600;font-size:15px;cursor:pointer}
-.post-meta{font-size:12px;color:var(--muted);line-height:1.4}
-.post-content{padding:0 16px 12px}
-.post-title{font-weight:800;font-size:17px;line-height:1.3;margin-bottom:6px}
-.post-desc{font-size:14.5px;line-height:1.45;color:#222;white-space:pre-wrap}
-.post-images img{width:100%;aspect-ratio:1;object-fit:cover;display:block}
-.price-tag{font-weight:800;color:#111;font-size:16px;margin-top:6px}
-.badge-new{background:#E7F3FF;color:#0866FF;padding:2px 6px;border-radius:10px;font-size:10px;font-weight:700;margin-left:6px}
-.empty{text-align:center;padding:80px 20px;color:var(--muted)}
+.post-card{background:var(--card);border-radius:12px;box-shadow:0 1px 2px rgba(0,0,0,.1);margin-bottom:16px;border:1px solid var(--line);padding:16px}
 .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.45);backdrop-filter:blur(8px);z-index:100;display:none;place-items:center;padding:16px}
 .modal-bg.open{display:grid}
-.modal{background:#fff;border-radius:12px;max-width:520px;width:100%;box-shadow:0 8px 30px rgba(0,0,0,.2);overflow:hidden}
-.modal-head{padding:16px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;font-weight:700}
-.modal-body{padding:16px;max-height:85vh;overflow:auto}
-.field{margin:10px 0;display:flex;flex-direction:column;gap:6px}
-.field label{font-size:11px;font-weight:700;text-transform:uppercase;color:#555}
-.field input,.field textarea,.field select{padding:12px;border-radius:8px;border:1px solid #CCD0D5;font-size:15px;outline:0}
+.modal{background:#fff;border-radius:12px;max-width:520px;width:100%;max-height:90vh;overflow-y:auto}
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
+.field label{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase}
+.field input,.field select{padding:10px;border:1px solid #CCD0D5;border-radius:8px;font-size:15px;width:100%}
+.prefix{padding:10px;background:#F0F2F5;border:1px solid #CCD0D5;border-radius:8px;font-weight:600}
+.btn-submit{width:100%;background:#000;color:#fff;padding:12px;border-radius:25px;border:0;font-weight:700;margin-top:8px;cursor:pointer;font-size:15px}
 </style>
 </head>
 <body>
 <header class="header"><div class="header-inner">
 <div class="logo">SHOP ONLINE</div>
-<div style="display:flex;gap:8px;align-items:center">
-<span id="userBadge" style="display:none;font-size:12px;font-weight:600;background:#E7F3FF;color:#0866FF;padding:6px 10px;border-radius:20px"></span>
+<div>
+<span id="userBadge" style="display:none;font-weight:600"></span>
 <button class="btn btn-light" onclick="openAuth('login')">Connexion</button>
 <button class="btn btn-dark" onclick="openAuth('register')">Créer compte</button>
 <button id="logoutBtn" class="btn btn-light" style="display:none" onclick="logout()">Déconnexion</button>
@@ -55,62 +40,89 @@
 </div></header>
 
 <main class="container">
-<div id="addPostFrame" class="add-post-card" style="display:none" onclick="openPublish()"><div class="avatar"><img src="https://ui-avatars.com/api/?name=V&background=111&color=fff"/></div><div class="add-input">Ajouter une publication... Quoi de neuf?</div><div>📸</div></div>
-<div id="accountInfo" style="display:none;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;margin:16px 0"></div>
-<div style="display:flex;gap:8px;margin:12px 0;overflow:auto">
-<button class="btn btn-dark" style="font-size:12px;padding:8px 12px" onclick="sortBy('recent')">🕒 Plus récents</button>
-<button class="btn btn-light" style="font-size:12px;padding:8px 12px" onclick="sortBy('oldest')">📅 Plus anciens</button>
-<span style="font-size:11px;color:#888;padding:8px">Connecté à Supabase PostgreSQL</span>
-</div>
+<div id="addPostFrame" style="display:none;margin:16px 0"><button class="btn btn-dark" style="width:100%" onclick="openPublish()">+ Ajouter une publication</button></div>
 <div id="feed"></div>
 </main>
 
-<div class="modal-bg" id="publishModal"><div class="modal"><div class="modal-head"><span>Créer publication</span><button onclick="closePublish()" style="width:28px;height:28px;border-radius:50%;border:0;background:#E4E6EB">✕</button></div><div class="modal-body">
-<div class="field"><label>Nom produit (gras) *</label><input id="pName" placeholder="Ex: Robe Ankara"></div>
+<!-- MODAL PUBLICATION -->
+<div class="modal-bg" id="publishModal"><div class="modal" style="padding:16px"><h3 style="margin-bottom:12px">Créer publication</h3>
+<div class="field"><label>Nom produit *</label><input id="pName"></div>
 <div class="field"><label>Description</label><textarea id="pDesc"></textarea></div>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div class="field"><label>Prix FCFA *</label><input id="pPrice" type="number"></div><div class="field"><label>Catégorie</label><select id="pCat"><option>Mode</option><option>Téléphones</option><option>Beauté</option><option>Maison</option></select></div></div>
-<div class="field"><label>Photos</label><input type="file" id="pPhotos" accept="image/*" multiple onchange="previewPhotos(this)"><div id="preview"></div></div>
-<button class="btn btn-dark" style="width:100%;margin-top:10px;background:#0866FF" onclick="publishProduct()">Publier</button>
-</div></div></div>
+<div class="field"><label>Prix FCFA *</label><input id="pPrice" type="number"></div>
+<button class="btn btn-dark" style="width:100%;background:#0866FF" onclick="publishProduct()">Publier</button>
+<button onclick="closePublish()" style="margin-top:8px">Fermer</button>
+</div></div>
 
-<div class="modal-bg" id="authModal"><div class="modal"><div class="modal-head"><span id="authTitle">Créer compte</span><button onclick="closeAuth()" style="width:28px;height:28px;border-radius:50%;border:0;background:#E4E6EB">✕</button></div><div class="modal-body">
-<div id="roleSwitch" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;background:#F0F2F5;padding:5px;border-radius:10px;margin-bottom:12px">
-<div id="rc" onclick="setRole('client')" style="padding:10px;border-radius:8px;text-align:center;font-weight:700;cursor:pointer;background:#111;color:#fff">👤 Client</div>
-<div id="rv" onclick="setRole('vendeur')" style="padding:10px;border-radius:8px;text-align:center;font-weight:700;cursor:pointer">🏪 Vendeur</div>
+<!-- MODAL AUTH -->
+<div class="modal-bg" id="authModal">
+  <div class="modal">
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:16px;border-bottom:1px solid var(--line);position:sticky;top:0;background:#fff;z-index:2">
+      <h3 id="authTitle" style="font-size:18px;font-weight:700">Créer compte</h3>
+      <button onclick="closeAuth()" style="background:#E4E6EB;border:0;border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:18px">×</button>
+    </div>
+
+    <div style="padding:16px">
+      <div id="tabsContainer" style="display:flex;background:#F0F2F5;border-radius:10px;padding:4px;margin-bottom:16px">
+        <button id="tabClient" onclick="setRole('client')" style="flex:1;padding:10px;border-radius:8px;border:0;font-weight:600;background:#000;color:#fff;cursor:pointer;display:flex;gap:6px;justify-content:center;align-items:center">👤 Client</button>
+        <button id="tabVendeur" onclick="setRole('vendeur')" style="flex:1;padding:10px;border-radius:8px;border:0;font-weight:600;background:transparent;color:#050505;cursor:pointer;display:flex;gap:6px;justify-content:center;align-items:center">🛍️ Vendeur</button>
+      </div>
+
+      <div id="authError" class="error-box"></div>
+
+      <form id="formClient" onsubmit="register(event)">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div class="field"><label>NOM *</label><input name="nom" required></div>
+          <div class="field"><label>PRÉNOM *</label><input name="prenom" required></div>
+        </div>
+        <div class="field"><label>VILLE *</label>
+          <select name="city" required><option value="">Choisir</option><option>Douala</option><option>Yaoundé</option><option>Bamenda</option><option>Buea</option><option>Bafoussam</option><option>Garoua</option></select>
+        </div>
+        <div class="field"><label>TÉLÉPHONE *</label>
+          <div style="display:flex;gap:8px"><div class="prefix">+237</div><input name="phone" placeholder="6XXXXXXXX" required pattern="6[0-9]{8}"></div>
+        </div>
+        <div class="field"><label>MOT DE PASSE *</label><input name="password" type="password" required></div>
+        <button type="submit" class="btn-submit">Créer compte client (PostgreSQL)</button>
+      </form>
+
+      <form id="formVendeur" onsubmit="register(event)" style="display:none">
+        <div class="field"><label>NOM BOUTIQUE *</label><input name="boutiqueName" required></div>
+        <div class="field"><label>TÉLÉPHONE *</label><div style="display:flex;gap:8px"><div class="prefix">+237</div><input name="phone" placeholder="6XXXXXXXX" required pattern="6[0-9]{8}"></div></div>
+        <div class="field"><label>EMAIL *</label><input name="email" type="email" required></div>
+        <div class="field"><label>WHATSAPP *</label><div style="display:flex;gap:8px"><div class="prefix">+237</div><input name="whatsapp" placeholder="6XXXXXXXX" required pattern="6[0-9]{8}"></div></div>
+        <div class="field"><label>VILLE *</label><select name="city" required><option value="">Choisir</option><option>Douala</option><option>Yaoundé</option><option>Bamenda</option></select></div>
+        <div class="field"><label>ACTIVITÉ *</label><select name="activite" required><option>Mode</option><option>Électronique</option><option>Cosmétique</option><option>Nourriture</option><option>Autres</option></select></div>
+        <div class="field"><label>MOT DE PASSE *</label><input name="password" type="password" required></div>
+        <button type="submit" class="btn-submit">Créer compte vendeur (PostgreSQL)</button>
+      </form>
+
+      <div id="loginBox" style="display:none">
+        <div class="field"><label>TÉLÉPHONE *</label><div style="display:flex;gap:8px"><div class="prefix">+237</div><input id="loginPhone" placeholder="6XXXXXXXX" required></div></div>
+        <div class="field"><label>MOT DE PASSE *</label><input id="loginPassword" type="password" required></div>
+        <button onclick="doLogin()" class="btn-submit">Se connecter</button>
+      </div>
+
+      <a href="#" id="switchLink" onclick="toggleMode();return false" style="display:block;text-align:center;margin-top:12px;color:#0866FF;font-weight:600">Se connecter</a>
+    </div>
+  </div>
 </div>
-<div id="loginError" class="error-box"></div>
-<div id="registerError" class="error-box"></div>
-<form id="f-client" onsubmit="register(event)"><div class="field"><label>Nom *</label><input required name="nom"></div><div class="field"><label>Prénom *</label><input required name="prenom"></div><div class="field"><label>Ville *</label><select required name="ville"><option>Douala</option><option>Yaoundé</option></select></div><div class="field"><label>Téléphone *</label><input required name="phone"></div><div class="field"><label>Mot de passe *</label><input required type="password" name="password"></div><button class="btn btn-dark" style="width:100%" type="submit">Créer compte client</button></form>
-<form id="f-vendeur" style="display:none" onsubmit="register(event)"><div class="field"><label>Nom boutique *</label><input required name="boutiqueName"></div><div class="field"><label>Téléphone *</label><input required name="phone"></div><div class="field"><label>Email *</label><input required type="email" name="email"></div><div class="field"><label>WhatsApp *</label><input required name="whatsapp"></div><div class="field"><label>Ville *</label><select required name="city"><option>Douala</option><option>Yaoundé</option></select></div><div class="field"><label>Activité *</label><select required name="activite"><option>Mode</option><option>Téléphones</option></select></div><div class="field"><label>Mot de passe *</label><input required type="password" name="password"></div><button class="btn btn-dark" style="width:100%" type="submit">Créer boutique</button></form>
-<div id="loginBox" style="display:none"><div class="field"><label>Téléphone *</label><input id="loginPhone"></div><div class="field"><label>Mot de passe *</label><input id="loginPassword" type="password"></div><button class="btn btn-dark" style="width:100%;background:#0866FF" onclick="doLogin()">Se connecter</button></div>
-<div style="text-align:center;margin-top:10px"><a href="#" id="switchLink" onclick="toggleMode();return false">Se connecter</a></div>
-</div></div></div>
 
 <script>
 // ========== CONFIG SUPABASE ==========
 const SUPABASE_URL = 'https://cvcgtiykdocjhwanyned.supabase.co/rest/v1';
-const SUPABASE_KEY = 'sb_publishable_Q-_I_gqrhW-pCXDYtlofEg_g0gOM9Xd'; // Settings > API > anon public
+const SUPABASE_KEY = 'sb_publishable_Q-_I_gqrhW-pCXDYtlofEg_g0gOM9Xd';
 
 const headers = {
   'apikey': SUPABASE_KEY,
   'Authorization': 'Bearer ' + SUPABASE_KEY,
   'Content-Type': 'application/json',
   'Prefer': 'return=representation'
-  
 };
 
-let role='client', mode='register', tempImages=[], allProducts=[], boutiquesCache=[], sortOrder='recent';
+let role='client', mode='register', allProducts=[], boutiquesCache=[];
 
 function getCurrentUser(){ return JSON.parse(localStorage.getItem('shoponline_user')||'null') }
 function setCurrentUser(u){ localStorage.setItem('shoponline_user', JSON.stringify(u)); }
-function showError(id, msg){const el=document.getElementById(id); el.textContent=msg; el.classList.add('show'); setTimeout(()=>el.classList.remove('show'),5000);}
-
-function formatDateTime(dateStr){
-  const d = new Date(dateStr);
-  const diffMin = Math.floor((new Date() - d)/60000);
-  let duree = diffMin<60? `Il y a ${diffMin} min` : `Il y a ${Math.floor(diffMin/60)}h`;
-  return {duree, full:`Publié le ${d.toLocaleDateString('fr-FR')} à ${d.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})}`};
-}
+function showError(id, msg){const el=document.getElementById(id); el.textContent=msg; el.classList.add('show');}
 
 async function apiFetch(table, query=''){
   const res = await fetch(`${SUPABASE_URL}/${table}${query}`, {headers});
@@ -119,75 +131,97 @@ async function apiFetch(table, query=''){
 
 async function renderAll(){
   const user = getCurrentUser();
-  document.getElementById('addPostFrame').style.display = user?.role==='vendeur'? 'flex' : 'none';
-  document.getElementById('logoutBtn').style.display = user? 'inline' : 'none';
+  document.getElementById('addPostFrame').style.display = user?.role==='vendeur'? 'block' : 'none';
+  document.getElementById('logoutBtn').style.display = user? 'inline-block' : 'none';
+  document.querySelector('.btn-light').style.display = user? 'none' : 'inline-block';
+  document.querySelector('.btn-dark').style.display = user? 'none' : 'inline-block';
+  document.getElementById('userBadge').style.display = user? 'inline' : 'none';
+  if(user) document.getElementById('userBadge').textContent = user.nom || user.boutiqueName;
 
-  boutiquesCache = await apiFetch('boutiques');
-  allProducts = await apiFetch('products?order=created_at.desc');
+  boutiquesCache = await apiFetch('boutiques?select=*');
+  allProducts = await apiFetch('products?select=*&order=created_at.desc');
 
-  if(user){
-    document.getElementById('userBadge').style.display='inline';
-    document.getElementById('userBadge').textContent='+237 '+user.phone+' • '+user.role;
-  }
-  renderFeed();
-}
-
-function renderFeed(){
-  const el=document.getElementById('feed');
-  let products = [...allProducts];
-  if(sortOrder==='oldest') products.reverse();
-  if(!products.length) return el.innerHTML=`<div class="empty"><h2>SHOP ONLINE</h2><p>Aucune publication</p></div>`;
-  el.innerHTML=products.map(p=>{
-    const boutique = boutiquesCache.find(b=>b.id===p.boutique_id);
-    const time = formatDateTime(p.created_at);
+  document.getElementById('feed').innerHTML = allProducts.map(p=>{
+    const b = boutiquesCache.find(x=>x.id===p.boutique_id);
     return `<div class="post-card">
-      <div class="post-header"><div class="avatar"><img src="https://ui-avatars.com/api/?name=${boutique?.name}&background=111&color=fff"/></div><div><div class="post-shop">${boutique?.name}</div><div class="post-meta">📍 ${boutique?.city} • ⏰ ${time.duree}</div></div></div>
-      <div class="post-content"><div class="post-title">${p.name}</div><div class="post-desc">${p.description}</div><div class="price-tag">${Number(p.price).toLocaleString()} FCFA</div></div>
-      <div style="padding:12px"><button class="btn-commander" onclick="window.open('https://wa.me/237${boutique?.whatsapp}?text=Je veux ${p.name}')">🛒 Commander</button></div>
+      <b>${b?.name || 'Boutique'}</b> - ${p.name}<br>
+      <div style="color:var(--muted);font-size:14px;margin:6px 0">${p.description || ''}</div>
+      <div style="font-weight:700;font-size:18px">${p.price} FCFA</div>
+      <button class="btn-commander" onclick="window.open('https://wa.me/237${b?.whatsapp}?text=Bonjour je veux ${p.name} à ${p.price} FCFA')">Commander sur WhatsApp</button>
     </div>`;
   }).join('');
 }
 
-function sortBy(order){ sortOrder=order; renderFeed(); }
 function openPublish(){document.getElementById('publishModal').classList.add('open')}
 function closePublish(){document.getElementById('publishModal').classList.remove('open')}
-function previewPhotos(input){tempImages=[];for(let f of input.files){const r=new FileReader();r.onload=e=>tempImages.push(e.target.result);r.readAsDataURL(f)}}
 
 async function publishProduct(){
   const user=getCurrentUser();
   const boutique = boutiquesCache.find(b=>b.user_id===user.id);
+  if(!boutique) return alert("Crée d'abord ta boutique");
   await fetch(`${SUPABASE_URL}/products`, {method:'POST', headers, body:JSON.stringify({
     boutique_id:boutique.id,
     name:document.getElementById('pName').value,
     description:document.getElementById('pDesc').value,
-    price:parseInt(document.getElementById('pPrice').value),
-    images: tempImages
+    price:parseInt(document.getElementById('pPrice').value)
   })});
   closePublish(); renderAll();
 }
 
-function openAuth(m='register',p=''){mode=m;if(p)role=p;document.getElementById('authModal').classList.add('open');}
+function openAuth(m='register'){
+  mode = m;
+  document.getElementById('authModal').classList.add('open');
+  toggleMode();
+}
 function closeAuth(){document.getElementById('authModal').classList.remove('open')}
-function setRole(r){role=r;document.getElementById('rc').style.background=r==='client'?'#111':'transparent';document.getElementById('rv').style.background=r==='vendeur'?'#111':'transparent';}
-function toggleMode(){mode=mode==='register'?'login':'register';document.getElementById('f-client').style.display=mode==='register'&&role==='client'?'block':'none';document.getElementById('f-vendeur').style.display=mode==='register'&&role==='vendeur'?'block':'none';document.getElementById('loginBox').style.display=mode==='login'?'block':'none';}
+
+function setRole(r){
+  role=r;
+  document.getElementById('formClient').style.display = r==='client'?'block':'none';
+  document.getElementById('formVendeur').style.display = r==='vendeur'?'block':'none';
+  const tabC = document.getElementById('tabClient');
+  const tabV = document.getElementById('tabVendeur');
+  if(r==='client'){
+    tabC.style.background='#000'; tabC.style.color='#fff';
+    tabV.style.background='transparent'; tabV.style.color='#050505';
+  } else {
+    tabV.style.background='#000'; tabV.style.color='#fff';
+    tabC.style.background='transparent'; tabC.style.color='#050505';
+  }
+}
+
+function toggleMode(){
+  mode = mode==='register'?'login':'register';
+  document.getElementById('authTitle').textContent = mode==='register'?'Créer compte':'Se connecter';
+  document.getElementById('tabsContainer').style.display = mode==='register'?'flex':'none';
+  document.getElementById('formClient').style.display = mode==='register' && role==='client'?'block':'none';
+  document.getElementById('formVendeur').style.display = mode==='register' && role==='vendeur'?'block':'none';
+  document.getElementById('loginBox').style.display = mode==='login'?'block':'none';
+  document.getElementById('switchLink').textContent = mode==='register'?'Se connecter':'Créer un compte';
+  document.getElementById('authError').classList.remove('show');
+}
 
 async function register(e){
   e.preventDefault();
-  const fd=new FormData(e.target); const data = Object.fromEntries(fd.entries()); data.role = role;
+  const fd=new FormData(e.target); const data = Object.fromEntries(fd.entries()); data.role = role; data.phone = '237' + data.phone;
   const res = await fetch(`${SUPABASE_URL}/users`, {method:'POST', headers, body:JSON.stringify(data)});
   const user = await res.json();
+  if(res.status!== 201) return showError('authError', 'Erreur: Téléphone déjà utilisé');
+
   if(role==='vendeur'){
-    await fetch(`${SUPABASE_URL}/boutiques`, {method:'POST', headers, body:JSON.stringify({user_id:user[0].id, name:data.boutiqueName, city:data.city, activite:data.activite, phone:data.phone, whatsapp:data.whatsapp, email:data.email})});
+    await fetch(`${SUPABASE_URL}/boutiques`, {method:'POST', headers, body:JSON.stringify({
+      user_id:user[0].id, name:data.boutiqueName, phone:data.phone, email:data.email,
+      whatsapp:data.whatsapp, city:data.city, activite:data.activite
+    })});
   }
   setCurrentUser(user[0]); closeAuth(); renderAll();
 }
 
 async function doLogin(){
-  const phone=document.getElementById('loginPhone').value;
-  const pass=document.getElementById('loginPassword').value;
+  const phone = '237' + document.getElementById('loginPhone').value;
+  const pass = document.getElementById('loginPassword').value;
   const users = await apiFetch(`users?phone=eq.${phone}`);
-  if(!users[0]) return showError('loginError', '⛔ Numéro n\'existe pas');
-  if(users[0].password!== pass) return showError('loginError', '⛔ Mot de passe incorrect');
+  if(!users[0] || users[0].password!== pass) return showError('authError', '⛔ Téléphone ou mot de passe incorrect');
   setCurrentUser(users[0]); closeAuth(); renderAll();
 }
 
