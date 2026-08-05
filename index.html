@@ -99,7 +99,7 @@
 <script>
 // ========== CONFIG SUPABASE ==========
 const SUPABASE_URL = 'https://cvcgtiykdocjhwanyned.supabase.co/rest/v1';
-const SUPABASE_KEY = 'sb_publishable_Q-_I_gqrhW-pCXDYtlofEg_g0gOM9Xd'; // <-- REMPLACE ICI
+const SUPABASE_KEY = 'sb_publishable_Q-_I_gqrhW-pCXDYtlofEg_g0gOM9Xd';
 
 const headers = {
   'apikey': SUPABASE_KEY,
@@ -113,8 +113,12 @@ let role='client', mode='register', allProducts=[], sortOrder='recent';
 function getUser(){
   try{
     const u = localStorage.getItem('shoponline_user');
-    return u? JSON.parse(u) : null; // FIX: évite "undefined"
-  }catch{return null}
+    return u && u!== "undefined"? JSON.parse(u) : null;
+  }catch{
+    localStorage.removeItem('shoponline_user');
+    return null
+  }
+}
 function setUser(u){localStorage.setItem('shoponline_user',JSON.stringify(u))}
 function showError(id, msg){const el=document.getElementById(id); el.textContent=msg; el.classList.add('show'); setTimeout(()=>el.classList.remove('show'),6000);}
 
@@ -161,7 +165,7 @@ async function renderAll(){
   if(user) document.getElementById('userBadge').textContent = `${user.phone} • ${user.role}`;
 
   if(user && user.role==='vendeur'){
-    const boutiques = await fetch(`${SUPABASE_URL}/boutiques?user_id=eq.${user.id}`, {headers}).then(r=>r.json());
+    const boutiques = await fetch(`${SUPABASE_URL}/boutiques?user_id=eq.${user.id}`, {headers}).then(r=>r.ok?r.json():[]);
     if(boutiques && boutiques[0]) document.getElementById('accountInfo').innerHTML=`<b>${boutiques[0].name}</b><div style="font-size:12px">${boutiques[0].city} • ${boutiques[0].activite} • ${boutiques[0].phone}</div>`;
     document.getElementById('accountInfo').style.display='block';
   } else if(user) {
@@ -200,7 +204,7 @@ function closePublish(){document.getElementById('publishModal').classList.remove
 async function publishProduct(){
   const user=getUser(); const name=document.getElementById('pName').value.trim(),desc=document.getElementById('pDesc').value.trim(),price=document.getElementById('pPrice').value.trim();
   if(!name||!price){alert('Nom + prix obligatoires');return}
-  const boutiques = await fetch(`${SUPABASE_URL}/boutiques?user_id=eq.${user.id}`, {headers}).then(r=>r.json());
+  const boutiques = await fetch(`${SUPABASE_URL}/boutiques?user_id=eq.${user.id}`, {headers}).then(r=>r.ok?r.json():[]);
   if(!boutiques[0]) return alert("Crée d'abord ta boutique");
   await fetch(`${SUPABASE_URL}/products`, {method:'POST', headers, body:JSON.stringify({
     boutique_id:boutiques[0].id, name, description:desc, price:parseInt(price), category:document.getElementById('pCat').value
@@ -223,12 +227,12 @@ async function register(e){
   
   const res = await fetch(`${SUPABASE_URL}/users`, {method:'POST', headers, body:JSON.stringify(data)});
   
-  if(res.status!== 201){ 
-    const err = await res.json();
-    return showError('authError', `⛔ Erreur: ${err.message || 'Téléphone déjà utilisé ou RLS activé'}`);
+  if(!res.ok){ 
+    const err = await res.json().catch(()=>({message:'Erreur 401: Désactive RLS dans Supabase'}));
+    return showError('authError', `⛔ Erreur: ${err.message}`);
   }
   
-  const userArr = await res.json(); // FIX: on lit le json qu'une seule fois
+  const userArr = await res.json();
   const user = userArr[0];
 
   if(role==='vendeur'){
@@ -243,7 +247,7 @@ async function register(e){
 async function doLogin(){
   const phone = '237' + document.getElementById('loginPhone').value;
   const pass = document.getElementById('loginPassword').value;
-  const users = await fetch(`${SUPABASE_URL}/users?phone=eq.${phone}`, {headers}).then(r=>r.json());
+  const users = await fetch(`${SUPABASE_URL}/users?phone=eq.${phone}`, {headers}).then(r=>r.ok?r.json():[]);
   if(!users[0] || users[0].password!== pass) return showError('authError', '⛔ Téléphone ou mot de passe incorrect');
   setUser(users[0]); closeAuth(); renderAll();
 }
