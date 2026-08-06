@@ -3,222 +3,85 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SHOP ONLINE - Vendez et Achetez à Douala</title>
+<title>SHOP ONLINE</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-  :root{
-    --primary: #2563eb;
-    --primary-dark: #1d4ed8;
-    --accent: #f59e0b;
-    --bg: #f8fafc;
-    --card: #ffffff;
-    --text: #1e293b;
-    --muted: #64748b;
-    --radius: 16px;
-    --shadow: 0 4px 20px rgba(0,0,0,0.08);
-  }
-  *{margin:0;padding:0;box-sizing:border-box;font-family: 'Segoe UI', system-ui, sans-serif;}
-  body{background: var(--bg); color: var(--text); scroll-behavior: smooth;}
-
-  /* HEADER */
-  header{background: var(--card); box-shadow: var(--shadow); position: sticky; top:0; z-index:100;}
- .nav{max-width:1200px;margin:auto;display:flex;justify-content:space-between;align-items:center;padding:15px 20px;}
- .logo{font-size:24px;font-weight:800;color:var(--primary);}
- .logo span{color:var(--accent);}
- .nav-buttons{display:flex;gap:10px;}
- .btn{padding:10px 18px;border:none;border-radius:10px;font-weight:600;cursor:pointer;transition:0.2s;}
- .btn-primary{background:var(--primary);color:white;}
- .btn-primary:hover{background:var(--primary-dark); transform: translateY(-2px);}
- .btn-outline{background:transparent;border:2px solid var(--primary);color:var(--primary);}
- .btn-outline:hover{background:var(--primary);color:white;}
-
-  /* HERO */
- .hero{text-align:center;padding:80px 20px;background:linear-gradient(135deg,#2563eb,#1d4ed8);color:white;}
- .hero h1{font-size:42px;margin-bottom:15px;}
- .hero p{font-size:18px;opacity:0.9;margin-bottom:25px;}
-
-  /* CONTAINER */
- .container{max-width:1200px;margin:40px auto;padding:0 20px;}
- .section-title{font-size:28px;font-weight:700;margin-bottom:20px;text-align:center;}
-
-  /* GRID PRODUITS */
- .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px;}
- .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;transition:0.3s;cursor:pointer;}
- .card:hover{transform:translateY(-5px);box-shadow:0 8px 30px rgba(0,0,0,0.12);}
- .card img{width:100%;height:200px;object-fit:cover;}
- .card-body{padding:15px;}
- .card-title{font-size:18px;font-weight:700;margin-bottom:5px;}
- .card-price{color:var(--primary);font-size:20px;font-weight:800;}
- .card-shop{font-size:13px;color:var(--muted);}
-
-  /* MODALS */
- .modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);justify-content:center;align-items:center;z-index:200;}
- .modal-content{background:white;padding:25px;border-radius:var(--radius);width:90%;max-width:500px;animation:slideUp 0.3s;}
-  @keyframes slideUp{from{transform:translateY(30px);opacity:0;}to{transform:translateY(0);opacity:1;}}
- .modal h2{margin-bottom:15px;}
- .form-group{margin-bottom:15px;}
- .form-group label{font-weight:600;font-size:14px;display:block;margin-bottom:5px;}
- .form-group input,.form-group textarea,.form-group select{width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;font-size:15px;}
- .close-btn{float:right;font-size:24px;cursor:pointer;}
-
-  /* LOADER */
- .loader{text-align:center;padding:40px;font-size:18px;color:var(--muted);}
- .avatar-nav{
-  width:40px;
-  height:40px;
-  border-radius:50%;
-  background:var(--primary);
-  color:white;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:800;
-  cursor:pointer;
-  overflow:hidden;
-  border:2px solid white;
-}
-.avatar-nav img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-.shop-card{display:flex;align-items:center;gap:15px;padding:15px;border:1px solid #eee;border-radius:12px;cursor:pointer;transition:0.2s;}
-.shop-card:hover{background:#f8fafc;}
-.shop-avatar{width:60px;height:60px;border-radius:50%;background:var(--primary);color:white;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;position:relative;overflow:hidden;}
-.shop-avatar img{width:100%;height:100%;object-fit:cover;}
-.online-status{width:14px;height:14px;background:#94a3b8;border-radius:50%;border:2px solid white;position:absolute;bottom:2px;right:2px;}
-.online-status.on{background:#22c55e;}
-#searchInput:focus{
-  border-color:var(--primary);
-  box-shadow:0 0 0 3px rgba(37,99,235,0.1);
-}
+    body{font-family:Arial;background:#f5f5f5;margin:0;padding:20px}
+    .card{background:#fff;padding:20px;border-radius:10px;box-shadow:0 2px 5px #0001;margin-bottom:20px}
+    input,select,button{width:100%;padding:10px;margin:8px 0;border:1px solid #ddd;border-radius:5px;box-sizing:border-box}
+    button{background:#25D366;color:#fff;border:none;cursor:pointer;font-weight:bold}
+    button:hover{opacity:0.9}
+    .hidden{display:none}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:15px}
+    .product{border:1px solid #eee;padding:10px;border-radius:8px;text-align:center}
+    .product img{width:100%;height:150px;object-fit:cover;border-radius:5px}
+    header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+    a{color:#25D366;text-decoration:none;cursor:pointer}
 </style>
 </head>
 <body>
 
 <header>
-  <div class="nav" style="gap:15px;">
-  <div class="logo">SHOP<span>ONLINE</span></div>
-  
-  <button class="btn btn-outline" onclick="openAllShops()" style="margin-right:auto;">Nos Boutiques</button>
-
-  <div class="nav-buttons" id="navButtons">
-    <button class="btn btn-outline" onclick="openModal('loginModal')">Connexion</button>
-    <button class="btn btn-primary" onclick="openModal('registerModal')">S'inscrire</button>
-  </div>
-</div>
+    <h2>SHOP ONLINE</h2>
+    <div id="userInfo"></div>
 </header>
-<!-- BARRE DE RECHERCHE -->
-<div class="container" style="padding:20px 0;">
-  <div style="position:relative;max-width:600px;margin:0 auto;">
-    <input 
-      type="text" 
-      id="searchInput" 
-      placeholder="Recher un produit ou le nom d'une boutique..." 
-      onkeyup="searchProducts()"
-      style="width:100%;padding:15px 50px 15px 20px;border:2px solid #e2e8f0;border-radius:50px;font-size:16px;outline:none;"
-    >
-    <span style="position:absolute;right:20px;top:50%;transform:translateY(-50%);font-size:20px;">🔍</span>
-  </div>
-</div>
-<section class="hero">
-  <h1>Vendez et Achetez à Douala</h1>
-  <p>Créez votre boutique gratuite et publiez vos produits en 2 minutes</p>
-  <button class="btn btn-primary" onclick="openModal('shopModal')">Créer ma boutique</button>
-</section>
 
-<div class="container">
-  <h2 class="section-title">Derniers Produits</h2>
-  <div class="grid" id="productsGrid"><div class="loader">Chargement...</div></div>
+<!-- ========== FORMULAIRE CONNEXION ========== -->
+<div id="authBox" class="card" style="max-width:400px;margin:40px auto;">
+    <h3 id="authTitle">Se Connecter</h3>
+    <form id="loginForm" onsubmit="login(event)">
+        <select id="loginRole">
+            <option value="client">Client</option>
+            <option value="vendeur">Boutique / Vendeur</option>
+        </select>
+        <input name="phone" placeholder="Numéro WhatsApp" required />
+        <input name="password" type="password" placeholder="Mot de passe" required />
+        <button type="submit">Se connecter</button>
+    </form>
+    <p style="text-align:center;margin-top:10px;">
+        Pas de compte ? <a onclick="showRegister()">S'inscrire</a>
+    </p>
 </div>
 
-<!-- MODAL LOGIN -->
-<div class="modal" id="loginModal">
-  <div class="modal-content">
-    <span class="close-btn" onclick="closeModal('loginModal')">&times;</span>
-    <h2>Connexion</h2>
-    <div class="form-group"><label>Phone 2376...</label><input type="text" id="loginPhone"></div>
-    <div class="form-group"><label>Mot de passe</label><input type="password" id="loginPassword"></div>
-    <button class="btn btn-primary" onclick="login()">Se connecter</button>
-  </div>
+<!-- ========== FORMULAIRE INSCRIPTION ========== -->
+<div id="registerBox" class="card hidden" style="max-width:400px;margin:40px auto;">
+    <h3>Créer un compte</h3>
+    <form id="registerForm" onsubmit="register(event)">
+        <select id="registerRole">
+            <option value="client">Client</option>
+            <option value="vendeur">Boutique / Vendeur</option>
+        </select>
+        <input name="nom" placeholder="Nom" required />
+        <input name="prenom" placeholder="Prénom" required />
+        <input name="phone" placeholder="Numéro WhatsApp" required />
+        <input name="ville" placeholder="Ville" />
+        <input name="password" type="password" placeholder="Mot de passe" required />
+        <button type="submit">Créer mon compte</button>
+    </form>
+    <p style="text-align:center;margin-top:10px;">
+        Déjà un compte ? <a onclick="showLogin()">Se connecter</a>
+    </p>
 </div>
 
-<!-- MODAL REGISTER -->
-<div class="modal" id="registerModal">
-  <div class="modal-content">
-    <span class="close-btn" onclick="closeModal('registerModal')">&times;</span>
-    <h2>Inscription</h2>
-    <div class="form-group"><label>Nom</label><input type="text" id="regNom"></div>
-    <div class="form-group"><label>Phone 2376...</label><input type="text" id="regPhone"></div>
-    <div class="form-group"><label>Mot de passe</label><input type="password" id="regPassword"></div>
-    <div class="form-group"><label>Je suis</label>
-      <select id="regRole"><option value="client">Client</option><option value="vendeur">Vendeur</option></select>
+<!-- ========== APP PRINCIPALE ========== -->
+<div id="app" class="hidden">
+    <div id="clientView" class="hidden">
+        <h3>Produits</h3>
+        <div id="products" class="grid"></div>
     </div>
-    <button class="btn btn-primary" onclick="register()">Créer mon compte</button>
-  </div>
+    <div id="vendeurView" class="hidden">
+        <h3>Ajouter un Produit</h3>
+        <form class="card" onsubmit="addProduct(event)">
+            <input name="nom" placeholder="Nom du produit" required />
+            <input name="prix" type="number" placeholder="Prix FCFA" required />
+            <input name="image" placeholder="Lien Image" />
+            <button>Publier</button>
+        </form>
+        <h3>Mes Produits</h3>
+        <div id="myProducts" class="grid"></div>
+    </div>
 </div>
 
-<!-- MODAL BOUTIQUE -->
-<div class="modal" id="shopModal">
-  <div class="modal-content">
-    <span class="close-btn" onclick="closeModal('shopModal')">&times;</span>
-    <h2>Créer ma Boutique</h2>
-    <div class="form-group"><label>Nom Boutique</label><input type="text" id="shopName"></div>
-    <div class="form-group"><label>Ville</label><input type="text" id="shopCity" value="Douala"></div>
-    <div class="form-group"><label>WhatsApp</label><input type="text" id="shopWhatsapp"></div>
-    <button class="btn btn-primary" onclick="createShop()">Enregistrer Boutique</button>
-  </div>
-</div>
-
-<!-- MODAL PRODUIT -->
-<div class="modal" id="productModal">
-  <div class="modal-content">
-    <span class="close-btn" onclick="closeModal('productModal')">&times;</span>
-    <h2>Publier un Produit</h2>
-    <div class="form-group"><label>Nom Produit</label><input type="text" id="prodName"></div>
-    <div class="form-group"><label>Prix FCFA</label><input type="number" id="prodPrice"></div>
-    <div class="form-group"><label>Description</label><textarea id="prodDesc"></textarea></div>
-    <div class="form-group"><label>Image</label><input type="file" id="prodImage"></div>
-    <button class="btn btn-primary" onclick="publishProduct()">Publier</button>
-  </div>
-</div>
-<!-- MODAL PROFIL BOUTIQUE -->
-<div class="modal" id="shopProfileModal">
-  <div class="modal-content" style="max-width:700px;padding:0;">
-    <div id="shopCover" style="height:180px;background:linear-gradient(135deg,#2563eb,#1d4ed8);position:relative;">
-      <span class="close-btn" onclick="closeModal('shopProfileModal')" style="position:absolute;right:15px;top:10px;color:white;">&times;</span>
-      <div id="shopAvatar" style="width:120px;height:120px;border-radius:50%;background:white;border:4px solid white;position:absolute;bottom:-60px;left:20px;display:flex;align-items:center;justify-content:center;font-size:48px;font-weight:800;color:var(--primary);position:relative;">
-        <span id="avatarLetter">S</span>
-        <div id="onlineDot" style="width:20px;height:20px;background:#22c55e;border-radius:50%;border:3px solid white;position:absolute;bottom:5px;right:5px;display:none;"></div>
-      </div>
-    </div>
-    <div style="padding:80px 20px 20px 20px;">
-      <h2 id="shopProfileName">Nom Boutique</h2>
-      <p id="shopProfileDesc" style="color:var(--muted);margin-bottom:20px;"></p>
-      
-      <div style="display:grid;gap:10px;">
-        <div><b>📍 Adresse:</b> <span id="shopProfileAddress">-</span></div>
-        <div><b>📞 Téléphone:</b> <span id="shopProfilePhone">-</span></div>
-        <div><b>💬 WhatsApp:</b> <span id="shopProfileWhatsapp">-</span></div>
-        <div><b>✉️ Email:</b> <span id="shopProfileEmail">-</span></div>
-      </div>
-      
-      <h3 style="margin-top:25px;margin-bottom:15px;">Produits de la boutique</h3>
-      <div class="grid" id="shopProductsGrid"></div>
-    </div>
-  </div>
-</div>
-<!-- MODAL TOUTES LES BOUTIQUES -->
-<div class="modal" id="allShopsModal">
-  <div class="modal-content" style="max-width:800px;">
-    <span class="close-btn" onclick="closeModal('allShopsModal')">&times;</span>
-    <h2>Toutes les Boutiques</h2>
-    <div id="allShopsList" style="display:grid;gap:12px;margin-top:20px;">
-      <div class="loader">Chargement...</div>
-    </div>
-  </div>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 // ========== CONFIG SUPABASE ==========
 const supabase = window.supabase.createClient(
@@ -226,170 +89,144 @@ const supabase = window.supabase.createClient(
     "sb_publishable_Q-_I_gqrhW-pCXDYtlofEg_g0gOM9Xd"
 );
 
-let role='client', mode='register', allProducts=[], sortOrder='recent', currentUser = null;
+let role='client', allProducts=[], currentUser = null;
 
 function setUser(u){ currentUser = u; localStorage.setItem('shoponline_user', JSON.stringify(u)); }
-
-
+function logout(){ localStorage.removeItem('shoponline_user'); currentUser=null; renderAll(); }
 function getUser(){
-    if(currentUser) return currentUser; // on utilise le cache
+    if(currentUser) return currentUser; 
     const data = localStorage.getItem("shoponline_user");
-    if (!data || data === "undefined" || data === "null") return null; // check de sécurité
-    try { 
-        currentUser = JSON.parse(data); 
-        return currentUser; 
-    }
-    catch (error) { 
-        console.log("localStorage corrompu, on nettoie");
-        localStorage.removeItem("shoponline_user"); // on supprime le truc cassé
-        return null; 
-    }
-}
-function showError(id, msg){const el=document.getElementById(id); el.textContent=msg; el.classList.add('show'); setTimeout(()=>el.classList.remove('show'),6000);}
-
-function formatDateTime(dateStr){ /*... ton code inchangé... */
-  if(!dateStr) return {duree:'', full:''};
-  const d = new Date(dateStr); const now = new Date();
-  const diffMs = now - d; const diffMin = Math.floor(diffMs/60000); const diffHour = Math.floor(diffMin/60); const diffDay = Math.floor(diffHour/24);
-  let duree='';
-  if(diffMin<1) duree="À l'instant"; else if(diffMin<60) duree=`Il y a ${diffMin} min`; else if(diffHour<24) duree=`Il y a ${diffHour}h`; else if(diffDay===1) duree="Hier"; else if(diffDay<7) duree=`Il y a ${diffDay} jours`; else duree=`Il y a ${Math.floor(diffDay/7)} sem.`;
-  const date = d.toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit',year:'numeric'}); const heure = d.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
-  return {duree, date, heure, full:`Publié le ${date} à ${heure}`};
-}
-function sortBy(order){ sortOrder=order; renderFeed(); }
-
-async function fetchProducts(){
-    const { data, error } = await supabase.from("products").select(`*, boutiques(name, city, whatsapp)`).order("created_at",{ascending:false});
-    if(error){ console.log(error); return []; }
-    return data;
+    if (!data || data === "undefined" || data === "null") return null; 
+    try { currentUser = JSON.parse(data); return currentUser; }
+    catch (error) { localStorage.removeItem("shoponline_user"); return null; }
 }
 
-function commanderProduit(productName, boutiqueName, price, whatsapp){
-  const user = getUser();
-  if(!user){ showError('authError','⛔ Tu dois te connecter en tant que client pour commander.'); openAuth('login'); return; }
-  if(user.role!=='client'){ alert('⛔ Seul un compte client peut commander.'); return; }
-  const nomClient = `${user.prenom||''} ${user.nom||''}`.trim() || user.phone;
-  const villeClient = user.ville || 'Non renseignée';
-  const phoneClient = user.phone;
-  const message = `Bonjour, Je souhaite commander: ${productName} de ${boutiqueName} - ${Number(price).toLocaleString()} FCFA. Client: ${nomClient} - ${phoneClient}`;
-  let numero = whatsapp;
-  if (!numero.startsWith("237")) { numero = "237" + numero; }
-  window.open(`https://wa.me/${numero}?text=${encodeURIComponent(message)}`, "_blank");
+function showRegister(){
+    document.getElementById('authBox').classList.add('hidden');
+    document.getElementById('registerBox').classList.remove('hidden');
+    role = document.getElementById('registerRole').value;
 }
-
-async function renderAll(){
-  const user = getUser();
-  document.getElementById('addPostFrame').style.display = user?.role==='vendeur'? 'flex' : 'none';
-  document.getElementById('logoutBtn').style.display = user? 'inline-block' : 'none';
-  document.querySelectorAll('.header-inner.btn').forEach(b => b.style.display = user? 'none' : 'inline-block');
-  document.getElementById('userBadge').style.display = user? 'inline-block' : 'none';
-  if(user) document.getElementById('userBadge').textContent = `${user.phone} • ${user.role}`;
-
-  if(user && user.role==='vendeur'){
-    const {data:boutiques} = await supabase.from("boutiques").select("*").eq("user_id",user.id);
-    if(boutiques?.length){
-      document.getElementById("accountInfo").innerHTML = `<h2>${boutiques[0].name}</h2><p>${boutiques[0].description||""}</p><p>📍 ${boutiques[0].city}</p><button class="btn btn-dark" onclick="openProfile()">Modifier mon profil</button>`;
-      document.getElementById("accountInfo").style.display = "block";
-    }
-  } else if (user) {
-    document.getElementById("accountInfo").innerHTML = `<b>${user.prenom || ""} ${user.nom || ""}</b><div style="font-size:12px">${user.ville || ""} • ${user.phone} • ${user.role}</div>`;
-    document.getElementById("accountInfo").style.display = "block";
-  } else {
-    document.getElementById("accountInfo").style.display = "none";
-  }
-  allProducts = await fetchProducts();
-  renderFeed();
+function showLogin(){
+    document.getElementById('registerBox').classList.add('hidden');
+    document.getElementById('authBox').classList.remove('hidden');
+    role = document.getElementById('loginRole').value;
 }
+document.getElementById('loginRole').onchange = e => role = e.target.value;
+document.getElementById('registerRole').onchange = e => role = e.target.value;
 
-function renderFeed(){ /*... ton code inchangé... */
-  const el=document.getElementById('feed');
-  let products = [...allProducts];
-  if(sortOrder==='oldest') products.reverse();
-  if(!products.length){ el.innerHTML=`<div class="empty"><h2>SHOP ONLINE</h2><p>Aucune publication pour le moment.</p></div>`; return; }
-  el.innerHTML=products.map(p=>{
-    const time = formatDateTime(p.created_at);
-    const isNew = (new Date() - new Date(p.created_at)) < 3600000;
-    return `<div class="post-card"><div class="post-header"><div class="avatar"><img src="https://ui-avatars.com/api/?name=${encodeURIComponent(p.boutiques?.name||'Shop')}&background=111&color=fff"/></div><div style="flex:1"><div class="post-shop">${p.boutiques?.name||''} ${isNew?'<span class="badge-new">NOUVEAU</span>':''}</div><div class="post-meta">📍 ${p.boutiques?.city||''} • ⏰ ${time.duree}<br>📅 ${time.full}</div></div></div><div class="post-content"><div class="post-title">${p.name}</div>${p.description?`<div class="post-desc">${p.description}</div>`:''}<div class="price-tag">${Number(p.price).toLocaleString()} FCFA</div></div><div style="padding:12px 16px 16px"><button class="btn-commander" onclick="commanderProduit('${p.name}', '${p.boutiques?.name||''}', ${p.price}, '${p.boutiques?.whatsapp||''}')">🛒 Commander</button></div></div>`;
-  }).join('');
-}
-
-function openPublish(){const u=getUser(); if(!u||u.role!=='vendeur') return; document.getElementById('publishModal').classList.add('open')}
-function closePublish(){document.getElementById('publishModal').classList.remove('open')}
-
-async function publishProduct() {
-    const user = getUser(); if(!user) return;
-    const name = document.getElementById("pName").value.trim();
-    const desc = document.getElementById("pDesc").value.trim();
-    const price = document.getElementById("pPrice").value.trim();
-    const category = document.getElementById("pCat").value;
-    if (!name ||!price) { alert("Nom et prix obligatoires."); return; }
-
-    const { data: boutiques } = await supabase.from("boutiques").select("*").eq("user_id", user.id);
-    if (!boutiques?.length) { alert("Créez d'abord votre profil vendeur."); return; }
-
-    const file = document.getElementById("pImage").files[0];
-    let imageUrl = "";
-    if (file) {
-        const fileName = Date.now() + "-" + file.name;
-        const { error: uploadError } = await supabase.storage.from("products").upload(fileName, file);
-        if (uploadError) { alert(uploadError.message); return; }
-        const { data } = supabase.storage.from("products").getPublicUrl(fileName);
-        imageUrl = data.publicUrl;
-    }
-
-    const { error } = await supabase.from("products").insert([{ boutique_id: boutiques[0].id, name, description: desc, price: parseInt(price), category, images: imageUrl? [imageUrl] : [] }]);
-    if (error) { alert(error.message); return; }
-    alert("Produit publié!"); closePublish(); renderAll();
-}
-
-function openAuth(m='register'){mode=m;document.getElementById('authModal').classList.add('open');upd(); document.getElementById('authError').classList.remove('show');}
-function closeAuth(){document.getElementById('authModal').classList.remove('open')}
-function setRole(r){role=r;upd()}
-function toggleMode(){mode=mode==='register'?'login':'register';upd()}
-function upd(){document.getElementById('rc').style.background=role==='client'?'#111':'transparent';document.getElementById('rc').style.color=role==='client'?'#fff':'#111';document.getElementById('rv').style.background=role==='vendeur'?'#111':'transparent';document.getElementById('rv').style.color=role==='vendeur'?'#fff':'#111';const isLogin=mode==='login';document.getElementById('f-client').style.display=!isLogin&&role==='client'?'block':'none';document.getElementById('f-vendeur').style.display=!isLogin&&role==='vendeur'?'block':'none';document.getElementById('loginBox').style.display=isLogin?'block':'none';document.getElementById('authTitle').textContent=isLogin?'Connexion':'Créer compte';document.getElementById('roleSwitch').style.display=isLogin?'none':'grid';document.getElementById('switchLink').textContent=isLogin?'Créer compte':'Se connecter'}
-
-async function register(e){
+// ========== LOGIN ==========
+async function login(e){
     e.preventDefault();
-    const form = e.target;
-    const fd = new FormData(form);
+    const fd = new FormData(e.target);
+    role = document.getElementById('loginRole').value;
     
-    const newUser = {
-        nom: fd.get('nom'), 
-        prenom: fd.get('prenom'), 
-        phone: fd.get('phone'), 
-        password: fd.get('password'),
-        ville: fd.get('ville'),
-        role: role // 'client' ou 'vendeur'
-    }
-
-    console.log("J'envoie ça:", newUser); // pour debug
-
-    const { data, error } = await supabase.from('users').insert([newUser]).select().single();
-
-    if(error){ 
-        alert("Erreur Supabase: " + error.message); 
-        console.error(error); // regarde F12 > Console pour le détail
-        return; 
-    }
+    const { data, error } = await supabase.from('users')
+        .select().eq('phone', fd.get('phone')).eq('password', fd.get('password')).eq('role', role).single();
     
-    setUser(data); 
-    alert('Inscription réussie!');
+    if(error || !data) return alert("Numéro ou mot de passe incorrect");
+    
+    setUser(data);
     renderAll();
 }
 
-async function doLogin() {
-    const phone = document.getElementById("loginPhone").value.trim();
-    const password = document.getElementById("loginPassword").value;
-    const { data, error } = await supabase.from("users").select("*").eq("phone", phone).eq("password", password).single();
-    if (error ||!data) { showError("authError", "⛔ Téléphone ou mot de passe incorrect."); return; }
-    setUser(data); closeAuth(); renderAll(); alert("Connexion réussie!");
+// ========== REGISTER ==========
+async function register(e){
+    e.preventDefault();
+    const fd = new FormData(e.target);
+    role = document.getElementById('registerRole').value;
+
+    const { data, error } = await supabase.from('users').insert([{
+        nom: fd.get('nom'), 
+        prenom: fd.get('prenom'), 
+        phone: fd.get('phone'),
+        ville: fd.get('ville'),
+        password: fd.get('password'),
+        role: role
+    }]).select().single();
+
+    if(error){ 
+        if(error.code === '23505') alert("Ce numéro WhatsApp est déjà utilisé");
+        else alert("Erreur: " + error.message); 
+        return; 
+    }
+    
+    setUser(data);
+    alert('Compte créé avec succès !');
+    renderAll();
 }
 
-function logout(){ localStorage.removeItem('shoponline_user'); currentUser=null; renderAll(); }
+// ========== PRODUITS ==========
+async function loadProducts(){
+    const { data } = await supabase.from('products').select('*').order('created_at',{ascending:false});
+    allProducts = data || [];
+    renderProducts();
+}
 
-async function openProfile(){ const user=getUser(); if(!user) return; const {data} = await supabase.from("boutiques").select("*").eq("user_id",user.id).single(); if(data){ shopName.value=data.name; shopDescription.value=data.description||""; shopCity.value=data.city||""; shopQuartier.value=data.quartier||""; shopPhone.value=data.phone||""; shopWhatsapp.value=data.whatsapp||""; shopEmail.value=data.email||""; shopFacebook.value=data.facebook||""; shopInstagram.value=data.instagram||""; shopTiktok.value=data.tiktok||""; } document.getElementById("profileModal").classList.add("open"); }
-function closeProfile(){ document.getElementById("profileModal").classList.remove("open"); }
-async function saveProfile(){ const user=getUser(); await supabase.from("boutiques").update({ name:shopName.value, description:shopDescription.value, city:shopCity.value, quartier:shopQuartier.value, phone:shopPhone.value, whatsapp:shopWhatsapp.value, email:shopEmail.value, facebook:shopFacebook.value, instagram:shopInstagram.value, tiktok:shopTiktok.value }).eq("user_id",user.id); alert("Profil enregistré."); closeProfile(); renderAll(); }
+function renderProducts(){
+    const div = document.getElementById('products');
+    div.innerHTML = allProducts.map(p=>`
+        <div class="product">
+            <img src="${p.image || 'https://via.placeholder.com/150'}" />
+            <h4>${p.nom}</h4>
+            <b>${p.prix} FCFA</b>
+            <button onclick="buy(${p.id})">Acheter sur WhatsApp</button>
+        </div>
+    `).join('');
+}
+
+async function addProduct(e){
+    e.preventDefault();
+    const u = getUser();
+    const fd = new FormData(e.target);
+    await supabase.from('products').insert({
+        nom:fd.get('nom'), prix:fd.get('prix'), image:fd.get('image'), vendeur_id:u.id
+    });
+    e.target.reset();
+    loadProducts();
+    loadMyProducts();
+}
+
+async function loadMyProducts(){
+    const u = getUser();
+    const { data } = await supabase.from('products').select('*').eq('vendeur_id',u.id);
+    document.getElementById('myProducts').innerHTML = (data||[]).map(p=>`
+        <div class="product"><h4>${p.nom}</h4><b>${p.prix} FCFA</b></div>
+    `).join('');
+}
+
+function buy(id){
+    const p = allProducts.find(x=>x.id===id);
+    const msg = `Bonjour, je suis intéressé par ${p.nom} à ${p.prix} FCFA`;
+    window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`,'_blank');
+}
+
+// ========== RENDER PRINCIPAL ==========
+async function renderAll(){
+    const u = getUser();
+    if(!u){
+        document.getElementById('app').classList.add('hidden');
+        document.getElementById('authBox').classList.remove('hidden');
+        document.getElementById('userInfo').innerHTML = '';
+        return;
+    }
+    
+    document.getElementById('authBox').classList.add('hidden');
+    document.getElementById('registerBox').classList.add('hidden');
+    document.getElementById('app').classList.remove('hidden');
+    document.getElementById('userInfo').innerHTML = `Bonjour ${u.prenom} <button onclick="logout()">Déconnexion</button>`;
+    
+    if(u.role==='vendeur'){
+        document.getElementById('vendeurView').classList.remove('hidden');
+        document.getElementById('clientView').classList.add('hidden');
+        loadMyProducts();
+    }else{
+        document.getElementById('clientView').classList.remove('hidden');
+        document.getElementById('vendeurView').classList.add('hidden');
+        loadProducts();
+    }
+}
 
 renderAll();
 </script>
+</body>
+</html>S
