@@ -348,18 +348,28 @@ function setRole(r){role=r;upd()}
 function toggleMode(){mode=mode==='register'?'login':'register';upd()}
 function upd(){document.getElementById('rc').style.background=role==='client'?'#111':'transparent';document.getElementById('rc').style.color=role==='client'?'#fff':'#111';document.getElementById('rv').style.background=role==='vendeur'?'#111':'transparent';document.getElementById('rv').style.color=role==='vendeur'?'#fff':'#111';const isLogin=mode==='login';document.getElementById('f-client').style.display=!isLogin&&role==='client'?'block':'none';document.getElementById('f-vendeur').style.display=!isLogin&&role==='vendeur'?'block':'none';document.getElementById('loginBox').style.display=isLogin?'block':'none';document.getElementById('authTitle').textContent=isLogin?'Connexion':'Créer compte';document.getElementById('roleSwitch').style.display=isLogin?'none':'grid';document.getElementById('switchLink').textContent=isLogin?'Créer compte':'Se connecter'}
 
-async function register(e) {
+async function register(e){
     e.preventDefault();
-    const fd = new FormData(e.target); const form = Object.fromEntries(fd.entries()); form.role = role;
+    const form = e.target;
+    const fd = new FormData(form);
+    const nom = fd.get('nom'), prenom = fd.get('prenom'), phone = fd.get('phone'), password = fd.get('password');
+    const ville = fd.get('ville');
 
-    const { data: user, error } = await supabase.from("users").insert([form]).select().single();
-    if (error) { showError("authError", error.message); return; }
+    if(!phone || !password) return alert('Phone et Password obligatoires');
 
-    setUser(user); closeAuth(); renderAll(); alert("Compte créé!");
+    const { data, error } = await supabase.from('users').insert({
+        nom, prenom, phone, password, ville, role
+    }).select().single(); // .select().single() pour récupérer l'user créé
 
-    if(role === 'vendeur'){ // Création auto de la boutique
-        await supabase.from("boutiques").insert([{ user_id: user.id, name: form.boutiqueName, city: form.city, whatsapp: form.whatsapp, email: form.email, activite: form.activite }]);
+    if(error){ 
+        alert("Erreur Inscription: " + error.message); 
+        console.log(error); // pour voir le détail dans F12
+        return; 
     }
+    
+    setUser(data); // data contient maintenant l'id
+    alert('Inscription réussie !');
+    renderAll();
 }
 
 async function doLogin() {
