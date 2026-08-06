@@ -229,12 +229,21 @@ const supabase = window.supabase.createClient(
 let role='client', mode='register', allProducts=[], sortOrder='recent', currentUser = null;
 
 function setUser(u){ currentUser = u; localStorage.setItem('shoponline_user', JSON.stringify(u)); }
+
+
 function getUser(){
-    if(currentUser) return currentUser;
+    if(currentUser) return currentUser; // on utilise le cache
     const data = localStorage.getItem("shoponline_user");
-    if (!data || data === "undefined") return null;
-    try { currentUser = JSON.parse(data); return currentUser; }
-    catch (error) { localStorage.removeItem("shoponline_user"); return null; }
+    if (!data || data === "undefined" || data === "null") return null; // check de sécurité
+    try { 
+        currentUser = JSON.parse(data); 
+        return currentUser; 
+    }
+    catch (error) { 
+        console.log("localStorage corrompu, on nettoie");
+        localStorage.removeItem("shoponline_user"); // on supprime le truc cassé
+        return null; 
+    }
 }
 function showError(id, msg){const el=document.getElementById(id); el.textContent=msg; el.classList.add('show'); setTimeout(()=>el.classList.remove('show'),6000);}
 
