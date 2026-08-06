@@ -352,23 +352,28 @@ async function register(e){
     e.preventDefault();
     const form = e.target;
     const fd = new FormData(form);
-    const nom = fd.get('nom'), prenom = fd.get('prenom'), phone = fd.get('phone'), password = fd.get('password');
-    const ville = fd.get('ville');
+    
+    const newUser = {
+        nom: fd.get('nom'), 
+        prenom: fd.get('prenom'), 
+        phone: fd.get('phone'), 
+        password: fd.get('password'),
+        ville: fd.get('ville'),
+        role: role // 'client' ou 'vendeur'
+    }
 
-    if(!phone || !password) return alert('Phone et Password obligatoires');
+    console.log("J'envoie ça:", newUser); // pour debug
 
-    const { data, error } = await supabase.from('users').insert({
-        nom, prenom, phone, password, ville, role
-    }).select().single(); // .select().single() pour récupérer l'user créé
+    const { data, error } = await supabase.from('users').insert([newUser]).select().single();
 
     if(error){ 
-        alert("Erreur Inscription: " + error.message); 
-        console.log(error); // pour voir le détail dans F12
+        alert("Erreur Supabase: " + error.message); 
+        console.error(error); // regarde F12 > Console pour le détail
         return; 
     }
     
-    setUser(data); // data contient maintenant l'id
-    alert('Inscription réussie !');
+    setUser(data); 
+    alert('Inscription réussie!');
     renderAll();
 }
 
