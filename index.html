@@ -26,7 +26,7 @@
     <div id="userInfo"></div>
 </header>
 
-<!-- ========== FORMULAIRE CONNEXION SEUL ========== -->
+<!-- SEUL FORMULAIRE VISIBLE -->
 <div id="authBox" class="card" style="max-width:400px;margin:40px auto;">
     <h3 style="text-align:center;">Connexion</h3>
     <form id="loginForm" onsubmit="login(event)">
@@ -38,15 +38,14 @@
         <input name="password" type="password" placeholder="Mot de passe" required />
         <button type="submit">Se connecter</button>
     </form>
-
     <p style="text-align:center;margin-top:15px;font-size:14px;">
-        Vous n'avez pas de compte ? <a onclick="showRegister()">S'inscrire</a>
+        Pas de compte ? <a onclick="showRegister()">S'inscrire ici</a>
     </p>
 </div>
 
-<!-- ========== FORMULAIRE INSCRIPTION CACHE ========== -->
+<!-- FORMULAIRE INSCRIPTION CACHE -->
 <div id="registerBox" class="card hidden" style="max-width:400px;margin:40px auto;">
-    <h3 style="text-align:center;">Création de compte</h3>
+    <h3 style="text-align:center;">Inscription</h3>
     <form id="registerForm" onsubmit="register(event)">
         <select id="registerRole">
             <option value="client">Je suis Client</option>
@@ -57,179 +56,67 @@
         <input name="phone" placeholder="Numéro WhatsApp" required />
         <input name="ville" placeholder="Ville" />
         <input name="password" type="password" placeholder="Mot de passe" required />
-        <button type="submit">Créer mon compte</button>
+        <button type="submit">Valider l'inscription</button>
     </form>
-
     <p style="text-align:center;margin-top:15px;font-size:14px;">
-        Déjà un compte ? <a onclick="showLogin()">Se connecter</a>
+        Déjà inscrit ? <a onclick="showLogin()">Se connecter</a>
     </p>
 </div>
 
-<!-- ========== APP PRINCIPALE ========== -->
+<!-- APP -->
 <div id="app" class="hidden">
-    <div id="clientView" class="hidden">
-        <h3>Boutiques & Produits</h3>
-        <div id="products" class="grid"></div>
-    </div>
+    <div id="clientView" class="hidden"><h3>Produits</h3><div id="products" class="grid"></div></div>
     <div id="vendeurView" class="hidden">
         <h3>Ajouter un Produit</h3>
         <form class="card" onsubmit="addProduct(event)">
             <input name="nom" placeholder="Nom du produit" required />
             <input name="prix" type="number" placeholder="Prix FCFA" required />
-            <input name="image" placeholder="Lien Image du produit" />
-            <button>Publier le produit</button>
+            <input name="image" placeholder="Lien Image" />
+            <button>Publier</button>
         </form>
-        <h3>Mes Produits</h3>
-        <div id="myProducts" class="grid"></div>
+        <h3>Mes Produits</h3><div id="myProducts" class="grid"></div>
     </div>
 </div>
 
 <script>
-// ========== CONFIG SUPABASE ==========
 const supabase = window.supabase.createClient(
     "https://cvcgtiykdocjhwanyned.supabase.co",
     "sb_publishable_Q-_I_gqrhW-pCXDYtlofEg_g0gOM9Xd"
 );
-
 let role='client', allProducts=[], currentUser = null;
 
 function setUser(u){ currentUser = u; localStorage.setItem('shoponline_user', JSON.stringify(u)); }
 function logout(){ localStorage.removeItem('shoponline_user'); currentUser=null; renderAll(); }
-function getUser(){
-    if(currentUser) return currentUser; 
-    const data = localStorage.getItem("shoponline_user");
-    if (!data || data === "undefined" || data === "null") return null; 
-    try { currentUser = JSON.parse(data); return currentUser; }
-    catch (error) { localStorage.removeItem("shoponline_user"); return null; }
-}
+function getUser(){ const data = localStorage.getItem("shoponline_user"); if(!data) return null; try{currentUser=JSON.parse(data);return currentUser;}catch{return null;} }
 
-function showRegister(){
-    document.getElementById('authBox').classList.add('hidden');
-    document.getElementById('registerBox').classList.remove('hidden');
-    role = document.getElementById('registerRole').value;
-}
-function showLogin(){
-    document.getElementById('registerBox').classList.add('hidden');
-    document.getElementById('authBox').classList.remove('hidden');
-    role = document.getElementById('loginRole').value;
-}
-document.getElementById('loginRole').onchange = e => role = e.target.value;
-document.getElementById('registerRole').onchange = e => role = e.target.value;
+function showRegister(){document.getElementById('authBox').classList.add('hidden');document.getElementById('registerBox').classList.remove('hidden');}
+function showLogin(){document.getElementById('registerBox').classList.add('hidden');document.getElementById('authBox').classList.remove('hidden');}
 
-// ========== LOGIN ==========
 async function login(e){
-    e.preventDefault();
-    const fd = new FormData(e.target);
-    role = document.getElementById('loginRole').value;
-    
-    const { data, error } = await supabase.from('users')
-        .select().eq('phone', fd.get('phone')).eq('password', fd.get('password')).eq('role', role).single();
-    
-    if(error || !data) return alert("Numéro ou mot de passe incorrect");
-    
-    setUser(data);
-    renderAll();
+    e.preventDefault(); const fd = new FormData(e.target); role = document.getElementById('loginRole').value;
+    const { data, error } = await supabase.from('users').select().eq('phone', fd.get('phone')).eq('password', fd.get('password')).eq('role', role).single();
+    if(error || !data) return alert("Identifiants incorrects"); setUser(data); renderAll();
 }
 
-// ========== REGISTER ==========
 async function register(e){
-    e.preventDefault();
-    const fd = new FormData(e.target);
-    role = document.getElementById('registerRole').value;
-
-    const { data, error } = await supabase.from('users').insert([{
-        nom: fd.get('nom'), 
-        prenom: fd.get('prenom'), 
-        phone: fd.get('phone'),
-        ville: fd.get('ville'),
-        password: fd.get('password'),
-        role: role
-    }]).select().single();
-
-    if(error){ 
-        if(error.code === '23505') alert("Ce numéro WhatsApp est déjà utilisé");
-        else alert("Erreur: " + error.message); 
-        return; 
-    }
-    
-    setUser(data);
-    alert('Compte créé avec succès !');
-    renderAll();
+    e.preventDefault(); const fd = new FormData(e.target); role = document.getElementById('registerRole').value;
+    const { data, error } = await supabase.from('users').insert([{nom:fd.get('nom'),prenom:fd.get('prenom'),phone:fd.get('phone'),ville:fd.get('ville'),password:fd.get('password'),role:role}]).select().single();
+    if(error){ if(error.code==='23505') alert("Numéro déjà utilisé"); else alert("Erreur"); return; } setUser(data); alert('Compte créé !'); renderAll();
 }
 
-// ========== PRODUITS ==========
-async function loadProducts(){
-    const { data } = await supabase.from('products').select('*').order('created_at',{ascending:false});
-    allProducts = data || [];
-    renderProducts();
-}
+async function loadProducts(){ const { data } = await supabase.from('products').select('*').order('created_at',{ascending:false}); allProducts = data || []; document.getElementById('products').innerHTML = allProducts.map(p=>`<div class="product"><img src="${p.image||'https://via.placeholder.com/150'}"/><h4>${p.nom}</h4><b>${p.prix} FCFA</b><button onclick="buy(${p.id})">Acheter</button></div>`).join(''); }
+async function addProduct(e){ e.preventDefault(); const u=getUser(); const fd=new FormData(e.target); await supabase.from('products').insert({nom:fd.get('nom'),prix:fd.get('prix'),image:fd.get('image'),vendeur_id:u.id}); e.target.reset(); loadProducts(); loadMyProducts(); }
+async function loadMyProducts(){ const u=getUser(); const { data } = await supabase.from('products').select('*').eq('vendeur_id',u.id); document.getElementById('myProducts').innerHTML = (data||[]).map(p=>`<div class="product"><h4>${p.nom}</h4><b>${p.prix} FCFA</b></div>`).join(''); }
+function buy(id){ const p=allProducts.find(x=>x.id===id); window.open(`https://wa.me/?text=${encodeURIComponent('Bonjour, je veux '+p.nom+' à '+p.prix+' FCFA')}`,'_blank'); }
 
-function renderProducts(){
-    const div = document.getElementById('products');
-    if(allProducts.length === 0) div.innerHTML = '<p>Aucun produit pour le moment</p>';
-    else div.innerHTML = allProducts.map(p=>`
-        <div class="product">
-            <img src="${p.image || 'https://via.placeholder.com/150'}" />
-            <h4>${p.nom}</h4>
-            <b>${p.prix} FCFA</b>
-            <button onclick="buy(${p.id})">Acheter sur WhatsApp</button>
-        </div>
-    `).join('');
-}
-
-async function addProduct(e){
-    e.preventDefault();
-    const u = getUser();
-    const fd = new FormData(e.target);
-    await supabase.from('products').insert({
-        nom:fd.get('nom'), prix:fd.get('prix'), image:fd.get('image'), vendeur_id:u.id
-    });
-    e.target.reset();
-    alert('Produit publié !');
-    loadProducts();
-    loadMyProducts();
-}
-
-async function loadMyProducts(){
-    const u = getUser();
-    const { data } = await supabase.from('products').select('*').eq('vendeur_id',u.id);
-    document.getElementById('myProducts').innerHTML = (data||[]).map(p=>`
-        <div class="product"><h4>${p.nom}</h4><b>${p.prix} FCFA</b></div>
-    `).join('');
-}
-
-function buy(id){
-    const p = allProducts.find(x=>x.id===id);
-    const msg = `Bonjour, je suis intéressé par ${p.nom} à ${p.prix} FCFA`;
-    window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`,'_blank');
-}
-
-// ========== RENDER PRINCIPAL ==========
 async function renderAll(){
     const u = getUser();
-    if(!u){
-        document.getElementById('app').classList.add('hidden');
-        document.getElementById('authBox').classList.remove('hidden');
-        document.getElementById('userInfo').innerHTML = '';
-        return;
-    }
-    
-    document.getElementById('authBox').classList.add('hidden');
-    document.getElementById('registerBox').classList.add('hidden');
-    document.getElementById('app').classList.remove('hidden');
-    document.getElementById('userInfo').innerHTML = `Bonjour ${u.prenom} <button onclick="logout()" style="width:auto;padding:8px 15px;margin-left:10px;">Déconnexion</button>`;
-    
-    if(u.role==='vendeur'){
-        document.getElementById('vendeurView').classList.remove('hidden');
-        document.getElementById('clientView').classList.add('hidden');
-        loadMyProducts();
-    }else{
-        document.getElementById('clientView').classList.remove('hidden');
-        document.getElementById('vendeurView').classList.add('hidden');
-        loadProducts();
-    }
+    if(!u){ document.getElementById('app').classList.add('hidden'); document.getElementById('authBox').classList.remove('hidden'); document.getElementById('userInfo').innerHTML = ''; return; }
+    document.getElementById('authBox').classList.add('hidden'); document.getElementById('registerBox').classList.add('hidden'); document.getElementById('app').classList.remove('hidden');
+    document.getElementById('userInfo').innerHTML = `Salut ${u.prenom} <button onclick="logout()" style="width:auto;padding:8px 15px;margin-left:10px;">Déconnexion</button>`;
+    if(u.role==='vendeur'){ document.getElementById('vendeurView').classList.remove('hidden'); document.getElementById('clientView').classList.add('hidden'); loadMyProducts(); }
+    else{ document.getElementById('clientView').classList.remove('hidden'); document.getElementById('vendeurView').classList.add('hidden'); loadProducts(); }
 }
-
 renderAll();
 </script>
 </body>
