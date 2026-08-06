@@ -218,187 +218,154 @@
     </div>
   </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-  const SUPABASE_URL = "https://cvcgtiykdocjhwanyned.supabase.co"
-  const SUPABASE_KEY = "sb_publishable_Q-_I_gqrhW-pCXDYtlofEg_g0gOM9Xd"
-  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY)
-  let currentUser = null;
+// ========== CONFIG SUPABASE ==========
+const supabase = window.supabase.createClient(
+    "https://cvcgtiykdocjhwanyned.supabase.co",
+    "sb_publishable_Q-_I_gqrhW-pCXDYtlofEg_g0gOM9Xd"
+);
 
-  function openModal(id){ document.getElementById(id).style.display='flex'; }
-  function closeModal(id){ document.getElementById(id).style.display='none'; }
-  window.onclick = e => { if(e.target.classList.contains('modal')) e.target.style.display='none' }
+let role='client', mode='register', allProducts=[], sortOrder='recent', currentUser = null;
 
-  async function restoreSession() {
-    const { data } = await supabase.auth.getSession();
-    if (data.session) {
-        currentUser = data.session.user;
-        await updateNav();
+function setUser(u){ currentUser = u; localStorage.setItem('shoponline_user', JSON.stringify(u)); }
+function getUser(){
+    if(currentUser) return currentUser;
+    const data = localStorage.getItem("shoponline_user");
+    if (!data || data === "undefined") return null;
+    try { currentUser = JSON.parse(data); return currentUser; }
+    catch (error) { localStorage.removeItem("shoponline_user"); return null; }
+}
+function showError(id, msg){const el=document.getElementById(id); el.textContent=msg; el.classList.add('show'); setTimeout(()=>el.classList.remove('show'),6000);}
+
+function formatDateTime(dateStr){ /*... ton code inchangé... */
+  if(!dateStr) return {duree:'', full:''};
+  const d = new Date(dateStr); const now = new Date();
+  const diffMs = now - d; const diffMin = Math.floor(diffMs/60000); const diffHour = Math.floor(diffMin/60); const diffDay = Math.floor(diffHour/24);
+  let duree='';
+  if(diffMin<1) duree="À l'instant"; else if(diffMin<60) duree=`Il y a ${diffMin} min`; else if(diffHour<24) duree=`Il y a ${diffHour}h`; else if(diffDay===1) duree="Hier"; else if(diffDay<7) duree=`Il y a ${diffDay} jours`; else duree=`Il y a ${Math.floor(diffDay/7)} sem.`;
+  const date = d.toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit',year:'numeric'}); const heure = d.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
+  return {duree, date, heure, full:`Publié le ${date} à ${heure}`};
+}
+function sortBy(order){ sortOrder=order; renderFeed(); }
+
+async function fetchProducts(){
+    const { data, error } = await supabase.from("products").select(`*, boutiques(name, city, whatsapp)`).order("created_at",{ascending:false});
+    if(error){ console.log(error); return []; }
+    return data;
+}
+
+function commanderProduit(productName, boutiqueName, price, whatsapp){
+  const user = getUser();
+  if(!user){ showError('authError','⛔ Tu dois te connecter en tant que client pour commander.'); openAuth('login'); return; }
+  if(user.role!=='client'){ alert('⛔ Seul un compte client peut commander.'); return; }
+  const nomClient = `${user.prenom||''} ${user.nom||''}`.trim() || user.phone;
+  const villeClient = user.ville || 'Non renseignée';
+  const phoneClient = user.phone;
+  const message = `Bonjour, Je souhaite commander: ${productName} de ${boutiqueName} - ${Number(price).toLocaleString()} FCFA. Client: ${nomClient} - ${phoneClient}`;
+  let numero = whatsapp;
+  if (!numero.startsWith("237")) { numero = "237" + numero; }
+  window.open(`https://wa.me/${numero}?text=${encodeURIComponent(message)}`, "_blank");
+}
+
+async function renderAll(){
+  const user = getUser();
+  document.getElementById('addPostFrame').style.display = user?.role==='vendeur'? 'flex' : 'none';
+  document.getElementById('logoutBtn').style.display = user? 'inline-block' : 'none';
+  document.querySelectorAll('.header-inner.btn').forEach(b => b.style.display = user? 'none' : 'inline-block');
+  document.getElementById('userBadge').style.display = user? 'inline-block' : 'none';
+  if(user) document.getElementById('userBadge').textContent = `${user.phone} • ${user.role}`;
+
+  if(user && user.role==='vendeur'){
+    const {data:boutiques} = await supabase.from("boutiques").select("*").eq("user_id",user.id);
+    if(boutiques?.length){
+      document.getElementById("accountInfo").innerHTML = `<h2>${boutiques[0].name}</h2><p>${boutiques[0].description||""}</p><p>📍 ${boutiques[0].city}</p><button class="btn btn-dark" onclick="openProfile()">Modifier mon profil</button>`;
+      document.getElementById("accountInfo").style.display = "block";
     }
+  } else if (user) {
+    document.getElementById("accountInfo").innerHTML = `<b>${user.prenom || ""} ${user.nom || ""}</b><div style="font-size:12px">${user.ville || ""} • ${user.phone} • ${user.role}</div>`;
+    document.getElementById("accountInfo").style.display = "block";
+  } else {
+    document.getElementById("accountInfo").style.display = "none";
   }
+  allProducts = await fetchProducts();
+  renderFeed();
+}
 
-  async function register() {
-    const phone = document.getElementById("regPhone").value.trim();
-    const email = phone + "@shoponline.cm";
-    const password = document.getElementById("regPassword").value;
-    const role = document.getElementById("regRole").value;
-    const nom = document.getElementById("regNom").value;
-    const { data, error } = await supabase.auth.signUp({ email, password });
-    if (error) { alert(error.message); return; }
-    await supabase.from("users").insert({ auth_id: data.user.id, role, nom, phone, email });
-    alert("Compte créé avec succès.");
-    closeModal("registerModal");
-  }
-
-  async function login() {
-    const phone = document.getElementById("loginPhone").value.trim();
-    const password = document.getElementById("loginPassword").value;
-    const email = phone + "@shoponline.cm";
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error) { alert(error.message); return; }
-    currentUser = data.user;
-    await updateNav();
-    closeModal("loginModal");
-    await supabase.from('boutiques').update({is_online: true, last_seen: new Date()}).eq('user_id', currentUser.id);
-  }
-
-  async function updateNav(){
-    const { data: userData } = await supabase.from('users').select('role').eq('auth_id', currentUser.id).single();
-    document.getElementById('navButtons').innerHTML = `
-      <button class="btn btn-outline" onclick="openModal('productModal')">+ Publier</button>
-      <button class="btn btn-primary" onclick="logout()">Déconnexion</button>
-    `;
-  }
-
-  async function logout(){
-    if(currentUser){
-      await supabase.from('boutiques').update({is_online: false}).eq('user_id', currentUser.id);
-    }
-    await supabase.auth.signOut();
-    currentUser = null;
-    location.reload();
-  }
-
-  async function createShop(){
-    if(!currentUser){ alert("Veuillez vous connecter."); return; }
-    const { error } = await supabase.from("boutiques").insert({
-      user_id: currentUser.id,
-      name: document.getElementById("shopName").value.trim(),
-      city: document.getElementById("shopCity").value.trim(),
-      whatsapp: document.getElementById("shopWhatsapp").value.trim()
-    });
-    if(error){ alert(error.message); return; }
-    alert("Boutique créée avec succès.");
-    closeModal("shopModal");
-  }
-
-  async function publishProduct(){
-    if (!currentUser) { alert("Veuillez vous connecter"); openModal("loginModal"); return; }
-    const { data: shop } = await supabase.from("boutiques").select("id").eq("user_id", currentUser.id).single();
-    if (!shop) { alert("Créez d'abord votre boutique."); return; }
-    const file = document.getElementById("prodImage").files[0];
-    if (!file) { alert("Ajoutez une image."); return; }
-    const fileName = Date.now() + "-" + file.name;
-    const { error: uploadError } = await supabase.storage.from("products").upload(fileName, file);
-    if (uploadError) { alert(uploadError.message); return; }
-    const { data: urlData } = await supabase.storage.from("products").getPublicUrl(fileName); // AWAIT AJOUTE
-
-    const { error } = await supabase.from("products").insert({
-      boutique_id: shop.id,
-      name: document.getElementById("prodName").value,
-      price: Number(document.getElementById("prodPrice").value),
-      description: document.getElementById("prodDesc").value,
-      images: [urlData.publicUrl]
-    });
-    if (error) { alert(error.message); return; }
-    alert("Produit publié avec succès!");
-    closeModal("productModal");
-    loadProducts();
-  }
-
-  restoreSession();
-  loadProducts();
-
-  let allProducts = [];
-
-  async function loadProducts() {
-    const { data, error } = await supabase.from("products").select(`*, boutiques(id,name,city,phone,whatsapp,logo_url)`).order("created_at", { ascending: false });
-    if (error) {
-      console.error("Erreur:", error);
-      document.getElementById("productsGrid").innerHTML = `<div class="loader">Impossible de charger les produits.</div>`;
-      return;
-    }
-    allProducts = data || [];
-    displayProducts(allProducts);
-  }
-
-  function displayProducts(products){
-  const grid = document.getElementById('productsGrid');
-  if(products.length === 0){
-    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--muted);"><div style="font-size:48px;">😕</div><h3>Aucun résultat</h3><p>Essayez un autre nom de produit ou de boutique</p></div>`;
-    return;
-  }
-  grid.innerHTML = products.map(p => {
-    const image = (p.images && p.images.length > 0)? p.images[0] : "https://via.placeholder.com/400x300?text=Produit";
-    return `
-      <div class="card" onclick="openShopProfile('${p.boutique_id}')">
-        <img src="${image}" alt="${p.name}">
-        <div class="card-body">
-          <div class="card-title">${p.name}</div>
-          <div class="card-price">${Number(p.price).toLocaleString()} FCFA</div>
-          <div class="card-shop">Par ${p.boutiques.name}</div>
-        </div>
-      </div>
-    `;
+function renderFeed(){ /*... ton code inchangé... */
+  const el=document.getElementById('feed');
+  let products = [...allProducts];
+  if(sortOrder==='oldest') products.reverse();
+  if(!products.length){ el.innerHTML=`<div class="empty"><h2>SHOP ONLINE</h2><p>Aucune publication pour le moment.</p></div>`; return; }
+  el.innerHTML=products.map(p=>{
+    const time = formatDateTime(p.created_at);
+    const isNew = (new Date() - new Date(p.created_at)) < 3600000;
+    return `<div class="post-card"><div class="post-header"><div class="avatar"><img src="https://ui-avatars.com/api/?name=${encodeURIComponent(p.boutiques?.name||'Shop')}&background=111&color=fff"/></div><div style="flex:1"><div class="post-shop">${p.boutiques?.name||''} ${isNew?'<span class="badge-new">NOUVEAU</span>':''}</div><div class="post-meta">📍 ${p.boutiques?.city||''} • ⏰ ${time.duree}<br>📅 ${time.full}</div></div></div><div class="post-content"><div class="post-title">${p.name}</div>${p.description?`<div class="post-desc">${p.description}</div>`:''}<div class="price-tag">${Number(p.price).toLocaleString()} FCFA</div></div><div style="padding:12px 16px 16px"><button class="btn-commander" onclick="commanderProduit('${p.name}', '${p.boutiques?.name||''}', ${p.price}, '${p.boutiques?.whatsapp||''}')">🛒 Commander</button></div></div>`;
   }).join('');
 }
 
-  function searchProducts(){
-    const query = document.getElementById('searchInput').value.toLowerCase();
-    if(query === ''){ displayProducts(allProducts); return; }
-    const filtered = allProducts.filter(p => p.name.toLowerCase().includes(query) || p.boutiques.name.toLowerCase().includes(query));
-    displayProducts(filtered);
-  }
+function openPublish(){const u=getUser(); if(!u||u.role!=='vendeur') return; document.getElementById('publishModal').classList.add('open')}
+function closePublish(){document.getElementById('publishModal').classList.remove('open')}
 
-  async function openAllShops(){
-    openModal('allShopsModal');
-    const { data: shops } = await supabase.from('boutiques').select('*').order('name');
-    const fiveMinAgo = new Date(Date.now() - 5*60*1000);
-    document.getElementById('allShopsList').innerHTML = shops.map(shop => {
-      const isOnline = new Date(shop.last_seen) > fiveMinAgo && shop.is_online;
-      let avatar = `<div class="shop-avatar">${shop.name.charAt(0).toUpperCase()}</div>`;
-      if(shop.logo_url) avatar = `<div class="shop-avatar"><img src="${shop.logo_url}"></div>`;
-      return `<div class="shop-card" onclick="openShopProfile('${shop.id}')">${avatar}<div style="flex:1;"><div style="font-weight:700;font-size:18px;">${shop.name}</div><div style="color:var(--muted);font-size:14px;">📍 ${shop.city || '-'}</div></div><div style="text-align:right;"><div class="online-status ${isOnline? 'on' : ''}"></div><div style="font-size:12px;color:var(--muted);">${isOnline? 'En ligne' : 'Hors ligne'}</div></div></div>`;
-    }).join('');
-  }
+async function publishProduct() {
+    const user = getUser(); if(!user) return;
+    const name = document.getElementById("pName").value.trim();
+    const desc = document.getElementById("pDesc").value.trim();
+    const price = document.getElementById("pPrice").value.trim();
+    const category = document.getElementById("pCat").value;
+    if (!name ||!price) { alert("Nom et prix obligatoires."); return; }
 
-  async function openShopProfile(boutiqueId){
-    const { data: shop } = await supabase.from('boutiques').select('*').eq('id', boutiqueId).single();
-    const { data: products } = await supabase.from('products').select('*').eq('boutique_id', boutiqueId).order('created_at', {ascending:false});
+    const { data: boutiques } = await supabase.from("boutiques").select("*").eq("user_id", user.id);
+    if (!boutiques?.length) { alert("Créez d'abord votre profil vendeur."); return; }
 
-    document.getElementById('shopProfileName').innerText = shop.name;
-    document.getElementById('shopProfileDesc').innerText = shop.description || 'Aucune description';
-    document.getElementById('shopProfileAddress').innerText = shop.address || shop.city || '-';
-    document.getElementById('shopProfilePhone').innerText = shop.phone || '-';
-    document.getElementById('shopProfileWhatsapp').innerText = shop.whatsapp || '-';
-    document.getElementById('shopProfileEmail').innerText = shop.email || '-';
-
-    if(shop.logo_url){
-      document.getElementById('shopAvatar').innerHTML = `<img src="${shop.logo_url}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">`;
-    } else {
-      document.getElementById('shopAvatar').innerHTML = `<span id="avatarLetter">${shop.name.charAt(0).toUpperCase()}</span><div id="onlineDot" style="width:20px;height:20px;background:#22c55e;border-radius:50%;border:3px solid white;position:absolute;bottom:5px;right:5px;display:none;"></div>`;
+    const file = document.getElementById("pImage").files[0];
+    let imageUrl = "";
+    if (file) {
+        const fileName = Date.now() + "-" + file.name;
+        const { error: uploadError } = await supabase.storage.from("products").upload(fileName, file);
+        if (uploadError) { alert(uploadError.message); return; }
+        const { data } = supabase.storage.from("products").getPublicUrl(fileName);
+        imageUrl = data.publicUrl;
     }
 
-    const fiveMinAgo = new Date(Date.now() - 5*60*1000);
-    if(new Date(shop.last_seen) > fiveMinAgo && shop.is_online){
-      document.getElementById('onlineDot').style.display = 'block';
+    const { error } = await supabase.from("products").insert([{ boutique_id: boutiques[0].id, name, description: desc, price: parseInt(price), category, images: imageUrl? [imageUrl] : [] }]);
+    if (error) { alert(error.message); return; }
+    alert("Produit publié!"); closePublish(); renderAll();
+}
+
+function openAuth(m='register'){mode=m;document.getElementById('authModal').classList.add('open');upd(); document.getElementById('authError').classList.remove('show');}
+function closeAuth(){document.getElementById('authModal').classList.remove('open')}
+function setRole(r){role=r;upd()}
+function toggleMode(){mode=mode==='register'?'login':'register';upd()}
+function upd(){document.getElementById('rc').style.background=role==='client'?'#111':'transparent';document.getElementById('rc').style.color=role==='client'?'#fff':'#111';document.getElementById('rv').style.background=role==='vendeur'?'#111':'transparent';document.getElementById('rv').style.color=role==='vendeur'?'#fff':'#111';const isLogin=mode==='login';document.getElementById('f-client').style.display=!isLogin&&role==='client'?'block':'none';document.getElementById('f-vendeur').style.display=!isLogin&&role==='vendeur'?'block':'none';document.getElementById('loginBox').style.display=isLogin?'block':'none';document.getElementById('authTitle').textContent=isLogin?'Connexion':'Créer compte';document.getElementById('roleSwitch').style.display=isLogin?'none':'grid';document.getElementById('switchLink').textContent=isLogin?'Créer compte':'Se connecter'}
+
+async function register(e) {
+    e.preventDefault();
+    const fd = new FormData(e.target); const form = Object.fromEntries(fd.entries()); form.role = role;
+
+    const { data: user, error } = await supabase.from("users").insert([form]).select().single();
+    if (error) { showError("authError", error.message); return; }
+
+    setUser(user); closeAuth(); renderAll(); alert("Compte créé!");
+
+    if(role === 'vendeur'){ // Création auto de la boutique
+        await supabase.from("boutiques").insert([{ user_id: user.id, name: form.boutiqueName, city: form.city, whatsapp: form.whatsapp, email: form.email, activite: form.activite }]);
     }
+}
 
-    document.getElementById("shopProductsGrid").innerHTML = products.length > 0? products.map(p => {
-      const image = (p.images && p.images.length > 0)? p.images[0] : "https://via.placeholder.com/400x300?text=Produit";
-      return `<div class="card"><img src="${image}" alt="${p.name}"><div class="card-body"><div class="card-title">${p.name}</div><div class="card-price">${Number(p.price).toLocaleString()} FCFA</div></div></div>`;
-    }).join("") : `<p style="text-align:center;padding:20px;">Aucun produit pour le moment.</p>`;
+async function doLogin() {
+    const phone = document.getElementById("loginPhone").value.trim();
+    const password = document.getElementById("loginPassword").value;
+    const { data, error } = await supabase.from("users").select("*").eq("phone", phone).eq("password", password).single();
+    if (error ||!data) { showError("authError", "⛔ Téléphone ou mot de passe incorrect."); return; }
+    setUser(data); closeAuth(); renderAll(); alert("Connexion réussie!");
+}
 
-    closeModal('allShopsModal');
-    openModal('shopProfileModal');
-  }
+function logout(){ localStorage.removeItem('shoponline_user'); currentUser=null; renderAll(); }
+
+async function openProfile(){ const user=getUser(); if(!user) return; const {data} = await supabase.from("boutiques").select("*").eq("user_id",user.id).single(); if(data){ shopName.value=data.name; shopDescription.value=data.description||""; shopCity.value=data.city||""; shopQuartier.value=data.quartier||""; shopPhone.value=data.phone||""; shopWhatsapp.value=data.whatsapp||""; shopEmail.value=data.email||""; shopFacebook.value=data.facebook||""; shopInstagram.value=data.instagram||""; shopTiktok.value=data.tiktok||""; } document.getElementById("profileModal").classList.add("open"); }
+function closeProfile(){ document.getElementById("profileModal").classList.remove("open"); }
+async function saveProfile(){ const user=getUser(); await supabase.from("boutiques").update({ name:shopName.value, description:shopDescription.value, city:shopCity.value, quartier:shopQuartier.value, phone:shopPhone.value, whatsapp:shopWhatsapp.value, email:shopEmail.value, facebook:shopFacebook.value, instagram:shopInstagram.value, tiktok:shopTiktok.value }).eq("user_id",user.id); alert("Profil enregistré."); closeProfile(); renderAll(); }
+
+renderAll();
 </script>
