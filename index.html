@@ -125,107 +125,120 @@
 </div>
 
 <script>
-const supabase = window.supabase.createClient(
+const supabaseClient = window.supabase.createClient(
     "https://cvcgtiykdocjhwanyned.supabase.co",
     "sb_publishable_Q-_I_gqrhW-pCXDYtlofEg_g0gOM9Xd"
 );
-let role='client', allProducts=[], currentUser = null;
 
-function setUser(u){ currentUser = u; localStorage.setItem('shoponline_user', JSON.stringify(u)); }
-function logout(){ localStorage.removeItem('shoponline_user'); currentUser=null; renderAll(); }
+let role = "client";
+let allProducts = [];
+let currentUser = null;
+
+function setUser(user) {
+    currentUser = user;
+    localStorage.setItem("shoponline_user", JSON.stringify(user));
+}
+
 function getUser() {
-
     const data = localStorage.getItem("shoponline_user");
-
-    // Vérifie si aucune donnée n'est enregistrée
-    if (!data || data === "undefined") {
-        return null;
-    }
+    if (!data || data === "undefined" || data === "null") return null;
 
     try {
-
         return JSON.parse(data);
-
     } catch (error) {
-
         console.error("Erreur LocalStorage :", error);
-
-        // Supprime la donnée corrompue
         localStorage.removeItem("shoponline_user");
-
         return null;
+    }
+}
 
+async function logout() {
+    localStorage.removeItem("shoponline_user");
+    currentUser = null;
+    await renderAll();
+}
+
+function showRegister() {
+    document.getElementById("authBox").classList.add("hidden");
+    document.getElementById("registerBox").classList.remove("hidden");
+}
+
+function showLogin() {
+    document.getElementById("registerBox").classList.add("hidden");
+    document.getElementById("authBox").classList.remove("hidden");
+}
+
+async function login(event) {
+    event.preventDefault();
+
+    const fd = new FormData(event.target);
+    role = document.getElementById("loginRole").value;
+
+    const { data, error } = await supabaseClient
+        .from("users")
+        .select("*")
+        .eq("phone", fd.get("phone"))
+        .eq("password", fd.get("password"))
+        .eq("role", role)
+        .maybeSingle();
+
+    if (error) {
+        console.error(error);
+        alert("Erreur : " + error.message);
+        return;
     }
 
-}
+    if (!data) {
+        alert("❌ Téléphone, mot de passe ou rôle incorrect.");
+        return;
+    }
 
-function showRegister(){document.getElementById('authBox').classList.add('hidden');document.getElementById('registerBox').classList.remove('hidden');}
-function showLogin(){document.getElementById('registerBox').classList.add('hidden');document.getElementById('authBox').classList.remove('hidden');}
-
-async function login(e){
-    e.preventDefault(); const fd = new FormData(e.target); role = document.getElementById('loginRole').value;
-    const { data, error } = await supabase.from('users').select().eq('phone', fd.get('phone')).eq('password', fd.get('password')).eq('role', role).single();
-    if (error) {
-
-    console.error(error);
-
-    alert(error.message);
-
-    return;
-
-}
-
-if (!data) {
-
-    alert("Téléphone ou mot de passe incorrect.");
-
-    return;
-
-}
-setUser(data);
-
+    setUser(data);
+    alert("✅ Connexion réussie !");
     await renderAll();
-
 }
-async function register(e) {
 
-    e.preventDefault();
+async function register(event) {
+    event.preventDefault();
 
-    const fd = new FormData(e.target);
-
+    const fd = new FormData(event.target);
     role = document.getElementById("registerRole").value;
 
-    // Vérifier si le numéro existe déjà
-    const { data: existe } = await supabase
+    const { data: existe, error: checkError } = await supabaseClient
         .from("users")
         .select("id")
         .eq("phone", fd.get("phone"))
         .maybeSingle();
+
+    if (checkError) {
+        alert("Erreur : " + checkError.message);
+        return;
+    }
 
     if (existe) {
         alert("❌ Ce numéro est déjà utilisé.");
         return;
     }
 
-    // Création du compte
-    const { data, error } = await supabase
-    .from("users")
-    .insert([{
+    const userData = {
         nom: fd.get("nom"),
         prenom: fd.get("prenom"),
         phone: fd.get("phone"),
-        ville: fd.get("ville"),
+        ville: fd.get("ville") || null,
         password: fd.get("password"),
         role: role,
+        boutique: role === "vendeur" ? (fd.get("boutique") || null) : null,
+        whatsapp: role === "vendeur" ? (fd.get("whatsapp") || null) : null,
+        adresse: role === "vendeur" ? (fd.get("adresse") || null) : null,
+        description: role === "vendeur" ? (fd.get("description") || null) : null,
+        logo: role === "vendeur" ? (fd.get("logo") || null) : null
+    };
 
-        boutique: role === "vendeur" ? fd.get("boutique") : null,
-        whatsapp: role === "vendeur" ? fd.get("whatsapp") : null,
-        adresse: role === "vendeur" ? fd.get("adresse") : null,
-        description: role === "vendeur" ? fd.get("description") : null,
-        logo: role === "vendeur" ? fd.get("logo") : null
-    }])
-    .select()
-    .single();
+    const { data, error } = await supabaseClient
+        .from("users")
+        .insert([userData])
+        .select("*")
+        .single();
 
     if (error) {
         console.error(error);
@@ -235,80 +248,104 @@ async function register(e) {
 
     setUser(data);
     alert("✅ Compte créé avec succès !");
+    event.target.reset();
+
+    document.getElementById("vendeurFields").classList.add("hidden");
 
     await renderAll();
-  }
-async function loadProducts() {
+}
 
-    const { data, error } = await supabase
+function escapeHTML(value) {
+    return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+}
+
+function productHTML(p) {
+    return `
+        <div class="product">
+            <img src="${escapeHTML(p.image || "https://via.placeholder.com/150")}"
+                 alt="${escapeHTML(p.nom || "Produit")}">
+            <h4>${escapeHTML(p.nom || "Produit")}</h4>
+            <b>${Number(p.prix || 0).toLocaleString("fr-FR")} FCFA</b>
+            <button type="button" onclick="buy(${Number(p.id)})">Acheter</button>
+        </div>
+    `;
+}
+
+async function loadProducts() {
+    const { data, error } = await supabaseClient
         .from("products")
         .select("*")
         .order("created_at", { ascending: false });
 
     if (error) {
         console.error("Erreur produits :", error);
-        alert(error.message);
+        alert("Erreur produits : " + error.message);
         return;
     }
 
     allProducts = data || [];
-
-    document.getElementById("products").innerHTML =
-        allProducts.map(p => `
-            <div class="product">
-                <img src="${p.image || 'https://via.placeholder.com/150'}" alt="${p.nom}">
-                <h4>${p.nom}</h4>
-                <b>${p.prix} FCFA</b>
-                <button onclick="buy(${p.id})">Acheter</button>
-            </div>
-        `).join("");
-
+    displayProducts(allProducts);
 }
-function searchProducts() {
 
-    const recherche = document
-        .getElementById("searchProduct")
-        .value
-        .toLowerCase();
+function displayProducts(products) {
+    const container = document.getElementById("products");
+    if (!container) return;
 
-    const produits = allProducts.filter(p =>
-        p.nom.toLowerCase().includes(recherche)
-    );
-
-    document.getElementById("products").innerHTML =
-        produits.map(p => `
-            <div class="product">
-                <img src="${p.image || 'https://via.placeholder.com/150'}" alt="${p.nom}">
-                <h4>${p.nom}</h4>
-                <b>${p.prix} FCFA</b>
-                <button onclick="buy(${p.id})">Acheter</button>
-            </div>
-        `).join("");
-
-}
-async function addProduct(e) {
-
-    e.preventDefault();
-
-    const u = getUser();
-
-    if (!u) {
-        alert("⚠️ Connectez-vous d'abord.");
+    if (!products.length) {
+        container.innerHTML = "<p>Aucun produit trouvé.</p>";
         return;
     }
 
-    const fd = new FormData(e.target);
+    container.innerHTML = products.map(productHTML).join("");
+}
 
-    const { data, error } = await supabase
-.from("products")
-.insert([{
-    nom: fd.get("nom"),
-    categorie: fd.get("categorie"),
-    prix: Number(fd.get("prix")),
-    image: fd.get("image") || null,
-    vendeur_id: u.id
-}])
-        .select();
+function searchProducts() {
+    const input = document.getElementById("searchProduct");
+    if (!input) return;
+
+    const search = input.value.trim().toLowerCase();
+
+    const filtered = allProducts.filter(p => {
+        const nom = String(p.nom || "").toLowerCase();
+        const categorie = String(p.categorie || "").toLowerCase();
+        return nom.includes(search) || categorie.includes(search);
+    });
+
+    displayProducts(filtered);
+}
+
+async function addProduct(event) {
+    event.preventDefault();
+
+    const user = getUser();
+
+    if (!user || user.role !== "vendeur") {
+        alert("⚠️ Connectez-vous avec un compte vendeur.");
+        return;
+    }
+
+    const fd = new FormData(event.target);
+    const prix = Number(fd.get("prix"));
+
+    if (!Number.isFinite(prix) || prix < 0) {
+        alert("❌ Prix invalide.");
+        return;
+    }
+
+    const { error } = await supabaseClient
+        .from("products")
+        .insert([{
+            nom: fd.get("nom"),
+            categorie: fd.get("categorie"),
+            prix: prix,
+            image: fd.get("image") || null,
+            vendeur_id: user.id
+        }]);
 
     if (error) {
         console.error(error);
@@ -317,118 +354,114 @@ async function addProduct(e) {
     }
 
     alert("✅ Produit publié avec succès !");
-
-    e.target.reset();
+    event.target.reset();
 
     await loadProducts();
     await loadMyProducts();
-
 }
+
 async function loadMyProducts() {
+    const user = getUser();
+    if (!user) return;
 
-    const u = getUser();
-
-    const { data, error } = await supabase
+    const { data, error } = await supabaseClient
         .from("products")
         .select("*")
-        .eq("vendeur_id", u.id);
+        .eq("vendeur_id", user.id)
+        .order("created_at", { ascending: false });
 
     if (error) {
         console.error("Erreur vendeur :", error);
-        alert(error.message);
+        alert("Erreur vendeur : " + error.message);
         return;
     }
 
-    document.getElementById("myProducts").innerHTML =
-        (data || []).map(p => `
-            <div class="product">
-                <h4>${p.nom}</h4>
-                <b>${p.prix} FCFA</b>
-            </div>
-        `).join("");
+    const container = document.getElementById("myProducts");
+    if (!container) return;
 
+    container.innerHTML = (data || []).map(p => `
+        <div class="product">
+            <img src="${escapeHTML(p.image || "https://via.placeholder.com/150")}"
+                 alt="${escapeHTML(p.nom || "Produit")}">
+            <h4>${escapeHTML(p.nom || "Produit")}</h4>
+            <b>${Number(p.prix || 0).toLocaleString("fr-FR")} FCFA</b>
+        </div>
+    `).join("") || "<p>Vous n'avez encore publié aucun produit.</p>";
 }
+
 function buy(id) {
+    const product = allProducts.find(p => Number(p.id) === Number(id));
 
-    const p = allProducts.find(x => x.id == id);
-
-    if (!p) {
-        alert("Produit introuvable.");
+    if (!product) {
+        alert("❌ Produit introuvable.");
         return;
     }
 
     const message =
-        `Bonjour,j'utilise l'application SHOP ONLINE et sje souhaite acheter le produit "${p.nom}" au prix de ${p.prix} FCFA.`;
+        `Bonjour, j'utilise l'application SHOP ONLINE et je souhaite acheter le produit "${product.nom}" au prix de ${product.prix} FCFA.`;
 
     window.open(
         "https://wa.me/?text=" + encodeURIComponent(message),
         "_blank"
     );
-
 }
+
 async function renderAll() {
+    const user = getUser();
 
-    const u = getUser();
+    const app = document.getElementById("app");
+    const authBox = document.getElementById("authBox");
+    const registerBox = document.getElementById("registerBox");
+    const clientView = document.getElementById("clientView");
+    const vendeurView = document.getElementById("vendeurView");
+    const userInfo = document.getElementById("userInfo");
 
-    // Aucun utilisateur connecté
-    if (!u) {
-
-        document.getElementById("app").classList.add("hidden");
-
-        document.getElementById("authBox").classList.remove("hidden");
-
-        document.getElementById("registerBox").classList.add("hidden");
-
-        document.getElementById("userInfo").innerHTML = "";
-
+    if (!user) {
+        app.classList.add("hidden");
+        authBox.classList.remove("hidden");
+        registerBox.classList.add("hidden");
+        clientView.classList.add("hidden");
+        vendeurView.classList.add("hidden");
+        userInfo.innerHTML = "";
         return;
     }
 
-    // Utilisateur connecté
-    document.getElementById("authBox").classList.add("hidden");
-    document.getElementById("registerBox").classList.add("hidden");
-    document.getElementById("app").classList.remove("hidden");
+    currentUser = user;
 
-    document.getElementById("userInfo").innerHTML = `
-        Salut ${u.prenom}
-        <button onclick="logout()" style="width:auto;padding:8px 15px;margin-left:10px;">
+    authBox.classList.add("hidden");
+    registerBox.classList.add("hidden");
+    app.classList.remove("hidden");
+
+    userInfo.innerHTML = `
+        Salut ${escapeHTML(user.prenom || "")}
+        <button type="button"
+                onclick="logout()"
+                style="width:auto;padding:8px 15px;margin-left:10px;">
             Déconnexion
         </button>
     `;
 
-    if (u.role === "vendeur") {
-
-        document.getElementById("vendeurView").classList.remove("hidden");
-        document.getElementById("clientView").classList.add("hidden");
-
+    if (user.role === "vendeur") {
+        vendeurView.classList.remove("hidden");
+        clientView.classList.add("hidden");
         await loadProducts();
         await loadMyProducts();
-
     } else {
-
-        document.getElementById("clientView").classList.remove("hidden");
-        document.getElementById("vendeurView").classList.add("hidden");
-
+        clientView.classList.remove("hidden");
+        vendeurView.classList.add("hidden");
         await loadProducts();
-
     }
 }
-   const registerRole = document.getElementById("registerRole");
+
+const registerRole = document.getElementById("registerRole");
 const vendeurFields = document.getElementById("vendeurFields");
 
 if (registerRole && vendeurFields) {
-
     registerRole.addEventListener("change", function () {
-
-        if (this.value === "vendeur") {
-            vendeurFields.classList.remove("hidden");
-        } else {
-            vendeurFields.classList.add("hidden");
-        }
-
+        vendeurFields.classList.toggle("hidden", this.value !== "vendeur");
     });
-
 }
+
 renderAll();
 </script>
 </body>
