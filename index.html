@@ -307,7 +307,7 @@ async function addProduct(e) {
     prix: Number(fd.get("prix")),
     image: fd.get("image") || null,
     vendeur_id: u.id
-}]);
+}])
         .select();
 
     if (error) {
@@ -358,7 +358,7 @@ function buy(id) {
     }
 
     const message =
-        `Bonjour, je souhaite acheter le produit "${p.nom}" au prix de ${p.prix} FCFA.`;
+        `Bonjour,j'utilise l'application SHOP ONLINE et sje souhaite acheter le produit "${p.nom}" au prix de ${p.prix} FCFA.`;
 
     window.open(
         "https://wa.me/?text=" + encodeURIComponent(message),
@@ -416,19 +416,19 @@ async function renderAll() {
    const registerRole = document.getElementById("registerRole");
 const vendeurFields = document.getElementById("vendeurFields");
 
-registerRole.addEventListener("change", function () {
+if (registerRole && vendeurFields) {
 
-    if (this.value === "vendeur") {
+    registerRole.addEventListener("change", function () {
 
-        vendeurFields.classList.remove("hidden");
+        if (this.value === "vendeur") {
+            vendeurFields.classList.remove("hidden");
+        } else {
+            vendeurFields.classList.add("hidden");
+        }
 
-    } else {
+    });
 
-        vendeurFields.classList.add("hidden");
-
-    }
-
-}); 
+}
 renderAll();
 </script>
 </body>
