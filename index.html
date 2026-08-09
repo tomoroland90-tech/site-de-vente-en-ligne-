@@ -112,8 +112,28 @@ input,select,textarea{border-radius:12px;padding:14px}
     <h3 style="text-align:center;">Connexion</h3>
     <form id="loginForm" onsubmit="login(event)">
         <div class="roleButtons"><button type="button" id="btnClientLogin" class="active" onclick="selectLoginRole('client')">👤 Client</button><button type="button" id="btnSellerLogin" onclick="selectLoginRole('vendeur')">🏪 Boutique</button></div>
-        <input name="phone" placeholder="Numéro WhatsApp" required />
-        <input name="password" type="password" placeholder="Mot de passe" required />
+        <div class="input-group">
+
+<input
+type="tel"
+name="phone"
+placeholder=" "
+required>
+
+<label>Téléphone</label>
+
+</div>
+        <div class="input-group">
+
+<input
+type="password"
+name="password"
+placeholder=" "
+required>
+
+<label>Mot de passe</label>
+
+</div>
         <button type="submit">Se connecter</button>
     </form>
     <p style="text-align:center;margin-top:15px;font-size:14px;">
@@ -137,9 +157,39 @@ required>
 <label>Nom</label>
 
 </div>
-        <input name="prenom" placeholder="Prénom" required />
-        <input name="phone" placeholder="Numéro WhatsApp" required />
-        <input name="ville" placeholder="Ville" />
+        <div class="input-group">
+
+<input
+type="text"
+name="prenom"
+placeholder=" "
+required>
+
+<label>Prénom</label>
+
+</div>
+        <div class="input-group">
+
+<input
+type="tel"
+name="phone"
+placeholder=" "
+required>
+
+<label>Téléphone</label>
+
+</div>
+        <div class="input-group">
+
+<input
+type="text"
+name="ville"
+placeholder=" "
+required>
+
+<label>Ville</label>
+
+</div>
         <div id="vendeurFields" class="hidden">
 
     <input name="boutique" placeholder="Nom de la boutique">
@@ -159,7 +209,17 @@ required>
         placeholder="Lien du logo ou de la photo de la boutique">
 
 </div>
-        <input name="password" type="password" placeholder="Mot de passe" required />
+        <div class="input-group">
+
+<input
+type="password"
+name="password"
+placeholder=" "
+required>
+
+<label>Mot de passe</label>
+
+</div>
         <button type="submit">Valider l'inscription</button>
     </form>
     <p style="text-align:center;margin-top:15px;font-size:14px;">
