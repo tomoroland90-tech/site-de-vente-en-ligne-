@@ -733,8 +733,35 @@ if (registerRole && vendeurFields) {
         vendeurFields.classList.toggle("hidden", this.value !== "vendeur");
     });
 }
+// Variables globales
+let loginRole = "client";
+let registerRole = "client";
 
+// Boutons de connexion
+function selectLoginRole(role){
+
+    loginRole = role;
+
+    document.getElementById("btnClientLogin").classList.toggle("active", role === "client");
+
+    document.getElementById("btnSellerLogin").classList.toggle("active", role === "vendeur");
+
+}
+
+// Boutons d'inscription
+function selectRegisterRole(role){
+
+    registerRole = role;
+
+    document.getElementById("btnClientRegister").classList.toggle("active", role === "client");
+
+    document.getElementById("btnSellerRegister").classList.toggle("active", role === "vendeur");
+
+    document.getElementById("vendeurFields").classList.toggle("hidden", role !== "vendeur");
+
+}
 renderAll();
+
 </script>
 
     <div id="sellerProfileModal" class="seller-modal hidden">
