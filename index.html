@@ -1349,7 +1349,7 @@ document
     reader.readAsDataURL(file);
 
 });
-async function loadNavbarProfile() {
+function loadNavbarProfile() {
 
     const user = getUser();
 
@@ -1359,7 +1359,7 @@ async function loadNavbarProfile() {
 
     if (!photo) return;
 
-    if (user.logo && user.logo !== "") {
+    if (user.logo && user.logo.trim() !== "") {
 
         photo.src = user.logo;
 
@@ -1368,26 +1368,26 @@ async function loadNavbarProfile() {
         photo.src = "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
 
     }
+
 }
-async function loadSellerProfile() {
+function loadNavbarProfile() {
 
     const user = getUser();
 
     if (!user) return;
 
-    const { data, error } = await supabaseClient
-        .from("users")
-        .select("logo")
-        .eq("id", user.id)
-        .single();
+    const photo = document.getElementById("navProfilePhoto");
 
-    if (error) {
-        console.error(error);
-        return;
-    }
+    if (!photo) return;
 
-    if (data && data.logo) {
-        document.getElementById("navProfilePhoto").src = data.logo;
+    if (user.logo && user.logo.trim() !== "") {
+
+        photo.src = user.logo;
+
+    } else {
+
+        photo.src = "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
+
     }
 
 }
