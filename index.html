@@ -194,19 +194,41 @@ required>
 
     <input name="boutique" placeholder="Nom de la boutique">
 
-    <input name="whatsapp" placeholder="Numéro WhatsApp de la boutique">
+    <div class="input-group">
 
-    <input name="adresse" placeholder="Adresse de la boutique">
+    <input
+        type="tel"
+        name="whatsapp"
+        placeholder=" "
+        required>
+
+    <label>Numéro WhatsApp de la boutique</label>
+
+</div>
+
+    <div class="input-group">
+
+    <input
+        type="text"
+        name="adresse"
+        placeholder=" "
+        required>
+
+    <label>Adresse de la boutique</label>
+
+</div>
+   <div class="input-group">
 
     <textarea
         name="description"
-        placeholder="Décrivez votre boutique"
-        style="width:100%;padding:12px;margin:8px 0;border:1px solid #ddd;border-radius:5px;">
-    </textarea>
+        placeholder=" "
+        rows="5"
+        required></textarea>
 
-    <input
-        name="logo"
-        placeholder="Lien du logo ou de la photo de la boutique">
+    <label>Description de la boutique</label>
+
+</div>
+        
 
 </div>
         <div class="input-group">
