@@ -880,7 +880,9 @@ async function register(event) {
 
     const fd = new FormData(event.target);
     role = registerRole;
+const logoFile = document.getElementById("profilePhoto").files[0];
 
+let logoUrl = null;
     const { data: existe, error: checkError } = await supabaseClient
         .from("users")
         .select("id")
@@ -896,7 +898,32 @@ async function register(event) {
         alert("❌ Ce numéro est déjà utilisé.");
         return;
     }
+if (role === "vendeur" && logoFile) {
 
+    const fileName =
+        Date.now() + "-" + logoFile.name;
+
+    const { error: uploadError } =
+        await supabaseClient.storage
+        .from("products")   // ton bucket
+        .upload(fileName, logoFile);
+
+    if (uploadError) {
+
+        alert(uploadError.message);
+
+        return;
+
+    }
+
+    const { data } =
+        supabaseClient.storage
+        .from("products")
+        .getPublicUrl(fileName);
+
+    logoUrl = data.publicUrl;
+
+}
     const userData = {
         nom: fd.get("nom"),
         prenom: fd.get("prenom"),
@@ -908,7 +935,7 @@ async function register(event) {
         whatsapp: role === "vendeur" ? (fd.get("whatsapp") || null) : null,
         adresse: role === "vendeur" ? (fd.get("adresse") || null) : null,
         description: role === "vendeur" ? (fd.get("description") || null) : null,
-        logo: role === "vendeur" ? (fd.get("logo") || null) : null
+        logo: logoUrl
     };
 
     const { data, error } = await supabaseClient
