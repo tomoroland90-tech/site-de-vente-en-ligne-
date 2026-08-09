@@ -501,6 +501,42 @@ input,select,textarea{border-radius:12px;padding:14px}
     border-radius:50%;
 
 }
+.hidden{
+    display:none !important;
+}
+.profile-top-bar{
+
+    padding:20px;
+
+}
+
+.backBtn{
+
+    background:#2563eb;
+
+    color:white;
+
+    border:none;
+
+    border-radius:12px;
+
+    padding:12px 22px;
+
+    cursor:pointer;
+
+    font-size:16px;
+
+    font-weight:bold;
+
+    transition:.3s;
+
+}
+
+.backBtn:hover{
+
+    background:#1d4ed8;
+
+}
 </style>
 </head>
 <body>
@@ -515,8 +551,21 @@ input,select,textarea{border-radius:12px;padding:14px}
 
     <div class="seller-profile"
          onclick="openSellerProfile()">
+<div class="profile-top-bar">
 
-       <img id="navProfilePhoto" src="" alt="Photo du vendeur">
+    <button class="backBtn" onclick="closeSellerProfile()">
+
+        ← Retour à l'accueil
+
+    </button>
+
+</div>
+       <img
+    id="navProfilePhoto"
+    src=""
+    alt="Photo du vendeur"
+    onclick="openSellerProfile()"
+    style="cursor:pointer;">
     </div>
 
 </div>
@@ -695,7 +744,7 @@ required>
     <div id="vendeurView" class="hidden">
         <!-- ================= PROFIL VENDEUR ================= -->
 
-<div id="sellerProfilePage" class="seller-profile-page hidden">
+<div id="sellerProfilePage" class="seller-profile-page hidden"></div>
 
     <div class="cover-container">
 
@@ -1389,6 +1438,24 @@ function loadSellerProfile() {
     if (user.logo) {
         document.getElementById("sellerPhoto").src = user.logo;
     }
+
+}
+function openSellerProfile() {
+
+    document.getElementById("homePage").style.display = "none";
+
+    document.getElementById("sellerProfilePage").style.display = "block";
+
+    loadSellerProfile();
+
+}
+function closeSellerProfile(){
+
+    document.getElementById("sellerProfilePage")
+        .classList.add("hidden");
+
+    document.getElementById("homePage")
+        .classList.remove("hidden");
 
 }
 renderAll();
