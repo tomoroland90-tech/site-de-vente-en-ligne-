@@ -516,10 +516,7 @@ input,select,textarea{border-radius:12px;padding:14px}
     <div class="seller-profile"
          onclick="openSellerProfile()">
 
-        <img
-            id="navProfilePhoto"
-            src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png">
-
+       <img id="navProfilePhoto" src="" alt="Photo du vendeur">
     </div>
 
 </div>
@@ -869,7 +866,12 @@ async function login(event) {
     }
 
     setUser(data);
+
+    // Afficher la photo du vendeur dans la barre de navigation
+    await loadNavbarProfile();
+
     alert("✅ Connexion réussie !");
+
     await renderAll();
 }
 
@@ -1320,51 +1322,45 @@ document
     reader.readAsDataURL(file);
 
 });
-function loadNavbarProfile(){
+async function loadNavbarProfile() {
 
     const user = getUser();
 
-    if(!user) return;
+    if (!user) return;
 
-    if(user.photo){
+    const photo = document.getElementById("navProfilePhoto");
 
-        document.getElementById("navProfilePhoto").src =
-            user.photo;
+    if (!photo) return;
+
+    if (user.logo && user.logo !== "") {
+
+        photo.src = user.logo;
+
+    } else {
+
+        photo.src = "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
 
     }
-
 }
-function loadSellerProfile(){
+async function loadSellerProfile() {
 
-    const user=getUser();
+    const user = getUser();
 
-    if(!user) return;
+    if (!user) return;
 
-    document.getElementById("sellerShopName").textContent=
-        user.boutique || "";
+    const { data, error } = await supabaseClient
+        .from("users")
+        .select("logo")
+        .eq("id", user.id)
+        .single();
 
-    document.getElementById("sellerCity").textContent=
-        user.ville || "";
-
-    document.getElementById("sellerPhone").textContent=
-        user.telephone || "";
-
-    document.getElementById("sellerWhatsapp").textContent=
-        user.whatsapp || "";
-
-    document.getElementById("sellerDescription").textContent=
-        user.description || "";
-
-    if(user.logo){
-
-        document.getElementById("sellerPhoto").src=user.logo;
-
+    if (error) {
+        console.error(error);
+        return;
     }
 
-    if(user.cover){
-
-        document.getElementById("coverPhoto").src=user.cover;
-
+    if (data && data.logo) {
+        document.getElementById("navProfilePhoto").src = data.logo;
     }
 
 }
