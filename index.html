@@ -98,6 +98,131 @@ input,select,textarea{border-radius:12px;padding:14px}
 
     font-weight:bold;
 }
+.shop-info{
+
+    background:#fff;
+
+    border-radius:18px;
+
+    padding:25px;
+
+    margin-top:25px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+
+    border:1px solid #e5e7eb;
+
+}
+
+.shop-left h1{
+
+    color:#0f766e;
+
+    margin-bottom:10px;
+
+    font-size:32px;
+
+}
+
+.shop-left p{
+
+    margin:8px 0;
+
+    color:#444;
+
+    font-size:16px;
+
+}
+
+.shop-badge{
+
+    display:inline-block;
+
+    background:#16a34a;
+
+    color:white;
+
+    padding:6px 15px;
+
+    border-radius:20px;
+
+    margin-bottom:15px;
+
+    font-size:14px;
+
+}
+
+.shop-right{
+
+    display:flex;
+
+    gap:12px;
+
+    flex-wrap:wrap;
+
+}
+
+.btnGreen{
+
+    background:#16a34a;
+
+    color:white;
+
+    border:none;
+
+    padding:12px 20px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+}
+
+.btnBlue{
+
+    background:#2563eb;
+
+    color:white;
+
+    border:none;
+
+    padding:12px 20px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+}
+
+.btnWhatsapp{
+
+    background:#25D366;
+
+    color:white;
+
+    border:none;
+
+    padding:12px 20px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+}
+
+.shop-right button:hover{
+
+    transform:translateY(-3px);
+
+    transition:.3s;
+
+}
 </style>
 </head>
 <body>
@@ -253,6 +378,47 @@ required>
 <div id="app" class="hidden">
     <div id="clientView" class="hidden"><h3>Produits</h3><div id="products" class="grid"></div></div>
     <div id="vendeurView" class="hidden">
+        <!-- ================= PROFIL BOUTIQUE ================= -->
+
+<div class="shop-profile">
+
+    <div class="shop-cover">
+
+        <img id="coverPreview" src="images/default-cover.jpg">
+
+    </div>
+
+    <div class="shop-header">
+
+        <img id="logoPreview" class="shop-logo" src="images/default-logo.png">
+
+        <div class="shop-details">
+
+            <h1 id="shopName">Nom de la boutique</h1>
+
+            <span class="verified">
+                ✔ Boutique vérifiée
+            </span>
+
+            <p id="shopAddress">
+                📍 Adresse de la boutique
+            </p>
+
+            <p id="shopWhatsapp">
+                📞 Numéro WhatsApp
+            </p>
+
+            <p id="shopDescription">
+                Description de la boutique
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ================= FIN PROFIL ================= -->
       <div style="margin-bottom:15px;">
     <input
         type="text"
@@ -767,6 +933,25 @@ function selectRegisterRole(role) {
     if (vendeurFields) {
         vendeurFields.classList.toggle("hidden", role !== "vendeur");
     }
+}
+function loadShopProfile(){
+
+    const u = getUser();
+
+    if(!u) return;
+
+    document.getElementById("shopName").textContent =
+        u.boutique || "Ma Boutique";
+
+    document.getElementById("shopAddress").textContent =
+        u.adresse || "Non renseignée";
+
+    document.getElementById("shopWhatsapp").textContent =
+        u.whatsapp || "Non renseigné";
+
+    document.getElementById("shopDate").textContent =
+        new Date().getFullYear();
+
 }
 renderAll();
 
