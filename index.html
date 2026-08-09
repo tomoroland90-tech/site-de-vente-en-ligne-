@@ -725,40 +725,26 @@ async function renderAll() {
     }
 }
 
-const registerRole = document.getElementById("registerRole");
-const vendeurFields = document.getElementById("vendeurFields");
-
-if (registerRole && vendeurFields) {
-    registerRole.addEventListener("change", function () {
-        vendeurFields.classList.toggle("hidden", this.value !== "vendeur");
-    });
-}
-// Variables globales
 let loginRole = "client";
 let registerRole = "client";
 
-// Boutons de connexion
-function selectLoginRole(role){
-
+function selectLoginRole(role) {
     loginRole = role;
 
-    document.getElementById("btnClientLogin").classList.toggle("active", role === "client");
-
-    document.getElementById("btnSellerLogin").classList.toggle("active", role === "vendeur");
-
+    document.getElementById("btnClientLogin")?.classList.toggle("active", role === "client");
+    document.getElementById("btnSellerLogin")?.classList.toggle("active", role === "vendeur");
 }
 
-// Boutons d'inscription
-function selectRegisterRole(role){
-
+function selectRegisterRole(role) {
     registerRole = role;
 
-    document.getElementById("btnClientRegister").classList.toggle("active", role === "client");
+    document.getElementById("btnClientRegister")?.classList.toggle("active", role === "client");
+    document.getElementById("btnSellerRegister")?.classList.toggle("active", role === "vendeur");
 
-    document.getElementById("btnSellerRegister").classList.toggle("active", role === "vendeur");
-
-    document.getElementById("vendeurFields").classList.toggle("hidden", role !== "vendeur");
-
+    const vendeurFields = document.getElementById("vendeurFields");
+    if (vendeurFields) {
+        vendeurFields.classList.toggle("hidden", role !== "vendeur");
+    }
 }
 renderAll();
 
