@@ -30,7 +30,7 @@
     .seller-profile-title{text-align:center;margin:5px 0}
     .seller-profile-data{line-height:1.7;color:#444}
 
-</style>
+.roleButtons{display:flex;gap:10px;margin:15px 0}.roleButtons button{flex:1;padding:12px;border:none;border-radius:10px;background:#ddd;font-weight:bold}.roleButtons button.active{background:#2563eb;color:#fff}</style>
 </head>
 <body>
 
@@ -43,10 +43,7 @@
 <div id="authBox" class="card" style="max-width:400px;margin:40px auto;">
     <h3 style="text-align:center;">Connexion</h3>
     <form id="loginForm" onsubmit="login(event)">
-        <select id="loginRole">
-            <option value="client">Je suis Client</option>
-            <option value="vendeur">Je suis Vendeur / Boutique</option>
-        </select>
+        <div class="roleButtons"><button type="button" id="btnClientLogin" class="active" onclick="selectLoginRole('client')">👤 Client</button><button type="button" id="btnSellerLogin" onclick="selectLoginRole('vendeur')">🏪 Boutique</button></div>
         <input name="phone" placeholder="Numéro WhatsApp" required />
         <input name="password" type="password" placeholder="Mot de passe" required />
         <button type="submit">Se connecter</button>
@@ -60,10 +57,7 @@
 <div id="registerBox" class="card hidden" style="max-width:400px;margin:40px auto;">
     <h3 style="text-align:center;">Inscription</h3>
     <form id="registerForm" onsubmit="register(event)">
-        <select id="registerRole">
-            <option value="client">Je suis Client</option>
-            <option value="vendeur">Je suis Boutique / Vendeur</option>
-        </select>
+        <div class="roleButtons"><button type="button" id="btnClientRegister" class="active" onclick="selectRegisterRole('client')">👤 Client</button><button type="button" id="btnSellerRegister" onclick="selectRegisterRole('vendeur')">🏪 Boutique</button></div>
         <input name="nom" placeholder="Nom" required />
         <input name="prenom" placeholder="Prénom" required />
         <input name="phone" placeholder="Numéro WhatsApp" required />
@@ -185,7 +179,7 @@ async function login(event) {
     event.preventDefault();
 
     const fd = new FormData(event.target);
-    role = document.getElementById("loginRole").value;
+    role = loginRole;
 
     const { data, error } = await supabaseClient
         .from("users")
@@ -215,7 +209,7 @@ async function register(event) {
     event.preventDefault();
 
     const fd = new FormData(event.target);
-    role = document.getElementById("registerRole").value;
+    role = registerRole;
 
     const { data: existe, error: checkError } = await supabaseClient
         .from("users")
