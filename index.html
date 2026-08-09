@@ -300,12 +300,229 @@ input,select,textarea{border-radius:12px;padding:14px}
     box-shadow:0 3px 10px rgba(0,0,0,.3);
 
 }
+.nav-right{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+}
+
+.seller-profile{
+
+    width:45px;
+
+    height:45px;
+
+    border-radius:50%;
+
+    overflow:hidden;
+
+    border:3px solid #16a34a;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    box-shadow:0 4px 10px rgba(0,0,0,.15);
+
+}
+
+.seller-profile:hover{
+
+    transform:scale(1.08);
+
+}
+
+.seller-profile img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+
+}
+
+.nav-btn{
+
+    background:#2563eb;
+
+    color:white;
+
+    border:none;
+
+    border-radius:10px;
+
+    padding:10px 18px;
+
+    cursor:pointer;
+
+    font-weight:bold;
+
+}
+
+.nav-btn:hover{
+
+    background:#1d4ed8;
+
+}
+.seller-profile-page{
+
+    background:white;
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+
+    margin:25px 0;
+
+}
+
+.cover-container{
+
+    position:relative;
+
+}
+
+.cover-container img{
+
+    width:100%;
+
+    height:280px;
+
+    object-fit:cover;
+
+}
+
+.profile-header{
+
+    display:flex;
+
+    gap:25px;
+
+    padding:25px;
+
+    align-items:flex-start;
+
+}
+
+.profile-photo-container{
+
+    position:relative;
+
+}
+
+.profile-photo-container img{
+
+    width:170px;
+
+    height:170px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    border:6px solid white;
+
+    margin-top:-90px;
+
+    background:white;
+
+}
+
+.seller-infos{
+
+    flex:1;
+
+}
+
+.seller-infos h2{
+
+    color:#0f766e;
+
+    font-size:34px;
+
+}
+
+.verified-badge{
+
+    display:inline-block;
+
+    background:#16a34a;
+
+    color:white;
+
+    padding:6px 14px;
+
+    border-radius:30px;
+
+    margin:12px 0;
+
+}
+
+.profile-actions{
+
+    display:flex;
+
+    align-items:center;
+
+}
+
+.edit-cover-btn,
+.photo-edit-btn{
+
+    background:#2563eb;
+
+    color:white;
+
+    border:none;
+
+    cursor:pointer;
+
+    border-radius:10px;
+
+    padding:10px 15px;
+
+}
+
+.photo-edit-btn{
+
+    position:absolute;
+
+    bottom:15px;
+
+    right:0;
+
+    border-radius:50%;
+
+}
 </style>
 </head>
 <body>
 
 <header>
     <h2>SHOP ONLINE</h2>
+    <div class="nav-right">
+
+    <button class="nav-btn" onclick="showLogin()">
+        Connexion
+    </button>
+
+    <div class="seller-profile"
+         onclick="openSellerProfile()">
+
+        <img
+            id="navProfilePhoto"
+            src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png">
+
+    </div>
+
+</div>
     <div id="userInfo"></div>
 </header>
 
@@ -479,39 +696,63 @@ required>
 <div id="app" class="hidden">
     <div id="clientView" class="hidden"><h3>Produits</h3><div id="products" class="grid"></div></div>
     <div id="vendeurView" class="hidden">
-        <!-- ================= PROFIL BOUTIQUE ================= -->
+        <!-- ================= PROFIL VENDEUR ================= -->
 
-<div class="shop-profile">
+<div id="sellerProfilePage" class="seller-profile-page hidden">
 
-    <div class="shop-cover">
+    <div class="cover-container">
 
-        <img id="coverPreview" src="images/default-cover.jpg">
+        <img id="coverPhoto"
+             src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=1600&q=80">
+
+        <button id="changeCoverBtn" class="edit-cover-btn hidden">
+            📷 Modifier la couverture
+        </button>
 
     </div>
 
-    <div class="shop-header">
+    <div class="profile-header">
 
-        <img id="logoPreview" class="shop-logo" src="images/default-logo.png">
+        <div class="profile-photo-container">
 
-        <div class="shop-details">
+            <img id="sellerPhoto"
+                 src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png">
 
-            <h1 id="shopName">Nom de la boutique</h1>
+            <button id="changePhotoBtn" class="photo-edit-btn hidden">
+                📷
+            </button>
 
-            <span class="verified">
+        </div>
+
+        <div class="seller-infos">
+
+            <h2 id="sellerShopName">Nom de la boutique</h2>
+
+            <span class="verified-badge">
                 ✔ Boutique vérifiée
             </span>
 
-            <p id="shopAddress">
-                📍 Adresse de la boutique
+            <p>📍 <span id="sellerCity">Ville</span></p>
+
+            <p>📞 <span id="sellerPhone">Téléphone</span></p>
+
+            <p>💬 <span id="sellerWhatsapp">WhatsApp</span></p>
+
+            <p id="sellerDescription">
+                Description de la boutique...
             </p>
 
-            <p id="shopWhatsapp">
-                📞 Numéro WhatsApp
-            </p>
+        </div>
 
-            <p id="shopDescription">
-                Description de la boutique
-            </p>
+        <div class="profile-actions">
+
+            <button
+                id="editSellerBtn"
+                class="btnBlue hidden">
+
+                ✏ Modifier le profil
+
+            </button>
 
         </div>
 
@@ -968,6 +1209,7 @@ function contactSeller(phone) {
 
 
 async function renderAll() {
+    loadNavbarProfile();
     const user = getUser();
 
     const app = document.getElementById("app");
@@ -1003,6 +1245,11 @@ async function renderAll() {
     `;
 
     if (user.role === "vendeur") {
+        document
+.getElementById("sellerProfilePage")
+.classList.remove("hidden");
+
+loadSellerProfile();
         vendeurView.classList.remove("hidden");
         clientView.classList.add("hidden");
         await loadProducts();
@@ -1073,6 +1320,54 @@ document
     reader.readAsDataURL(file);
 
 });
+function loadNavbarProfile(){
+
+    const user = getUser();
+
+    if(!user) return;
+
+    if(user.photo){
+
+        document.getElementById("navProfilePhoto").src =
+            user.photo;
+
+    }
+
+}
+function loadSellerProfile(){
+
+    const user=getUser();
+
+    if(!user) return;
+
+    document.getElementById("sellerShopName").textContent=
+        user.boutique || "";
+
+    document.getElementById("sellerCity").textContent=
+        user.ville || "";
+
+    document.getElementById("sellerPhone").textContent=
+        user.telephone || "";
+
+    document.getElementById("sellerWhatsapp").textContent=
+        user.whatsapp || "";
+
+    document.getElementById("sellerDescription").textContent=
+        user.description || "";
+
+    if(user.logo){
+
+        document.getElementById("sellerPhoto").src=user.logo;
+
+    }
+
+    if(user.cover){
+
+        document.getElementById("coverPhoto").src=user.cover;
+
+    }
+
+}
 renderAll();
 
 </script>
