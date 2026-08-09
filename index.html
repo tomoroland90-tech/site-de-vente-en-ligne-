@@ -1370,24 +1370,24 @@ function loadNavbarProfile() {
     }
 
 }
-function loadNavbarProfile() {
+function loadSellerProfile() {
 
     const user = getUser();
 
     if (!user) return;
 
-    const photo = document.getElementById("navProfilePhoto");
+    document.getElementById("sellerShopName").textContent = user.boutique || "";
 
-    if (!photo) return;
+    document.getElementById("sellerPhone").textContent = user.phone || "";
 
-    if (user.logo && user.logo.trim() !== "") {
+    document.getElementById("sellerCity").textContent = user.ville || "";
 
-        photo.src = user.logo;
+    document.getElementById("sellerWhatsapp").textContent = user.whatsapp || "";
 
-    } else {
+    document.getElementById("sellerDescription").textContent = user.description || "";
 
-        photo.src = "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
-
+    if (user.logo) {
+        document.getElementById("sellerPhoto").src = user.logo;
     }
 
 }
