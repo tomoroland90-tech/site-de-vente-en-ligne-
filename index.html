@@ -537,6 +537,184 @@ input,select,textarea{border-radius:12px;padding:14px}
     background:#1d4ed8;
 
 }
+.cover-container{
+
+position:relative;
+
+height:280px;
+
+overflow:hidden;
+
+border-radius:15px;
+
+}
+
+.cover-image{
+
+width:100%;
+
+height:100%;
+
+object-fit:cover;
+
+}
+
+.seller-photo{
+
+width:170px;
+
+height:170px;
+
+border-radius:50%;
+
+border:6px solid white;
+
+margin-top:-90px;
+
+object-fit:cover;
+
+background:white;
+
+}
+
+.profile-header{
+
+display:flex;
+
+align-items:center;
+
+gap:25px;
+
+padding:20px;
+
+}
+
+.seller-info{
+
+flex:1;
+
+}
+
+.editProfileBtn{
+
+background:#16a34a;
+
+color:white;
+
+border:none;
+
+padding:12px 20px;
+
+border-radius:10px;
+
+cursor:pointer;
+
+}
+
+.seller-stats{
+
+display:flex;
+
+justify-content:space-around;
+
+padding:25px;
+
+background:#f8fafc;
+
+border-radius:12px;
+
+margin:20px;
+
+}
+
+.seller-actions{
+
+display:flex;
+
+gap:20px;
+
+justify-content:center;
+
+margin:30px;
+
+}
+
+.seller-actions button{
+
+padding:14px 25px;
+
+border:none;
+
+border-radius:12px;
+
+background:#2563eb;
+
+color:white;
+
+cursor:pointer;
+
+font-size:16px;
+
+}
+.modal{
+
+position:fixed;
+
+left:0;
+
+top:0;
+
+width:100%;
+
+height:100%;
+
+background:rgba(0,0,0,.55);
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+z-index:9999;
+
+}
+
+.modal-content{
+
+background:white;
+
+padding:30px;
+
+border-radius:15px;
+
+width:500px;
+
+max-width:95%;
+
+}
+
+.modal-content input,
+
+.modal-content textarea{
+
+width:100%;
+
+padding:12px;
+
+margin:8px 0;
+
+border-radius:10px;
+
+border:1px solid #ddd;
+
+}
+
+.hidden{
+
+display:none;
+
+}
 </style>
 </head>
 <body>
@@ -562,12 +740,20 @@ input,select,textarea{border-radius:12px;padding:14px}
     </button>
 
 </div>
-       <img
+      <img
     id="navProfilePhoto"
     src=""
-    alt="Photo du vendeur"
+    alt="Profil"
     onclick="openSellerProfile()"
-    style="cursor:pointer;">
+    style="
+        width:42px;
+        height:42px;
+        border-radius:50%;
+        object-fit:cover;
+        cursor:pointer;
+        display:none;
+        border:2px solid #16a34a;
+    ">
     </div>
 
 </div>
@@ -747,8 +933,120 @@ required>
         </div>
         <!-- ================= PROFIL VENDEUR ================= -->
 
-<div id="sellerProfilePage" class="seller-profile-page hidden"></div>
+<div id="sellerProfilePage" class="seller-profile-page hidden">
 
+    <!-- Couverture -->
+    <div class="cover-container">
+
+        <img id="sellerCover"
+             src="images/default-cover.jpg"
+             class="cover-image">
+
+        <button class="editCoverBtn"
+                onclick="changeCover()">
+
+            📷 Modifier la couverture
+
+        </button>
+
+    </div>
+
+    <!-- Profil -->
+    <div class="profile-header">
+
+        <img id="sellerPhoto"
+             class="seller-photo">
+
+        <div class="seller-info">
+
+            <h2 id="sellerNom"></h2>
+
+            <p id="sellerBoutique"></p>
+
+            <p id="sellerVille"></p>
+
+            <p id="sellerDescription"></p>
+
+        </div>
+
+        <button class="editProfileBtn"
+                onclick="editSellerProfile()">
+
+            ✏ Modifier le profil
+
+        </button>
+
+    </div>
+
+    <!-- Statistiques -->
+
+    <div class="seller-stats">
+
+        <div>
+
+            <h3 id="totalProducts">0</h3>
+
+            <span>Produits</span>
+
+        </div>
+
+        <div>
+
+            <h3 id="totalViews">0</h3>
+
+            <span>Vues</span>
+
+        </div>
+
+        <div>
+
+            <h3 id="totalFollowers">0</h3>
+
+            <span>Abonnés</span>
+
+        </div>
+
+    </div>
+
+    <!-- Boutons -->
+
+    <div class="seller-actions">
+
+        <button onclick="contactSeller()">
+
+            💬 Contacter
+
+        </button>
+
+        <button onclick="callSeller()">
+
+            📞 Appeler
+
+        </button>
+
+        <button onclick="whatsappSeller()">
+
+            🟢 WhatsApp
+
+        </button>
+
+    </div>
+
+    <!-- Produits -->
+
+    <h2 style="margin-top:30px">
+
+        Publications
+
+    </h2>
+
+    <div id="sellerProducts"
+
+         class="products-grid">
+
+    </div>
+
+</div>
     <div class="cover-container">
 
         <img id="coverPhoto"
@@ -892,39 +1190,64 @@ function showLogin() {
     document.getElementById("authBox").classList.remove("hidden");
 }
 
-async function login(event) {
+async function register(event){
+
     event.preventDefault();
 
     const fd = new FormData(event.target);
-    role = loginRole;
 
-    const { data, error } = await supabaseClient
+    const userData = {
+
+        nom: fd.get("nom"),
+
+        prenom: fd.get("prenom"),
+
+        phone: fd.get("phone"),
+
+        ville: fd.get("ville"),
+
+        password: fd.get("password"),
+
+        role: registerRole,
+
+        boutique: registerRole==="vendeur" ? fd.get("boutique") : null,
+
+        whatsapp: registerRole==="vendeur" ? fd.get("whatsapp") : null,
+
+        adresse: registerRole==="vendeur" ? fd.get("adresse") : null,
+
+        description: registerRole==="vendeur" ? fd.get("description") : null,
+
+        logo: registerRole==="vendeur" ? fd.get("logo") : null
+
+    };
+
+    const {data,error}=await supabaseClient
+
         .from("users")
-        .select("*")
-        .eq("phone", fd.get("phone"))
-        .eq("password", fd.get("password"))
-        .eq("role", role)
-        .maybeSingle();
 
-    if (error) {
+        .insert(userData)
+
+        .select()
+
+        .single();
+
+    if(error){
+
+        alert(error.message);
+
         console.error(error);
-        alert("Erreur : " + error.message);
-        return;
-    }
 
-    if (!data) {
-        alert("❌ Téléphone, mot de passe ou rôle incorrect.");
         return;
+
     }
 
     setUser(data);
 
-    // Afficher la photo du vendeur dans la barre de navigation
-    await loadNavbarProfile();
-
-    alert("✅ Connexion réussie !");
+    event.target.reset();
 
     await renderAll();
+
 }
 
 async function register(event) {
@@ -1340,6 +1663,7 @@ loadSellerProfile();
         vendeurView.classList.add("hidden");
         await loadProducts();
     }
+    await loadNavbarProfile();
 }
 
 let loginRole = "client";
@@ -1422,43 +1746,229 @@ function loadNavbarProfile() {
     }
 
 }
-function loadSellerProfile() {
+async function loadNavbarProfile(){
+
+    const user = getUser();
+
+    if(!user) return;
+
+    const photo = document.getElementById("navProfilePhoto");
+
+    if(user.logo){
+
+        photo.src = user.logo;
+
+    }else{
+
+        photo.src = "images/default-logo.png";
+
+    }
+
+    photo.style.display = "block";
+
+}
+async function loadNavbarProfile(){
+
+    const user = getUser();
+
+    if(!user) return;
+
+    const photo = document.getElementById("navProfilePhoto");
+
+    if(user.logo){
+
+        photo.src = user.logo;
+
+    }else{
+
+        photo.src = "images/default-logo.png";
+
+    }
+
+    photo.style.display = "block";
+
+}
+async function openSellerProfile(){
+
+    const home = document.getElementById("homePage");
+
+    const profile = document.getElementById("sellerProfilePage");
+
+    if(home) home.style.display="none";
+
+    if(profile) profile.style.display="block";
+
+    await loadSellerProfile();
+
+}
+function editSellerProfile(){
+
+const user=getUser();
+
+const form=document.getElementById("editProfileForm");
+
+form.nom.value=user.nom||"";
+
+form.prenom.value=user.prenom||"";
+
+form.boutique.value=user.boutique||"";
+
+form.ville.value=user.ville||"";
+
+form.whatsapp.value=user.whatsapp||"";
+
+form.adresse.value=user.adresse||"";
+
+form.description.value=user.description||"";
+
+form.logo.value=user.logo||"";
+
+form.cover.value=user.cover||"";
+
+document
+
+.getElementById("editProfileModal")
+
+.classList.remove("hidden");
+
+}
+
+function contactSeller(){
+
+alert("Messagerie bientôt disponible");
+
+}
+
+function callSeller(){
+
+const user=getUser();
+
+window.location.href="tel:"+user.phone;
+
+}
+
+function whatsappSeller(){
+
+const user=getUser();
+
+window.open(
+
+"https://wa.me/"+user.whatsapp,
+
+"_blank"
+
+);
+
+}
+
+function changeCover(){
+
+alert("Modification de la couverture");
+
+}
+function closeEditProfile(){
+
+document
+
+.getElementById("editProfileModal")
+
+.classList.add("hidden");
+
+}
+document.getElementById("editProfileForm").addEventListener(
+"submit",
+async function(e){
+
+    e.preventDefault();
+
+    const fd = new FormData(this);
+
+    const user = getUser();
+
+    const update = {
+
+        nom: fd.get("nom"),
+
+        prenom: fd.get("prenom"),
+
+        boutique: fd.get("boutique"),
+
+        ville: fd.get("ville"),
+
+        whatsapp: fd.get("whatsapp"),
+
+        adresse: fd.get("adresse"),
+
+        description: fd.get("description"),
+
+        logo: fd.get("logo"),
+
+        cover: fd.get("cover")
+
+    };
+
+    const { data, error } = await supabaseClient
+        .from("users")
+        .update(update)
+        .eq("id", user.id)
+        .select()
+        .single();
+
+    if (error) {
+
+        alert(error.message);
+
+        return;
+
+    }
+
+    setUser(data);
+
+    closeEditProfile();
+
+    await renderAll();
+
+    alert("✅ Profil mis à jour.");
+
+});
+async function loadSellerProfile() {
 
     const user = getUser();
 
     if (!user) return;
 
-    document.getElementById("sellerShopName").textContent = user.boutique || "";
-
-    document.getElementById("sellerPhone").textContent = user.phone || "";
-
-    document.getElementById("sellerCity").textContent = user.ville || "";
-
-    document.getElementById("sellerWhatsapp").textContent = user.whatsapp || "";
-
-    document.getElementById("sellerDescription").textContent = user.description || "";
-
-    if (user.logo) {
-        document.getElementById("sellerPhoto").src = user.logo;
+    // Photo de couverture
+    const cover = document.getElementById("sellerCover");
+    if (cover) {
+        cover.src = user.cover || "images/default-cover.jpg";
     }
 
-}
-function openSellerProfile(){
+    // Photo de profil
+    const photo = document.getElementById("sellerPhoto");
+    if (photo) {
+        photo.src = user.logo || "images/default-logo.png";
+    }
 
-    document.getElementById("homePage").classList.add("hidden");
+    // Informations
+    const nom = document.getElementById("sellerNom");
+    if (nom) {
+        nom.textContent = (user.prenom || "") + " " + (user.nom || "");
+    }
 
-    document.getElementById("sellerProfilePage").classList.remove("hidden");
+    const boutique = document.getElementById("sellerBoutique");
+    if (boutique) {
+        boutique.textContent = user.boutique || "";
+    }
 
-    loadSellerProfile();
+    const ville = document.getElementById("sellerVille");
+    if (ville) {
+        ville.textContent = user.ville || "";
+    }
 
-}
-function closeSellerProfile(){
-
-    document.getElementById("sellerProfilePage")
-        .classList.add("hidden");
-
-    document.getElementById("homePage")
-        .classList.remove("hidden");
+    const description = document.getElementById("sellerDescription");
+    if (description) {
+        description.textContent = user.description || "";
+    }
 
 }
 renderAll();
@@ -1471,6 +1981,60 @@ renderAll();
             <div id="sellerProfileContent"></div>
         </div>
     </div>
+<div id="editProfileModal" class="modal hidden">
 
+<div class="modal-content">
+
+<h2>Modifier le profil</h2>
+
+<form id="editProfileForm">
+
+<input name="nom" placeholder="Nom">
+
+<input name="prenom" placeholder="Prénom">
+
+<input name="boutique" placeholder="Nom de la boutique">
+
+<input name="ville" placeholder="Ville">
+
+<input name="whatsapp" placeholder="WhatsApp">
+
+<input name="adresse" placeholder="Adresse">
+
+<textarea
+name="description"
+placeholder="Description"></textarea>
+
+<input
+name="logo"
+placeholder="Lien de la photo de profil">
+
+<input
+name="cover"
+placeholder="Lien de la photo de couverture">
+
+<div style="margin-top:20px">
+
+<button type="submit">
+
+💾 Enregistrer
+
+</button>
+
+<button
+type="button"
+onclick="closeEditProfile()">
+
+Annuler
+
+</button>
+
+</div>
+
+</form>
+
+</div>
+
+</div>
 </body>
 </html>
