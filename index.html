@@ -540,7 +540,9 @@ input,select,textarea{border-radius:12px;padding:14px}
 </style>
 </head>
 <body>
+<body>
 
+<div id="homePage">
 <header>
     <h2>SHOP ONLINE</h2>
     <div class="nav-right">
@@ -742,6 +744,7 @@ required>
 <div id="app" class="hidden">
     <div id="clientView" class="hidden"><h3>Produits</h3><div id="products" class="grid"></div></div>
     <div id="vendeurView" class="hidden">
+        </div>
         <!-- ================= PROFIL VENDEUR ================= -->
 
 <div id="sellerProfilePage" class="seller-profile-page hidden"></div>
@@ -1440,11 +1443,11 @@ function loadSellerProfile() {
     }
 
 }
-function openSellerProfile() {
+function openSellerProfile(){
 
-    document.getElementById("homePage").style.display = "none";
+    document.getElementById("homePage").classList.add("hidden");
 
-    document.getElementById("sellerProfilePage").style.display = "block";
+    document.getElementById("sellerProfilePage").classList.remove("hidden");
 
     loadSellerProfile();
 
