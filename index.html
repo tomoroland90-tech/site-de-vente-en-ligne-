@@ -430,7 +430,7 @@ function buyProduct(productId){
   var prixText=Number(product.prix||0).toLocaleString('fr-FR')+" FCFA";
   var nomClient=(user.prenom||"")+" "+(user.nom||""); nomClient=nomClient.trim()||user.phone;
   var numeroClient=user.phone||""; var villeClient=user.ville||""; var nomProduit=product.nom||"Produit";
-  var message="Salut ! j'utilise l'application web SHOP ONLINE et je voudrais commander le produit ""+nomProduit+"" au prix de ""+prixText+"" de la boutique ""+boutiqueNom+"" je suis le client ""+nomClient+"" mon numero est le ""+numeroClient+"" et je reside a ""+villeClient+"".";
+  var message="Salut ! j utilise l application web SHOP ONLINE et je voudrais commander le produit " + nomProduit + " au prix de " + prixText + " de la boutique " + boutiqueNom + " je suis le client " + nomClient + " mon numero est le " + numeroClient + " et je reside a " + villeClient + ".";
   var whatsappNumber=String(seller.whatsapp||seller.phone||"").replace(/[^0-9]/g,"");
   if(!whatsappNumber){ alert("Numero WhatsApp de la boutique non renseigne"); return; }
   if(whatsappNumber.indexOf("237")!==0){ whatsappNumber="237"+whatsappNumber; }
