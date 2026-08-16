@@ -6,6 +6,7 @@
 <title>SHOP ONLINE V2 - FIXED</title>
 <link rel="icon" type="image/x-icon" href="/favicon.ico">
 <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAFgUlEQVR4nM2XbYhcVxnHf+fl3jv3zt3Z2Uk2u25Nu8mmISSGtpqSZkW0YJFqQ7FU8aUVLCKCL6D4XVAQ/GRRv/jyQagUpFpRwZCCRaq0MURjkqbZuEk2szu7mc3uTGZmZ+/M3Ln3HD/sbpK1dpLNFuIDB+7LeZ7nx/N/DuccYa213EWTdzP5/wWAvhOntNWhOnGZ2lJMS7no/hw7dg3iZzYebsMenVNnufD9X/DvmTozfUPMuAWm5ACZXTv41lcO8P77+zcUT2ykCU1plqvPfJ3atu3kv/FF1MgQiVDMLrb54UuXONcK+O13HmTHVvf2CewGLP7JT+38w4/ZuHz1bf/KlciOffm4/d4fFjYS0t5SAhvHJBOTJK0Y+dZ59NYC0cUS7al5IunQlpq2dOkIl8G8x+lii+NvLqJ9j333ZfF07z7vLYG1JMUZop+/wFKxTOBA59Q5Fkf3MOf1M+vmKbv9lJ08ZbfAPxoB4/dnsFGbLfcO8rUnt7NzMIMUdwiQ/vV14h88T+RkiDIhjfkGzUTSGttJXQfUlM+SytBQPg0V8NaiwWQCgqECFZuhqUO+++kRPrYveEeAnhKI8jziX2cw2TwdJ6Dj5WipgOpEkYoKqOiQmva5pkOu6SzG66MeKy4uNag6hqtWU6qZXiluYxk6Djga4TgIIcAaMBa33yfrh3SVT6IDrBOQGo00AletDIUAei+y3gBpuhJgVUNrLSrr874vPc3QowfQ2QADWCRCSY68eonnf3UOu9p3Fkh6F+AWAElyPRBYbJow+tyTbH/248ydnKR2fo5EaWKh6UrN7FxjpUprZiFJNyGB6Caw1qPGIj2XgYP7qRfL/OmbP+ZKW1J3Q6oqpJ7J0fJzaC+8UTGgm/bMfxsVWFNACGycsDw5zeATH+HgV59irlSlrTxqieLs5SZvllor899VgFUBVkormPrZb2DbFvY//WH231TuTqfLL188zQtHimBvfO+mm2hCG3dvPGMRStKaW+CNb/+IdGwn7XyBpvSIszke//w4z372AV45sUCtaq5H3hTAWhPCmgygXBehJLVimWppiZoKWBA+ex7Zza49wwS+i7HJGjXx5iW4gWDihHufO8yDj3+I1EAqJSkCHM3QPQVOnikzV26ilX/da3M90O2uexVCkEZt2tU6iRV0pSYRko4RHDs2zUtHLtGJBeKm3XhzEnRvroBFaMXMr49Sffk1rjlZKjqkrnyqOmCRgGUvRHl9K7CrXp3kbVE3ALBrJzZNV6QQBsvqMAZjLNauDYHSAgGkqSERlji1YC17h9WdA4hPHkZOXkT85RhS+Tg6wFU+Gccn0AEdnSVVGVKdBeWjVAalPKR2cbTLpw4M8IVDfT0Bbu9IVm9gkhSDQChFYiypBZQCIUiMxQqJARCS1ILUikJ4671u3YxuN2H6SoVCf0jgu6zkkJSiLqGfIQw8ZuervHe4QOBoqo1lao0m940MkiQJSkla7ZjQdZBSUF+K8FwHIaDV6bJYbZDPZdk60Pe/AX7/6kkmp67w0L5Rqo0IJQXVWhOwJElKaiGKOvTnAp567AAv/vF1wsADKTk9Mc1HD+2jOFfh4f07yOeyHP3bGUrlRT74gT0UZxeZX6jxmScOrQNYd2DbOzaClIITZ6c4NTHNP88VOX+5zPhDuxkazHNhep44SblnaIBKrUkQeDx6cC8XimVyfQG/e+UEjWaLSm2Z+lJE1I7JeC4vHz1OM2qjlCQMMu8sgZSCLfmQ4W15do++B2MsUbvD309doJDP8szhcQr9IbtHh0lTw/mpK/z5jbN87hPjKCVpNCOWlttcnLlKagyPPDDGyLY88wt12nHCVGmBa/XldQAbuhe8G2Zv2i3hLtwNxX+dkO/65fQ/2AbWkBcas30AAAAASUVORK5CYII=">
+<link rel="shortcut icon" href="/favicon.ico">
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -49,7 +50,7 @@ header{display:flex;justify-content:space-between;align-items:center;padding:8px
 <div class="icon-btn" id="btnWishlist">❤️<span class="badge" id="wishBadge">0</span></div>
 <div class="icon-btn" id="btnNotif">🔔<span class="badge" id="notifBadge">0</span></div>
 <div class="icon-btn" id="btnParam">⚙️</div>
-<div class="seller-profile" id="profileBtn"><img id="navProfilePhoto" src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" style="width:100%;height:100%;object-fit:cover"></div>
+<button class="nav-btn" id="btnDeconnexion" style="display:none;background:#fee2e2;color:#ef4444">Déconnexion</button><div class="seller-profile" id="profileBtn"><img id="navProfilePhoto" src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" style="width:100%;height:100%;object-fit:cover"></div>
 </div>
 </header>
 <div id="toastContainer"></div>
@@ -162,7 +163,14 @@ header{display:flex;justify-content:space-between;align-items:center;padding:8px
 </div><div class="param-main">
 <div id="param-compte" class="param-panel active"><div id="paramInfo" style="font-size:12px;line-height:1.6;background:#f9fafb;padding:8px;border-radius:10px"></div></div>
 <div id="param-boutique" class="param-panel"><h4 style="margin:0">Ma Boutique</h4><div id="paramBoutiqueInfo" style="font-size:11px;background:#fff7ed;padding:8px;border-radius:10px;border:1px solid #fed7aa"></div><button id="btnViewBoutique" style="margin-top:6px">Voir boutique publique</button></div>
-<div id="param-abonnement" class="param-panel"><div style="background:#fffbeb;border:2px solid #f59e0b;padding:8px;border-radius:10px;font-size:11px;margin-bottom:8px">Orange Money: <b style="color:#ef4444">+237 657181788</b> Nom: JACQUES DIEGO</div><div id="abonnementStatus"></div><div style="margin-top:8px"><div class="abonnement-card">Gratuit - 0F - 3 produits max</div><div class="abonnement-card active" id="cardBasic">Basic - <span id="priceBasic">2500F</span>/30j - 50 produits<br><small id="discountBasic" style="color:#22c55e;display:none"></small><br><button id="btnPayBasic" style="background:#22c55e;margin-top:4px">J ai payé <span id="btnPriceBasic">2500F</span></button></div><div class="abonnement-card" style="border-color:#3b82f6;background:#dbeafe" id="cardPro">Pro - <span id="pricePro">10000F</span>/30j - Illimité<br><small id="discountPro" style="color:#3b82f6;display:none"></small><br><button id="btnPayPro" style="background:#3b82f6;margin-top:4px">J ai payé <span id="btnPricePro">10000F</span></button></div><button id="btnRappel" style="background:#25D366;margin-top:6px">Rappel Jour 28 WhatsApp</button></div></div>
+<div id="param-abonnement" class="param-panel"><div style="background:#fffbeb;border:2px solid #f59e0b;padding:8px;border-radius:10px;font-size:11px;margin-bottom:8px">💳 Orange Money: <b style="color:#ef4444">+237 657181788</b> Nom: JACQUES DIEGO</div><div id="abonnementStatus"></div>
+<div style="margin-top:12px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px">
+<div class="abonnement-card" style="border:2px solid #d1d5db;background:#f9fafb"><h4 style="margin:0 0 6px;color:#6b7280">🆓 GRATUIT - 0F / 7 jours</h4><ul style="font-size:10px;margin:4px 0 0 14px;line-height:1.5"><li>3 produits max</li><li>1 photo</li><li>En bas recherche</li><li>Pas de badge</li></ul></div>
+<div class="abonnement-card" style="border:2px solid #22c55e;background:#f0fdf4" id="cardBasic"><h4 style="margin:0 0 6px;color:#16a34a">🏪 BOUTIQUE - <span id="priceBasic">5000F</span>/30j</h4><div style="background:#dcfce7;color:#166534;padding:3px 6px;border-radius:10px;font-size:9px;font-weight:bold;display:inline-block">50 PRODUITS</div><ul style="font-size:10px;margin:4px 0 0 14px;line-height:1.6"><li><b>50 produits</b></li><li>3 photos/produit</li><li>Badge vert</li><li>1 code promo</li><li>5% reduc → <span id="discountBasic"></span></li><li>Lien profil partageable</li><li>Stats vues+followers</li></ul><button id="btnPayBasic" style="background:#22c55e;margin-top:8px">J'ai payé <span id="btnPriceBasic">5000F</span></button></div>
+<div class="abonnement-card" style="border:3px solid #f59e0b;background:linear-gradient(135deg,#fffbeb,#fef3c7);position:relative" id="cardPro"><div style="position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;padding:3px 12px;border-radius:20px;font-size:10px;font-weight:900">👑 LE PLUS CHOISI</div><h4 style="margin:12px 0 6px;color:#d97706">⭐ PREMIUM - <span id="pricePro">10000F</span>/30j</h4><div style="background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;padding:3px 6px;border-radius:10px;font-size:9px;font-weight:bold;display:inline-block">ILLIMITÉ + VIDÉO</div><ul style="font-size:10px;margin:4px 0 0 14px;line-height:1.6"><li><b>Illimité + vidéo</b></li><li><b>5 photos + vidéo</b></li><li><b>Badge doré + à la une</b></li><li><b>Haut recherches</b></li><li><b>5 codes promos</b></li><li><b>10% reduc → <span id="discountPro"></span></b></li><li><b>QR Code pro</b></li><li><b>Stats PRO</b></li><li><b>Support appel direct</b></li></ul><button id="btnPayPro" style="background:linear-gradient(135deg,#f59e0b,#d97706);margin-top:8px">J'ai payé <span id="btnPricePro">10000F</span></button><small style="font-size:9px;color:#92400e">~333F/jour</small></div>
+</div>
+<button id="btnRappel" style="background:#25D366;margin-top:10px">Rappel Jour 28 WhatsApp</button>
+</div>
 <div id="param-paiements" class="param-panel"><h4 style="margin:0">Historique Paiements</h4><div id="paiementHistory" style="font-size:11px"></div><button id="btnFacture" style="margin-top:6px;background:#8b5cf6">Générer Facture PDF</button><div id="facturePreview" style="margin-top:8px;font-size:10px;background:#f9fafb;padding:8px;border-radius:8px"></div></div>
 <div id="param-parrainage" class="param-panel"><h4 style="margin:0">Parrainage / Code Promo</h4><div style="background:#fef3c7;padding:8px;border-radius:8px;font-size:11px">Ton code: <b id="myParrainCode" style="color:#ef4444"></b><br><small>Lien: <span id="myPromoLink"></span></small><br><button id="btnSharePromoParam" style="margin-top:6px;background:#22c55e;padding:6px;font-size:11px">Partager mon code</button><div id="parrainStatus"></div></div></div>
 <div id="param-system" class="param-panel"><h4 style="margin:0">Boutique Système Certifiée</h4><div style="background:#dcfce7;border:2px solid #22c55e;padding:8px;border-radius:10px;font-size:11px"><b>SHOP ONLINE</b> ✔ Certifié<br>Tél: 657181788<br>Email: tomoroland90@gmail.com<br><a href="https://wa.me/237657181788" target="_blank" style="background:#25D366;color:#fff;padding:5px 10px;border-radius:20px;text-decoration:none;font-size:10px">WhatsApp</a></div></div>
@@ -184,6 +192,19 @@ var supabaseClient = window.supabase.createClient('https://cvcgtiykdocjhwanyned.
 var registerRole='client', loginRole='client', allProducts=[], followedBoutiques=[], cart=JSON.parse(localStorage.getItem('shop_cart')||'[]'), wishlist=JSON.parse(localStorage.getItem('shop_wish')||'[]'), viewCounts=JSON.parse(localStorage.getItem('shop_views')||'{}'), chatMessages=JSON.parse(localStorage.getItem('shop_chats')||'{}'), ratings=JSON.parse(localStorage.getItem('shop_ratings')||'{}'), currentDetailProduct=null, selectedRating=0;
 const SYSTEM_PHONE="657181788";
 let SYSTEM_BOUTIQUE_ID=localStorage.getItem('system_boutique_id')||null;
+
+function showToast(msg, type){
+  type = type || 'info';
+  var container=document.getElementById('toastContainer');
+  if(!container){console.log(msg); return;}
+  var toast=document.createElement('div');
+  toast.className='toast '+type;
+  toast.textContent=msg;
+  container.appendChild(toast);
+  setTimeout(function(){toast.classList.add('show');}, 10);
+  setTimeout(function(){toast.classList.remove('show'); setTimeout(function(){if(toast.parentNode) toast.parentNode.removeChild(toast);}, 300);}, 3000);
+}
+
 
 function togglePassword(id){ var i=document.getElementById(id); if(!i) return; i.type=i.type==='password'?'text':'password'; }
 function isSystemBoutique(u){ if(!u) return false; return String(u.phone||'').replace(/\D/g,'').endsWith('657181788'); }
