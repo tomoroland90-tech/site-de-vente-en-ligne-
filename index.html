@@ -254,8 +254,8 @@ function toggleEye(id, el){ const inp=document.getElementById(id); if(!inp) retu
 
 // --- AUTH ---
 let registerRole="client", loginRole="client";
-function selectLoginRole(r){ loginRole=r; document.getElementById('btnClientLogin')?.classList.toggle('active', r==='client'); document.getElementById('btnSellerLogin')?.classList.toggle('active', r==='vendeur'); }
-function selectRegisterRole(r){ registerRole=r; document.getElementById('btnClientRegister')?.classList.toggle('active', r==='client'); document.getElementById('btnSellerRegister')?.classList.toggle('active', r==='vendeur'); document.getElementById('vendeurFields')?.classList.toggle('hidden', r!=='vendeur'); }
+function selectLoginRole(r){ loginRole=r; document.getElementById('btnClientLogin').classList.toggle('active', r==='client'); document.getElementById('btnSellerLogin').classList.toggle('active', r==='vendeur'); }
+function selectRegisterRole(r){ registerRole=r; document.getElementById('btnClientRegister').classList.toggle('active', r==='client'); document.getElementById('btnSellerRegister').classList.toggle('active', r==='vendeur'); document.getElementById('vendeurFields').classList.toggle('hidden', r!=='vendeur'); }
 
 async function register(e){
  e.preventDefault();
@@ -286,8 +286,8 @@ async function login(e){
  setUser(data); showToast('Connexion réussie !','success'); await renderAll();
 }
 async function logout(){ localStorage.removeItem('shoponline_user'); currentUser=null; await renderAll(); showToast('Déconnecté','info'); }
-function showRegister(){ document.getElementById('authBox')?.classList.add('hidden'); document.getElementById('registerBox')?.classList.remove('hidden'); }
-function showLogin(){ document.getElementById('registerBox')?.classList.add('hidden'); document.getElementById('authBox')?.classList.remove('hidden'); }
+function showRegister(){ document.getElementById('authBox').classList.add('hidden'); document.getElementById('registerBox').classList.remove('hidden'); }
+function showLogin(){ document.getElementById('registerBox').classList.add('hidden'); document.getElementById('authBox').classList.remove('hidden'); }
 
 // --- PRODUCTS ---
 function getPromoDiscounts(){ try{return JSON.parse(localStorage.getItem('shop_promo_discounts')||'{}');}catch(e){return {};} }
@@ -436,14 +436,14 @@ function openProductDetail(id){
  <div style="margin-top:10px" class="card"><h4>🏪 Vendeur</h4><div style="display:flex;gap:10px;align-items:center"><img src="${escapeHTML(seller.logo||'https://cdn-icons-png.flaticon.com/512/3135/3135715.png')}" style="width:50px;height:50px;border-radius:50%"><div><b>${escapeHTML(seller.boutique||seller.prenom||'Boutique')}</b><br><small>📍 ${escapeHTML(seller.ville||'')} • ${isGoldBadgeSeller(p.vendeur_id)?'<span class="gold-badge">🏆 Vendeur Or</span>':''}</small></div></div><div style="display:flex;gap:6px;margin-top:8px"><button onclick="openBoutiqueProducts('${p.vendeur_id}')" style="flex:1;background:#2563eb;padding:6px;font-size:11px">Voir boutique</button><button onclick="openChat('${p.vendeur_id}')" style="flex:1;background:#22c55e;padding:6px;font-size:11px">Chat vendeur</button></div></div>
  <div id="detailReviews" style="margin-top:10px"></div>
  </div>`;
- document.getElementById('productDetailModal')?.classList.remove('hidden');
+ document.getElementById('productDetailModal').classList.remove('hidden');
  loadReviewsForProduct(p.id, 'detailReviews');
  // Increment view
  try{ const vues=(p.vues||0)+1; supabaseClient.from('products').update({vues}).eq('id', p.id).then(()=>{}); }catch(e){}
 }
 
 function openBoutiqueProducts(sellerId){
- document.getElementById('productDetailModal')?.classList.add('hidden');
+ document.getElementById('productDetailModal').classList.add('hidden');
  // Filter products by seller
  const sellerProds=allProducts.filter(p=>String(p.vendeur_id)===String(sellerId));
  displayProducts(sellerProds);
@@ -456,7 +456,7 @@ function openNegotiate(id){
  const p=allProducts.find(x=>String(x.id)===String(id)); if(!p) return;
  document.getElementById('negotiateProdName').textContent=`${p.nom} - Prix actuel: ${p.prix}F`;
  document.getElementById('negotiatePrice').value=Math.floor(p.prix*0.9);
- document.getElementById('negotiateModal')?.classList.remove('hidden');
+ document.getElementById('negotiateModal').classList.remove('hidden');
  document.getElementById('negotiateModal').dataset.pid=id;
 }
 async function sendNegotiate(){
@@ -472,7 +472,7 @@ async function sendNegotiate(){
    await supabaseClient.from('notifications').insert([{user_id:p.vendeur_id, type:'negociation', title:`💰 Négociation: ${u.prenom} propose ${price}F pour ${p.nom}`, message:`Client ${u.prenom} ${u.nom} (${u.phone}) propose ${price}F au lieu de ${p.prix}F. Message: ${msg}. Produit ID: ${p.id}. Contact client: +237 ${u.phone}`, from_user_id:u.id, read:false}]);
  }catch(e){}
  showToast(`Proposition ${price}F envoyée au vendeur ! Il va te répondre sur WhatsApp ou Chat`,'success');
- document.getElementById('negotiateModal')?.classList.add('hidden');
+ document.getElementById('negotiateModal').classList.add('hidden');
  // Also open chat
  openChat(p.vendeur_id, `Salut, je propose ${price}F pour ${p.nom}. ${msg}`);
 }
@@ -492,7 +492,7 @@ function isGoldBadgeSeller(sellerId){
 
 function openReviews(pid){
  document.getElementById('reviewModal').dataset.pid=pid;
- document.getElementById('reviewModal')?.classList.remove('hidden');
+ document.getElementById('reviewModal').classList.remove('hidden');
  selectedRating=5;
 }
 function loadReviewsForProduct(pid, containerId){
@@ -518,7 +518,7 @@ async function sendReview(){
  reviews[pid].push(rev);
  localStorage.setItem('shop_reviews', JSON.stringify(reviews));
  showToast('Avis envoyé ! Merci','success');
- document.getElementById('reviewModal')?.classList.add('hidden');
+ document.getElementById('reviewModal').classList.add('hidden');
  document.getElementById('reviewText').value='';
  loadReviewsForProduct(pid, 'detailReviews');
  displayProducts(allProducts);
@@ -758,12 +758,12 @@ async function renderAll(){
  [cartBtn,wishBtn,notifBtn,paramsBtn,chatBtn].forEach(b=>{ if(b) b.style.display='flex'; });
  updateCartBadge(); updateWishBadge();
  await loadProducts(); await loadMyProducts();
- if(u.role==='vendeur'){ document.getElementById('vendeurView')?.classList.remove('hidden'); document.getElementById('clientView')?.classList.add('hidden'); await loadSellerProfile(); } else { document.getElementById('clientView')?.classList.remove('hidden'); document.getElementById('vendeurView')?.classList.add('hidden'); }
+ if(u.role==='vendeur'){ document.getElementById('vendeurView').classList.remove('hidden'); document.getElementById('clientView').classList.add('hidden'); await loadSellerProfile(); } else { document.getElementById('clientView').classList.remove('hidden'); document.getElementById('vendeurView').classList.add('hidden'); }
  updateDiscountDisplay();
 }
 
-function closeModal(id){ const el=document.getElementById(id); if(el) el.classList.add('hidden'); }
-function openParams(){ document.getElementById('paramsModal')?.classList.remove('hidden'); }
+function closeModal(id){ document.getElementById(id)?.classList.add('hidden'); }
+function openParams(){ document.getElementById('paramsModal').classList.remove('hidden'); }
 function loadNotifications(){ /* simplified */ }
 
 async function loadSellerProfile(){
@@ -805,10 +805,10 @@ document.addEventListener('DOMContentLoaded', function(){
  document.getElementById('btnDeconnexion')?.addEventListener('click', logout);
  document.getElementById('logoutProfileBtn')?.addEventListener('click', logout);
  document.getElementById('btnLogout')?.addEventListener('click', logout);
- document.getElementById('profileBtn')?.addEventListener('click', ()=>{ document.getElementById('homePage').style.display='none'; document.getElementById('sellerProfilePage')?.classList.remove('hidden'); loadSellerProfile(); });
- document.getElementById('goLiveBtn')?.addEventListener('click', ()=>{ const u=getUser(); if(!u||u.role!=='vendeur'){ showToast('Vendeur requis','error'); return; } initPeer(); document.getElementById('goLiveModal')?.classList.remove('hidden'); });
- document.getElementById('backHomeBtn')?.addEventListener('click', ()=>{ document.getElementById('sellerProfilePage')?.classList.add('hidden'); document.getElementById('homePage').style.display='block'; });
- document.getElementById('openPublishBtn')?.addEventListener('click', ()=>{ const u=getUser(); if(!u||u.role!=='vendeur'){ showToast('Compte vendeur requis','error'); return; } document.getElementById('publishModal')?.classList.remove('hidden'); });
+ document.getElementById('profileBtn')?.addEventListener('click', ()=>{ document.getElementById('homePage').style.display='none'; document.getElementById('sellerProfilePage').classList.remove('hidden'); loadSellerProfile(); });
+ document.getElementById('goLiveBtn')?.addEventListener('click', ()=>{ const u=getUser(); if(!u||u.role!=='vendeur'){ showToast('Vendeur requis','error'); return; } initPeer(); document.getElementById('goLiveModal').classList.remove('hidden'); });
+ document.getElementById('backHomeBtn')?.addEventListener('click', ()=>{ document.getElementById('sellerProfilePage').classList.add('hidden'); document.getElementById('homePage').style.display='block'; });
+ document.getElementById('openPublishBtn')?.addEventListener('click', ()=>{ const u=getUser(); if(!u||u.role!=='vendeur'){ showToast('Compte vendeur requis','error'); return; } document.getElementById('publishModal').classList.remove('hidden'); });
  document.getElementById('closePublishBtn')?.addEventListener('click', ()=>closeModal('publishModal'));
  document.getElementById('publishForm')?.addEventListener('submit', publishProduct);
  document.getElementById('profileCircle')?.addEventListener('click', ()=>document.getElementById('profilePhoto').click());
@@ -817,18 +817,18 @@ document.addEventListener('DOMContentLoaded', function(){
  document.getElementById('filterCategorie')?.addEventListener('change', searchProducts);
  document.getElementById('filterStatut')?.addEventListener('change', searchProducts);
  document.getElementById('filterVille')?.addEventListener('change', searchProducts);
- document.getElementById('cartBtn')?.addEventListener('click', ()=>{ renderCart(); document.getElementById('cartModal')?.classList.remove('hidden'); });
+ document.getElementById('cartBtn')?.addEventListener('click', ()=>{ renderCart(); document.getElementById('cartModal').classList.remove('hidden'); });
  document.getElementById('closeCartBtn')?.addEventListener('click', ()=>closeModal('cartModal'));
- document.getElementById('wishBtn')?.addEventListener('click', ()=>{ renderWishlist(); document.getElementById('wishlistModal')?.classList.remove('hidden'); });
+ document.getElementById('wishBtn')?.addEventListener('click', ()=>{ renderWishlist(); document.getElementById('wishlistModal').classList.remove('hidden'); });
  document.getElementById('closeWishBtn')?.addEventListener('click', ()=>closeModal('wishlistModal'));
- document.getElementById('notifBtn')?.addEventListener('click', ()=>{ document.getElementById('notifModal')?.classList.remove('hidden'); });
+ document.getElementById('notifBtn')?.addEventListener('click', ()=>{ document.getElementById('notifModal').classList.remove('hidden'); });
  document.getElementById('closeNotifBtn')?.addEventListener('click', ()=>closeModal('notifModal'));
- document.getElementById('paramsBtn')?.addEventListener('click', ()=>{ document.getElementById('paramsModal')?.classList.remove('hidden'); });
+ document.getElementById('paramsBtn')?.addEventListener('click', ()=>{ document.getElementById('paramsModal').classList.remove('hidden'); });
  document.getElementById('closeParamsBtn')?.addEventListener('click', ()=>closeModal('paramsModal'));
  document.querySelectorAll('.param-tab').forEach(btn=>{ btn.addEventListener('click', function(){ switchParamTab(this.dataset.tab); }); });
  document.getElementById('btnPayBasic')?.addEventListener('click', ()=>signalerPaiement('boutique', getDiscountedPrice('basic')));
  document.getElementById('btnPayPro')?.addEventListener('click', ()=>signalerPaiement('premium', getDiscountedPrice('pro')));
- document.getElementById('chatBtn')?.addEventListener('click', ()=>{ if(!currentChatSellerId){ showToast('Ouvre chat depuis un produit','info'); return; } document.getElementById('chatModal')?.classList.remove('hidden'); });
+ document.getElementById('chatBtn')?.addEventListener('click', ()=>{ if(!currentChatSellerId){ showToast('Ouvre chat depuis un produit','info'); return; } document.getElementById('chatModal').classList.remove('hidden'); });
  document.getElementById('closeChatBtn')?.addEventListener('click', ()=>closeModal('chatModal'));
  document.getElementById('chatSendBtn')?.addEventListener('click', sendChat);
  document.getElementById('chatInput')?.addEventListener('keypress', function(e){ if(e.key==='Enter') sendChat(); });
@@ -840,8 +840,8 @@ document.addEventListener('DOMContentLoaded', function(){
  
  document.getElementById('confirmGoLiveBtn')?.addEventListener('click', startLive);
  document.getElementById('cancelGoLiveBtn')?.addEventListener('click', ()=>closeModal('goLiveModal'));
- document.getElementById('closeLiveBtn')?.addEventListener('click', ()=>{ if(isLiveHost) stopLive(); else { document.getElementById('liveModal')?.classList.add('hidden'); liveConnections.forEach(c=>{try{c.close();}catch(e){}}); } });
- document.getElementById('liveLeaveBtn')?.addEventListener('click', ()=>{ if(isLiveHost) stopLive(); else { document.getElementById('liveModal')?.classList.add('hidden'); liveConnections.forEach(c=>{try{c.close();}catch(e){}}); } });
+ document.getElementById('closeLiveBtn')?.addEventListener('click', ()=>{ if(isLiveHost) stopLive(); else { document.getElementById('liveModal').classList.add('hidden'); liveConnections.forEach(c=>{try{c.close();}catch(e){}}); } });
+ document.getElementById('liveLeaveBtn')?.addEventListener('click', ()=>{ if(isLiveHost) stopLive(); else { document.getElementById('liveModal').classList.add('hidden'); liveConnections.forEach(c=>{try{c.close();}catch(e){}}); } });
  document.getElementById('liveStopBtn')?.addEventListener('click', stopLive);
  document.getElementById('liveChatSendBtn')?.addEventListener('click', sendLiveChat);
  document.getElementById('liveChatInput')?.addEventListener('keypress', function(e){ if(e.key==='Enter') sendLiveChat(); });
@@ -889,46 +889,55 @@ function getMyLiveProducts(){
   return allProducts.filter(p=>String(p.vendeur_id)===String(u.id)).slice(0,8);
 }
 
+
 function startLive(){
-  const u=getUser(); if(!u||u.role!=='vendeur'){ showToast('Compte vendeur requis pour LIVE','error'); return; }
-  const roomName=document.getElementById('liveRoomName').value||`${u.boutique||u.prenom} LIVE`;
+  showToast('🚀 Démarrage LIVE...','info');
+  console.log('startLive called');
+  const u=getUser(); 
+  if(!u){ showToast('Connecte-toi d\'abord !','error'); alert('Connecte-toi en tant que vendeur'); return; }
+  if(u.role!=='vendeur'){ showToast('Compte vendeur requis - Tu es '+u.role,'error'); alert('Compte vendeur requis. Rôle actuel: '+u.role); return; }
+  if(typeof Peer==='undefined'){ showToast('PeerJS non chargé - Vérifie internet/adblock','error'); alert('PeerJS non chargé. Désactive AdBlock et recharge.'); return; }
+  const roomNameEl=document.getElementById('liveRoomName');
+  const roomName=(roomNameEl && roomNameEl.value) || `${u.boutique||u.prenom} LIVE`;
   liveRoomId='live_'+u.id+'_'+Date.now().toString(36);
   isLiveHost=true;
-  document.getElementById('goLiveModal')?.classList.add('hidden');
-  document.getElementById('liveModal')?.classList.remove('hidden');
-  document.getElementById('liveTitle').textContent='🔴 '+roomName;
-  document.getElementById('liveSellerName').textContent=`${u.boutique||u.prenom} • ${u.ville||''} • LIVE P2P sans base`;
-  document.getElementById('liveStopBtn').style.display='inline-block';
-  document.getElementById('liveOffline').style.display='none';
-  // Save live room in localStorage for discovery (sans base, juste local)
+  const goModal=document.getElementById('goLiveModal'); if(goModal) goModal.classList.add('hidden');
+  const liveModal=document.getElementById('liveModal'); if(!liveModal){ alert('liveModal introuvable'); return; }
+  liveModal.classList.remove('hidden');
+  const titleEl=document.getElementById('liveTitle'); if(titleEl) titleEl.textContent='🔴 '+roomName;
+  const sellerEl=document.getElementById('liveSellerName'); if(sellerEl) sellerEl.textContent=`${u.boutique||u.prenom} • ${u.ville||''} • LIVE P2P sans base`;
+  const stopBtn=document.getElementById('liveStopBtn'); if(stopBtn) stopBtn.style.display='inline-block';
+  const offlineEl=document.getElementById('liveOffline'); if(offlineEl) offlineEl.style.display='none';
+  // Save live room
   let liveRooms=JSON.parse(localStorage.getItem('shop_live_rooms')||'[]');
-  liveRooms.push({id:liveRoomId, sellerId:u.id, sellerName:u.boutique||u.prenom, title:roomName, ville:u.ville||'', start:Date.now(), peerId: peer ? peer.id : ''});
+  liveRooms.push({id:liveRoomId, sellerId:u.id, sellerName:u.boutique||u.prenom, title:roomName, ville:u.ville||'', start:Date.now(), peerId: ''});
   localStorage.setItem('shop_live_rooms', JSON.stringify(liveRooms));
-  // Update URL ?live=ID sans recharger
   history.replaceState(null,'',`?live=${liveRoomId}`);
-  initPeer();
+  try{ initPeer(); }catch(e){ console.error('initPeer error', e); showToast('Erreur Peer: '+e.message,'error'); }
   // Get camera
-  navigator.mediaDevices.getUserMedia({video:{facingMode:'user'}, audio:true}).then(stream=>{
-    localStream=stream;
-    const video=document.getElementById('liveVideo');
-    video.srcObject=stream;
-    video.style.display='block';
-    document.getElementById('liveRemoteVideo').style.display='none';
-    // Broadcast to existing connections
-    liveConnections.forEach(conn=>{ /* already handled */ });
-  }).catch(err=>{
-    showToast('Caméra refusée - LIVE sans vidéo, chat seulement','info');
-    document.getElementById('liveOffline').style.display='flex';
-  });
+  if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia){
+    navigator.mediaDevices.getUserMedia({video:{facingMode:'user'}, audio:true}).then(stream=>{
+      localStream=stream;
+      const video=document.getElementById('liveVideo');
+      if(video){ video.srcObject=stream; video.style.display='block'; }
+      const remoteVideo=document.getElementById('liveRemoteVideo');
+      if(remoteVideo) remoteVideo.style.display='none';
+    }).catch(err=>{
+      console.error('getUserMedia error', err);
+      showToast('Caméra refusée - LIVE sans vidéo, chat seulement','info');
+      const off=document.getElementById('liveOffline'); if(off) off.style.display='flex';
+    });
+  } else {
+    showToast('getUserMedia non supporté - Utilise Chrome','error');
+  }
   renderLiveProducts(getMyLiveProducts());
   updateLiveBar();
   showToast('🔴 LIVE lancé ! Partage le lien ?live='+liveRoomId,'success');
-  // Save peerId into room
   setTimeout(()=>{
     let rooms=JSON.parse(localStorage.getItem('shop_live_rooms')||'[]');
-    rooms=rooms.map(r=>{ if(r.id===liveRoomId){ r.peerId=peer.id; } return r; });
+    rooms=rooms.map(r=>{ if(r.id===liveRoomId && peer){ r.peerId=peer.id; } return r; });
     localStorage.setItem('shop_live_rooms', JSON.stringify(rooms));
-  }, 1000);
+  }, 1500);
 }
 
 function stopLive(){
@@ -952,7 +961,7 @@ function joinLive(roomId, peerId){
   setTimeout(()=>{ const btn=document.getElementById('requestToJoinLiveBtn'); if(btn){ btn.style.display='block'; btn.textContent='🎤 Demander à monter en LIVE'; btn.disabled=false; } }, 1000);
   liveRoomId=roomId;
   isLiveHost=false;
-  document.getElementById('liveModal')?.classList.remove('hidden');
+  document.getElementById('liveModal').classList.remove('hidden');
   document.getElementById('liveTitle').textContent='🔴 LIVE en cours - '+roomId;
   document.getElementById('liveStopBtn').style.display='none';
   document.getElementById('liveVideo').style.display='none';
