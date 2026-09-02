@@ -1067,33 +1067,54 @@ function productHTML(p, index){
  const images = p.images ? (Array.isArray(p.images)?p.images:[p.image]) : [p.image||'https://via.placeholder.com/300'];
  const mainImage=images[0]||'https://via.placeholder.com/300';
  const seller=p.seller||{};
+ const t=formatDateTime(p.created_at);
  const isBoosted=boosts[p.id] && new Date(boosts[p.id])>new Date();
+ const isSponsored = (index%6===3) && !isBoosted; // Pub tous les 6 produits
+ const commission= (p.prix*0.02).toFixed(0);
+ const vendeurReçoit= (p.prix*0.98).toFixed(0);
+ const fraisLivraison=p.frais_livraison||2000;
+ const livraisonGratuite=p.livraison_gratuite||null;
+ const statut=p.statut||'Neuf';
  const stock=p.stock||10;
- const inStock = stock>0;
- // Fake discount for Kingdom look - 10% to 50% random but stable based on id
- const discount = p.discount || ( (parseInt(String(p.id).slice(-2),10) % 5) * 10 + 10 ); // 10-50%
- const hasDiscount = discount >= 20;
- const oldPrice = hasDiscount ? Math.round(p.prix * 100 / (100 - discount)) : 0;
- const isBestSeller = (index % 3 === 0) || (p.vues||0) > 20;
  const avgRating = getAvgRating(p.id);
- 
+ const reviewCount = getReviewCount(p.id);
+ const isGoldSeller = isGoldBadgeSeller(p.vendeur_id);
+
  return `
- <div class="product" data-pid="${p.id}" onclick="openProductDetail('${p.id}')">
-   ${hasDiscount?`<div class="badge-discount">-${discount}%</div>`:''}
-   ${isBoosted?'<div style="position:absolute;top:8px;right:8px;background:#FF9800;color:#fff;padding:2px 6px;border-radius:6px;font-size:9px;font-weight:800;z-index:2">🚀 BOOST</div>':''}
-   <img src="${escapeHTML(mainImage)}" alt="${escapeHTML(p.nom)}" loading="lazy">
-   <div class="product-info-kingdom">
-     <div class="product-title-kingdom">${escapeHTML(p.nom||'Produit')}</div>
-     <div class="product-price-kingdom">${Number(p.prix||0).toLocaleString('fr-FR')} FCFA ${hasDiscount?`<span class="product-price-old">${Number(oldPrice).toLocaleString('fr-FR')}</span>`:''}</div>
-     <div style="display:flex;flex-direction:column;gap:2px;margin-top:2px">
-       ${inStock?`<div class="stock-badge-kingdom"><span style="width:6px;height:6px;background:#16a34a;border-radius:50%;display:inline-block"></span> En stock</div>`:`<div style="color:#ef4444;font-size:10px">Rupture</div>`}
-       ${isBestSeller?`<div class="meilleure-vente-badge">⭐ Meilleure vente</div>`:''}
+ <div class="product" data-pid="${p.id}">
+   ${isBoosted?'<div class="badge-boost">🚀 BOOSTÉ 24H</div>':''}
+   ${isSponsored?'<div class="sponsored-label">Sponsorisé</div>':''}
+   ${p.badge?`<div class="badge-overlay ${p.badge==='Nouveau'?'badge-nouveau':p.badge==='Promo'?'badge-promo':'badge-stock'}">${escapeHTML(p.badge)}</div>`:''}
+   <div class="badge-views">👁️ ${p.vues||0}</div>
+   ${fraisLivraison<=0|| (livraisonGratuite && p.prix>=livraisonGratuite) ? '<div class="badge-livraison">🚚 Livraison gratuite</div>' : `<div class="badge-livraison">🚚 ${fraisLivraison}F</div>`}
+   <div class="product-header" data-seller="${p.vendeur_id}">
+     <img src="${escapeHTML(seller.logo||'https://cdn-icons-png.flaticon.com/512/3135/3135715.png')}">
+     <div style="flex:1;text-align:left"><div style="font-weight:bold;font-size:12px">${escapeHTML(seller.boutique||seller.prenom||'Boutique')} ${isGoldSeller?'<span class="gold-badge">🏆 Or</span>':''}</div><div style="font-size:10px;color:#666">📍 ${escapeHTML(seller.ville||'')} • ${escapeHTML(statut)} • Stock: ${stock}</div></div>
+     <div style="font-size:10px">⭐ ${avgRating} (${reviewCount})</div>
+   </div>
+   <div class="carousel" onclick="openProductDetail('${p.id}')">
+     ${images.map((img,i)=>`<img src="${escapeHTML(img)}" class="${i===0?'active':''}" alt="${escapeHTML(p.nom)}">`).join('')}
+     ${images.length>1?`<div class="carousel-dots">${images.map((_,i)=>`<div class="dot ${i===0?'active':''}"></div>`).join('')}</div>`:''}
+   </div>
+   <div style="padding:8px;text-align:left">
+     <div style="font-weight:bold;font-size:13px">${escapeHTML(p.nom||'Produit')} ${statut==='Occasion'?'♻️':statut==='Sur commande'?'📦':'✨'}</div>
+     <div style="font-size:11px;color:#666">⏰ ${t.duree} • ${t.full}</div>
+     <div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px"><b style="color:#ef4444">${Number(p.prix||0).toLocaleString('fr-FR')} FCFA</b><small style="font-size:9px;color:#666">Vendeur: ${vendeurReçoit}F<br>Comm: ${commission}F (2%)</small></div>
+     ${livraisonGratuite?`<small style="font-size:9px;color:#22c55e">Livraison gratuite dès ${livraisonGratuite}F</small>`:''}
+     <div style="display:flex;gap:4px;margin-top:6px;flex-wrap:wrap">
+       <button onclick="buyProduct('${p.id}')" style="flex:1;background:#22c55e;padding:6px;font-size:11px">🛒 Commander + Facture PDF</button>
+       <button onclick="openNegotiate('${p.id}')" style="flex:1;background:#f59e0b;padding:6px;font-size:11px">💰 Négocier prix</button>
      </div>
-     <button class="btn-add-cart-kingdom" onclick="event.stopPropagation(); addToCart('${p.id}'); event.preventDefault();"><span>🛒</span> Ajouter au panier</button>
+     <div style="display:flex;gap:4px;margin-top:4px">
+       <button onclick="addToCart('${p.id}')" style="flex:1;background:#fff;color:#2563eb;border:1px solid #2563eb;padding:5px;font-size:10px">🛒 Panier</button>
+       <button onclick="addToWishlist('${p.id}')" style="flex:1;background:#fff;color:#ef4444;border:1px solid #fecaca;padding:5px;font-size:10px">❤️ Wishlist</button>
+       <button onclick="openChat('${p.vendeur_id}')" style="flex:1;background:#fff;color:#111;border:1px solid #ddd;padding:5px;font-size:10px">💬 Chat</button>
+       <button onclick="openReviews('${p.id}')" style="flex:1;background:#fff;color:#f59e0b;border:1px solid #fcd34d;padding:5px;font-size:10px">⭐ Avis (${reviewCount})</button>
+     </div>
+     <button onclick="boostProduct('${p.id}')" style="background:var(--degrade-gold);padding:5px;font-size:10px;margin-top:4px">🚀 Booster 500F/24h (250F Premium)</button>
    </div>
  </div>`;
 }
-
 
 function displayProducts(products){
  const container=document.getElementById('products');
@@ -2094,15 +2115,6 @@ setTimeout(initAllImprovements,2000);
 <div id="kycModal" class="modal hidden"><div class="modal-content kyc-modal-content" style="max-width:450px"><h3>🔵 Vérification Badge Bleu</h3><p style="font-size:12px">Badge bleu = +50% confiance</p><div style="background:#f0f7ff;padding:10px;border-radius:8px;border:1px solid #3b82f6;margin:8px 0;font-size:11px">✓ Haut recherches<br>✓ Badge bleu<br>✓ Support prioritaire</div><input type="text" id="kycNom" placeholder="Nom complet CNI"><input type="text" id="kycCNI" placeholder="Numéro CNI"><input type="file" id="kycPhoto" accept="image/*"><textarea id="kycAdresse" placeholder="Adresse boutique"></textarea><button onclick="submitKYC()">🔵 Demander vérification</button><button onclick="document.getElementById('kycModal').classList.add('hidden')" style="background:#6b7280 !important">Annuler</button></div></div>
 <div id="statsModal" class="modal hidden"><div class="modal-content" style="max-width:700px"><h3>📊 Stats Boutique</h3><div class="stats-grid"><div class="stat-card"><div class="stat-value" id="statVentes">0</div><div class="stat-label">Ventes</div></div><div class="stat-card"><div class="stat-value" id="statVues">0</div><div class="stat-label">Vues</div></div><div class="stat-card"><div class="stat-value" id="statRevenus">0F</div><div class="stat-label">Revenus</div></div><div class="stat-card"><div class="stat-value" id="statNote">0★</div><div class="stat-label">Note</div></div></div><div class="chart-container" id="salesChart"><b style="font-size:12px">📈 Ventes 7 jours</b><div id="chartBars" style="position:relative;height:150px;margin-top:10px"></div></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div class="card" style="padding:10px"><b style="font-size:12px">🔥 Top produit</b><div id="topProduct" style="font-size:11px;margin-top:6px">Aucun</div></div><div class="card" style="padding:10px"><b style="font-size:12px">📍 Top ville</b><div id="topCity" style="font-size:11px;margin-top:6px">Douala</div></div></div><button onclick="document.getElementById('statsModal').classList.add('hidden')" style="background:#6b7280 !important">Fermer</button></div></div>
 <div id="deliveryModal" class="modal hidden"><div class="modal-content" style="max-width:450px"><h3>🚚 Livreur</h3><div id="deliveryOptions"><div class="delivery-option selected" onclick="selectDelivery('express')"><b>⚡ Express 2h - 2000F</b></div><div class="delivery-option" onclick="selectDelivery('standard')"><b>📦 Standard 24h - 1000F</b></div><div class="delivery-option" onclick="selectDelivery('yango')"><b>🚕 Yango - Prix Yango</b></div><div class="delivery-option" onclick="selectDelivery('retrait')"><b>🏪 Retrait gratuit</b></div></div><input type="text" id="deliveryAddress" placeholder="Adresse exacte"><input type="tel" id="deliveryPhone" placeholder="Téléphone"><button onclick="confirmDelivery()">✅ Confirmer</button><button onclick="document.getElementById('deliveryModal').classList.add('hidden')" style="background:#6b7280 !important">Annuler</button></div></div>
-
-
-<div class="bottom-nav-kingdom" id="bottomNav">
-  <a href="#" class="active" onclick="window.scrollTo({top:0, behavior:'smooth'}); document.querySelectorAll('.bottom-nav-kingdom a').forEach(a=>a.classList.remove('active')); this.classList.add('active'); return false;"><span class="nav-icon">🏠</span><span>Accueil</span></a>
-  <a href="#" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'}); document.querySelectorAll('.bottom-nav-kingdom a').forEach(a=>a.classList.remove('active')); this.classList.add('active'); return false;"><span class="nav-icon">📦</span><span>Produit</span></a>
-  <a href="#" onclick="const sellers={}; allProducts.forEach(p=>{if(p.seller&&p.seller.boutique)sellers[p.vendeur_id]=p.seller;}); const container=document.getElementById('products'); const html=Object.values(sellers).map(s=>`<div class=\'product\' style=\'padding:10px;text-align:center\'><img src=\'${s.logo||'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'}\' style=\'width:60px;height:60px;border-radius:50%;margin:0 auto 8px\'><b style=\'font-size:12px\'>${s.boutique||s.prenom}</b><br><small style=\'font-size:10px;color:#666\'>📍 ${s.ville||''}</small><br><button class=\'btn-add-cart-kingdom\' style=\'margin-top:8px\' onclick=\'openBoutiqueProducts(\\'${s.id||''}\\')\'>Voir boutique</button></div>`).join(''); container.innerHTML=html||'<p style=\'grid-column:1/-1;text-align:center;padding:20px;background:#fff;border-radius:12px\'>Aucune boutique</p>'; window.scrollTo({top:0, behavior:'smooth'}); document.querySelectorAll('.bottom-nav-kingdom a').forEach(a=>a.classList.remove('active')); this.classList.add('active'); return false;"><span class="nav-icon">🏪</span><span>Boutiques</span></a>
-  <a href="#" onclick="openSellerProfile(); document.querySelectorAll('.bottom-nav-kingdom a').forEach(a=>a.classList.remove('active')); this.classList.add('active'); return false;"><span class="nav-icon">👤</span><span>Compte</span></a>
-</div>
-<style>body{padding-bottom:70px !important}</style>
 
 </body>
 </html>
