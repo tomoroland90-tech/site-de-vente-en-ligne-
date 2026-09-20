@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+<meta name="theme-color" content="#16a34a">
+<link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3081/3081559.png">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgdmlld0JveD0iMCAwIDQ4IDQ4Ij4KPHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiByeD0iMTIiIGZpbGw9IiNkYzI2MjYiLz4KPHBhdGggZD0iTTE0IDE0IEwzNCAxNCBMMzIgMzQgTDE2IDM0IFoiIGZpbGw9IndoaXRlIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjEiLz4KPHRleHQgeD0iMjQiIHk9IjMwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtd2VpZ2h0PSI5MDAiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiNkYzI2MjYiIHRleHQtYW5jaG9yPSJtaWRkbGUiPlM8L3RleHQ+Cjwvc3ZnPg==">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgdmlld0JveD0iMCAwIDQ4IDQ4Ij48cmVjdCB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHJ4PSIxMiIgZmlsbD0iI2RjMjYyNiIvPjx0ZXh0IHg9IjI0IiB5PSIzMiIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXdlaWdodD0iOTAwIiBmb250LXNpemU9IjIyIiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+UzwvdGV4dD48L3N2Zz4=">
-<link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgdmlld0JveD0iMCAwIDQ4IDQ4Ij48cmVjdCB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHJ4PSIxMiIgZmlsbD0iI2RjMjYyNiIvPjx0ZXh0IHg9IjI0IiB5PSIzMiIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXdlaWdodD0iOTAwIiBmb250LXNpemU9IjIyIiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+UzwvdGV4dD48L3N2Zz4=">
-<link rel="shortcut icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgdmlld0JveD0iMCAwIDQ4IDQ4Ij48cmVjdCB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHJ4PSIxMiIgZmlsbD0iI2RjMjYyNiIvPjx0ZXh0IHg9IjI0IiB5PSIzMiIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXdlaWdodD0iOTAwIiBmb250LXNpemU9IjIyIiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+UzwvdGV4dD48L3N2Zz4=">
-<meta name="theme-color" content="#dc2626">
+
+
+
+
+<link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3081/3081559.png">
+
+
 
 <title>SHOP ONLINE - 100% GRATUIT - Cameroun</title>
 
@@ -229,270 +233,7 @@ header{display:flex;justify-content:space-between;align-items:center;padding:10p
 .btn-add-cart-kingdom:hover{background:linear-gradient(135deg,#FB8C00,#F57C00) !important; transform:scale(1.02) !important}
 
 /* Bottom nav like Kingdom Market */
-.bottom-nav-kingdom{
-  position:fixed !important;
-  bottom:0 !important;
-  left:0 !important;
-  right:0 !important;
-  background:#fff !important;
-  border-top:1px solid #eee !important;
-  display:flex !important;
-  justify-content:space-around !important;
-  padding:6px 0 calc(6px + env(safe-area-inset-bottom)) 0 !important;
-  z-index:1000 !important;
-  box-shadow:0 -2px 10px rgba(0,0,0,.08) !important;
-}
-.bottom-nav-kingdom a{
-  display:flex !important;
-  flex-direction:column !important;
-  align-items:center !important;
-  gap:2px !important;
-  font-size:10px !important;
-  color:#999 !important;
-  text-decoration:none !important;
-  padding:4px 12px !important;
-  border-radius:8px !important;
-  transition:.2s !important;
-}
-.bottom-nav-kingdom a.active{
-  color:#FF9800 !important;
-  background:#fff8e1 !important;
-}
-.bottom-nav-kingdom a .nav-icon{
-  font-size:20px !important;
-}
 
-/* Header Kingdom */
-.header-kingdom{
-  background:#fff !important;
-  padding:8px 12px !important;
-  display:flex !important;
-  align-items:center !important;
-  justify-content:space-between !important;
-  box-shadow:0 1px 6px rgba(0,0,0,.08) !important;
-  position:sticky !important;
-  top:0 !important;
-  z-index:100 !important;
-}
-.header-kingdom .logo-text{
-  color:#FF9800 !important;
-  font-weight:800 !important;
-  font-size:16px !important;
-}
-.icon-circle{
-  width:36px !important;
-  height:36px !important;
-  border-radius:50% !important;
-  background:#f5f5f5 !important;
-  display:flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-  font-size:14px !important;
-  cursor:pointer !important;
-  border:1px solid #eee !important;
-}
-
-/* Search bar Kingdom */
-.search-bar-kingdom{
-  display:flex !important;
-  align-items:center !important;
-  background:#f5f5f5 !important;
-  border-radius:24px !important;
-  padding:4px 4px 4px 14px !important;
-  margin:10px !important;
-  border:1px solid #eee !important;
-}
-.search-bar-kingdom input{
-  flex:1 !important;
-  border:none !important;
-  background:transparent !important;
-  outline:none !important;
-  font-size:13px !important;
-  padding:8px 0 !important;
-  margin:0 !important;
-}
-.search-bar-kingdom button{
-  background:#FF9800 !important;
-  border:none !important;
-  border-radius:50% !important;
-  width:36px !important;
-  height:36px !important;
-  min-width:36px !important;
-  min-height:36px !important;
-  display:flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-  color:#fff !important;
-  cursor:pointer !important;
-}
-
-/* Sections */
-.section-kingdom{
-  background:#fff !important;
-  margin:8px 0 !important;
-  padding:10px !important;
-  border-radius:12px !important;
-}
-.section-title-kingdom{
-  font-size:14px !important;
-  font-weight:800 !important;
-  margin:0 0 8px 0 !important;
-  display:flex !important;
-  align-items:center !important;
-  gap:6px !important;
-}
-
-/* --- ALL BUTTONS RED --- */
-button, .nav-btn, .backBtn, .editProfileBtn, .seller-profile-btn, .roleButtons button, .seller-actions button, .edit-cover-btn, .photo-edit-btn, .close-profile {
-  background: #dc2626 !important;
-  background-color: #dc2626 !important;
-  background-image: none !important;
-  color: #ffffff !important;
-  border: 2px solid #b91c1c !important;
-  font-weight: bold !important;
-}
-button:hover, .nav-btn:hover {
-  background: #b91c1c !important;
-  background-color: #b91c1c !important;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(220,38,38,.4) !important;
-}
-button:active {
-  background: #991b1b !important;
-  transform: translateY(0);
-}
-/* Specific overrides that were green/blue */
-#liveCamBtn, #liveMicBtn, #liveSwitchBtn, .editProfileBtn, .seller-profile-btn, .verified-badge, .badge-nouveau, .badge-boost, .badge-livraison {
-  background: #dc2626 !important;
-  background-color: #dc2626 !important;
-}
-/* Keep close buttons distinct but still red */
-.close-profile {
-  background: #dc2626 !important;
-  color: #fff !important;
-}
-/* Cart/wish/chat icons keep red border but white bg becomes red on hover handled above */
-/* Toast success/error/info all red */
-.toast.success, .toast.info, .toast.error {
-  background: #dc2626 !important;
-  background-color: #dc2626 !important;
-  color: #fff !important;
-  border-left: 4px solid #991b1b !important;
-}
-
-
-/* --- RESPONSIVE NAVIGATION FIX - NO OVERFLOW --- */
-header{
-  flex-wrap:wrap !important;
-  gap:8px !important;
-  overflow:hidden !important;
-  max-width:100vw !important;
-}
-#homePage{
-  max-width:100vw !important;
-  overflow-x:hidden !important;
-}
-
-/* Desktop nav */
-.nav-right{
-  display:flex !important;
-  align-items:center !important;
-  gap:8px !important;
-  flex-wrap:wrap !important;
-  max-width:100% !important;
-  justify-content:flex-end !important;
-}
-
-/* Mobile - header becomes 2 rows */
-@media (max-width: 768px){
-  header{
-    padding:8px 10px !important;
-    gap:6px !important;
-    position:sticky !important;
-    top:0 !important;
-    z-index:100 !important;
-  }
-  header > div:first-child{
-    flex:1 1 auto !important;
-    min-width:0 !important;
-  }
-  header h2{
-    font-size:15px !important;
-    white-space:nowrap !important;
-    overflow:hidden !important;
-    text-overflow:ellipsis !important;
-  }
-  header h2 span{
-    font-size:8px !important;
-  }
-  
-  /* Nav-right: grid layout on mobile to avoid overflow */
-  .nav-right{
-    gap:5px !important;
-    width:100% !important;
-    justify-content:flex-start !important;
-    order:2 !important;
-    flex-basis:100% !important;
-    display:grid !important;
-    grid-template-columns:repeat(auto-fit, minmax(40px, 1fr)) !important;
-    max-width:100% !important;
-  }
-  
-  /* Make all nav elements small and equal */
-  .nav-btn{
-    padding:6px 8px !important;
-    font-size:10px !important;
-    min-height:32px !important;
-    white-space:nowrap !important;
-    overflow:hidden !important;
-    text-overflow:ellipsis !important;
-    grid-column: span 2 !important;
-  }
-  
-  .icon-btn{
-    width:38px !important;
-    height:38px !important;
-    min-width:38px !important;
-    min-height:38px !important;
-    font-size:14px !important;
-    padding:0 !important;
-    display:flex !important;
-    align-items:center !important;
-    justify-content:center !important;
-  }
-  
-  .seller-profile{
-    width:36px !important;
-    height:36px !important;
-    min-width:36px !important;
-    min-height:36px !important;
-  }
-  
-  /* Ensure no horizontal scroll */
-  body{
-    overflow-x:hidden !important;
-    max-width:100vw !important;
-    padding:0 !important;
-  }
-  
-  /* Search filters stack without overflow */
-  #homePage > div[style*="display:flex"]{
-    flex-wrap:wrap !important;
-    gap:6px !important;
-    max-width:100% !important;
-  }
-  
-  #searchProduct{
-    flex:1 1 100% !important;
-    min-width:100% !important;
-    max-width:100% !important;
-  }
-  #filterCategorie, #filterStatut, #filterVille{
-    flex:1 1 calc(50% - 6px) !important;
-    min-width:calc(50% - 6px) !important;
-    max-width:calc(50% - 6px) !important;
-  }
-}
 
 /* Very small phones 320-400px */
 @media (max-width: 480px){
@@ -739,11 +480,19 @@ button:hover{background:#b91c1c !important}
 }
 </style>
 
+
+<style>
+.param-panel.hidden{display:none !important}
+.param-panel{display:block; animation:fadeIn .3s}
+@keyframes fadeIn{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:translateY(0)}}
+#paramsSelect:focus{border-color:#16a34a !important; box-shadow:0 0 0 3px rgba(22,163,74,.2)}
+</style>
+
 </head>
 <body>
 
 <header>
-<div style="display:flex;align-items:center;gap:10px"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgdmlld0JveD0iMCAwIDQ4IDQ4Ij4KPHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiByeD0iMTIiIGZpbGw9IiNkYzI2MjYiLz4KPHBhdGggZD0iTTE0IDE0IEwzNCAxNCBMMzIgMzQgTDE2IDM0IFoiIGZpbGw9IndoaXRlIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjEiLz4KPHRleHQgeD0iMjQiIHk9IjMwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtd2VpZ2h0PSI5MDAiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiNkYzI2MjYiIHRleHQtYW5jaG9yPSJtaWRkbGUiPlM8L3RleHQ+Cjwvc3ZnPg==" alt="Logo" style="width:42px;height:42px;border-radius:12px;background:#fff;padding:3px;border:2px solid #16a34a;box-shadow:0 2px 8px rgba(0,0,0,.15)"><h2 style="margin:0">SHOP ONLINE</h2><span style="background:#facc15;color:#111;padding:2px 6px;border-radius:10px;font-size:9px;font-weight:900">ULTIMATE</span></div>
+<div style="display:flex;align-items:center;gap:10px"><img src="container:///mnt/data/logo-rouge-48.png" alt="Logo" style="width:42px;height:42px;border-radius:12px;background:#fff;padding:3px;border:2px solid #16a34a;box-shadow:0 2px 8px rgba(0,0,0,.15)"><h2 style="margin:0">SHOP ONLINE</h2><span style="background:#facc15;color:#111;padding:2px 6px;border-radius:10px;font-size:9px;font-weight:900">ULTIMATE</span></div>
 <div class="nav-right">
 <button class="nav-btn" id="btnConnexion">Connexion</button>
 <button class="nav-btn" id="btnDeconnexion" style="display:none;background:#fee2e2;color:#ef4444">Déconnexion</button>
@@ -827,7 +576,7 @@ button:hover{background:#b91c1c !important}
 <!-- BOUTIQUES A LA UNE PREMIUM -->
 <div id="featuredBoutiques" class="card" style="background:linear-gradient(135deg,#fffbeb,#fef3c7);border:2px solid #f59e0b;display:none"><h4 style="margin:0 0 8px;color:#d97706">⭐ Boutiques à la une - PREMIUM 10000F</h4><div id="featuredList" style="display:flex;gap:10px;overflow:auto"></div></div>
 
-<div id="authBox" class="card" style="max-width:400px;margin:20px auto;"><div style="text-align:center;margin-bottom:10px"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgdmlld0JveD0iMCAwIDQ4IDQ4Ij4KPHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiByeD0iMTIiIGZpbGw9IiNkYzI2MjYiLz4KPHBhdGggZD0iTTE0IDE0IEwzNCAxNCBMMzIgMzQgTDE2IDM0IFoiIGZpbGw9IndoaXRlIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjEiLz4KPHRleHQgeD0iMjQiIHk9IjMwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtd2VpZ2h0PSI5MDAiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiNkYzI2MjYiIHRleHQtYW5jaG9yPSJtaWRkbGUiPlM8L3RleHQ+Cjwvc3ZnPg==" style="width:50px;height:50px;border-radius:12px;background:#fff;padding:4px;border:2px solid #dc2626"></div><h3 style="text-align:center;">Connexion</h3>
+<div id="authBox" class="card" style="max-width:400px;margin:20px auto;"><div style="text-align:center;margin-bottom:10px"><img src="https://cdn-icons-png.flaticon.com/512/3081/3081559.png" style="width:50px;height:50px;border-radius:12px;background:#fff;padding:4px;border:2px solid #dc2626"></div><h3 style="text-align:center;">Connexion</h3>
 <div id="loginError" class="error-box"></div>
 <form id="loginForm">
 <div class="roleButtons"><button type="button" id="btnClientLogin" class="active">👤 Client</button><button type="button" id="btnSellerLogin">🏪 Boutique</button></div>
@@ -838,7 +587,7 @@ button:hover{background:#b91c1c !important}
 <p style="text-align:center;margin-top:10px;font-size:13px;">Pas de compte ? <a id="showRegisterLink" style="cursor:pointer;color:#2563eb">S'inscrire ici</a></p>
 </div>
 
-<div id="registerBox" class="card hidden" style="max-width:450px;margin:20px auto;"><div style="text-align:center;margin-bottom:10px"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgdmlld0JveD0iMCAwIDQ4IDQ4Ij4KPHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiByeD0iMTIiIGZpbGw9IiNkYzI2MjYiLz4KPHBhdGggZD0iTTE0IDE0IEwzNCAxNCBMMzIgMzQgTDE2IDM0IFoiIGZpbGw9IndoaXRlIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjEiLz4KPHRleHQgeD0iMjQiIHk9IjMwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtd2VpZ2h0PSI5MDAiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiNkYzI2MjYiIHRleHQtYW5jaG9yPSJtaWRkbGUiPlM8L3RleHQ+Cjwvc3ZnPg==" style="width:50px;height:50px;border-radius:12px;background:#fff;padding:4px;border:2px solid #dc2626"></div><h3 style="text-align:center;">Inscription</h3>
+<div id="registerBox" class="card hidden" style="max-width:450px;margin:20px auto;"><div style="text-align:center;margin-bottom:10px"><img src="https://cdn-icons-png.flaticon.com/512/3081/3081559.png" style="width:50px;height:50px;border-radius:12px;background:#fff;padding:4px;border:2px solid #dc2626"></div><h3 style="text-align:center;">Inscription</h3>
 <div id="registerError" class="error-box"></div>
 <form id="registerForm">
 <div class="roleButtons"><button type="button" id="btnClientRegister" class="active">👤 Client</button><button type="button" id="btnSellerRegister">🏪 Boutique</button></div>
@@ -913,69 +662,94 @@ button:hover{background:#b91c1c !important}
 <div id="notifModal" class="modal hidden"><div class="modal-content"><h3>🔔 Notifications (propositions prix, boosts, avis)</h3><div id="notifContent"></div><button id="closeNotifBtn" style="background:#6b7280">Fermer</button></div></div>
 
 
-<div id="paramsModal" class="modal hidden"><div class="modal-content" style="max-width:900px; max-height:92vh; overflow-y:auto"><h3>⚙️ Paramètres SHOP ONLINE - Tout Gratuit</h3>
-<div style="display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap; position:sticky; top:0; background:#fff; padding:8px 0; z-index:2; border-bottom:2px solid #f0f0f0">
-<button class="param-tab active" data-tab="abonnement" style="width:auto;padding:6px 10px;font-size:11px">🎉 Gratuit</button>
-<button class="param-tab" data-tab="profil" style="width:auto;padding:6px 10px;font-size:11px">👤 Profil</button>
-<button class="param-tab" data-tab="notifications" style="width:auto;padding:6px 10px;font-size:11px">🔔 Notifs</button>
-<button class="param-tab" data-tab="apparence" style="width:auto;padding:6px 10px;font-size:11px">🌙 Apparence</button>
-<button class="param-tab" data-tab="livraison" style="width:auto;padding:6px 10px;font-size:11px">🚚 Livraison</button>
-<button class="param-tab" data-tab="stats" style="width:auto;padding:6px 10px;font-size:11px">📊 Stats</button>
-<button class="param-tab" data-tab="reponses" style="width:auto;padding:6px 10px;font-size:11px">💬 Réponses</button>
-<button class="param-tab" data-tab="securite" style="width:auto;padding:6px 10px;font-size:11px">🔒 Sécurité</button>
-<button class="param-tab" data-tab="preferences" style="width:auto;padding:6px 10px;font-size:11px">❤️ Préf</button>
-<button class="param-tab" data-tab="commandes" style="width:auto;padding:6px 10px;font-size:11px">🛒 Commandes</button>
-<button class="param-tab" data-tab="avis" style="width:auto;padding:6px 10px;font-size:11px">⭐ Avis</button>
-<button class="param-tab" data-tab="personnalisation" style="width:auto;padding:6px 10px;font-size:11px">🎨 Perso</button>
-<button class="param-tab" data-tab="reseaux" style="width:auto;padding:6px 10px;font-size:11px">📲 Réseaux</button>
-<button class="param-tab" data-tab="aide" style="width:auto;padding:6px 10px;font-size:11px">🆘 Aide</button>
-<button class="param-tab" data-tab="donnees" style="width:auto;padding:6px 10px;font-size:11px">🗑️ Données</button>
-<button class="param-tab" data-tab="promo" style="width:auto;padding:6px 10px;font-size:11px">🎁 Promo</button>
-<button class="param-tab" data-tab="partage" style="width:auto;padding:6px 10px;font-size:11px">🔗 Partage</button>
-<button class="param-tab" data-tab="factures" style="width:auto;padding:6px 10px;font-size:11px">📜 Factures</button>
-<button class="param-tab" data-tab="boost" style="width:auto;padding:6px 10px;font-size:11px">🚀 Boost</button>
-<button class="param-tab" data-tab="pwa" style="width:auto;padding:6px 10px;font-size:11px;background:#16a34a !important;color:#fff !important">📲 App</button>
-</div>
 
-<div id="param-abonnement" class="param-panel"><div style="background:linear-gradient(135deg,#dcfce7,#f0fdf4);border:2px solid #16a34a;padding:12px;border-radius:12px;text-align:center">🎉 <b>TOUT EST GRATUIT !</b><br><small>Publie illimité - 0% commission</small></div><div id="abonnementStatus"></div>
-<div style="margin-top:12px"><div style="border:3px solid #16a34a;background:#f0fdf4;padding:16px;border-radius:16px;text-align:center"><h3>🌟 TOUT ILLIMITÉ GRATUIT</h3><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px"><div style="background:#fff;padding:8px;border-radius:8px">✅ Produits illimités</div><div style="background:#fff;padding:8px;border-radius:8px">✅ 5 photos + vidéo</div><div style="background:#fff;padding:8px;border-radius:8px">✅ Badge vérifié</div><div style="background:#fff;padding:8px;border-radius:8px">✅ Boost gratuit</div><div style="background:#fff;padding:8px;border-radius:8px">✅ Chat interne</div><div style="background:#fff;padding:8px;border-radius:8px">✅ 0% commission</div></div></div></div></div>
+<div id="paramsModal" class="modal hidden" style="background:#fff !important; z-index:9999 !important"><div class="modal-content" style="max-width:100% !important; width:100% !important; height:100vh !important; max-height:100vh !important; border-radius:0 !important; margin:0 !important; padding:0 !important; display:flex; flex-direction:column; background:#f8fafc !important; overflow:hidden !important">
+  <!-- HEADER FIXE -->
+  <div style="background:#dc2626; color:#fff; padding:12px 16px; display:flex; justify-content:space-between; align-items:center; position:sticky; top:0; z-index:10; box-shadow:0 2px 10px rgba(0,0,0,.2)">
+    <div style="display:flex; align-items:center; gap:10px"><span style="font-size:22px">⚙️</span><b style="font-size:16px">Paramètres SHOP ONLINE</b></div>
+    <button id="closeParamsBtn" onclick="document.getElementById('paramsModal').classList.add('hidden')" style="width:40px !important; height:40px !important; background:#fff !important; color:#dc2626 !important; border-radius:50% !important; font-size:20px !important; font-weight:900 !important; border:none !important; min-height:40px !important; padding:0 !important">✕</button>
+  </div>
 
-<div id="param-profil" class="param-panel hidden"><h4>👤 Mon Profil</h4><div style="background:#f9fafb;padding:12px;border-radius:10px"><img id="paramProfileImg" src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" style="width:60px;height:60px;border-radius:50%"><br><input type="text" id="editNom" placeholder="Nom"><input type="text" id="editPrenom" placeholder="Prénom" style="margin-top:6px"><input type="text" id="editBoutique" placeholder="Boutique" style="margin-top:6px"><input type="text" id="editVille" placeholder="Ville" style="margin-top:6px"><input type="tel" id="editWhatsapp" placeholder="WhatsApp" style="margin-top:6px"><textarea id="editDesc" placeholder="Description" rows="2" style="margin-top:6px"></textarea><button onclick="saveProfil()" style="background:#16a34a;margin-top:8px">💾 Sauvegarder</button></div></div>
+  <!-- SELECT DROPDOWN -->
+  <div style="padding:12px; background:#fff; border-bottom:2px solid #e5e7eb; position:sticky; top:58px; z-index:9">
+    <label style="font-size:12px; font-weight:700; color:#666; display:block; margin-bottom:6px">👇 Choisis une option :</label>
+    <select id="paramsSelect" onchange="switchParamTab(this.value)" style="width:100%; padding:14px; font-size:16px; border:3px solid #dc2626 !important; border-radius:12px; background:#fff; font-weight:700; color:#111">
+      <option value="abonnement">🎉 Gratuit - Tout illimité gratuit</option>
+      <option value="profil">👤 Profil - Modifier mon profil</option>
+      <option value="notifications">🔔 Notifs - Notifications</option>
+      <option value="apparence">🌙 Apparence - Thème clair/sombre</option>
+      <option value="livraison">🚚 Livraison - Frais de livraison</option>
+      <option value="stats">📊 Stats - Mes statistiques</option>
+      <option value="reponses">💬 Réponses - Réponses rapides</option>
+      <option value="securite">🔒 Sécurité - Mot de passe</option>
+      <option value="preferences">❤️ Préf - Préférences produits</option>
+      <option value="commandes">🛒 Commandes - Historique</option>
+      <option value="avis">⭐ Avis - Mes avis clients</option>
+      <option value="personnalisation">🎨 Perso - Couleurs boutique</option>
+      <option value="reseaux">📲 Réseaux - Facebook, Insta</option>
+      <option value="aide">🆘 Aide - Centre d'aide</option>
+      <option value="donnees">🗑️ Données - Vider cache</option>
+      <option value="promo">🎁 Promo - Codes promo</option>
+      <option value="partage">🔗 Partage - Partager profil</option>
+      <option value="factures">📜 Factures - Mes factures</option>
+      <option value="boost">🚀 Boost - Booster produits</option>
+      <option value="pwa">📲 App - Installer l'app</option>
+    </select>
+  </div>
 
-<div id="param-notifications" class="param-panel hidden"><h4>🔔 Notifications</h4><div style="background:#fff;padding:12px;border-radius:10px"><div style="display:flex;justify-content:space-between;padding:8px 0"><span>💬 Message</span><input type="checkbox" checked></div><div style="display:flex;justify-content:space-between;padding:8px 0"><span>🛒 Commande</span><input type="checkbox" checked></div><div style="display:flex;justify-content:space-between;padding:8px 0"><span>⭐ Avis</span><input type="checkbox" checked></div><button style="background:#16a34a;margin-top:8px">💾 Sauvegarder</button></div></div>
+  <!-- CONTENU PLEIN ECRAN SCROLLABLE -->
+  <div style="flex:1; overflow-y:auto; padding:16px; background:#f8fafc; -webkit-overflow-scrolling:touch">
 
-<div id="param-apparence" class="param-panel hidden"><h4>🌙 Apparence</h4><div style="background:#fff;padding:12px;border-radius:10px"><b>Thème</b><div style="display:flex;gap:6px;margin-top:6px"><button style="width:auto">☀️ Clair</button><button style="width:auto;background:#111;color:#fff">🌙 Sombre</button><button style="width:auto;background:#f59e0b">🔄 Auto</button></div><b style="margin-top:10px;display:block">Taille texte</b><div style="display:flex;gap:6px;margin-top:6px"><button style="width:auto">A- Petit</button><button style="width:auto;background:#16a34a">A Normal</button><button style="width:auto">A+ Grand</button></div></div></div>
+<div id="param-abonnement" class="param-panel"><div style="background:linear-gradient(135deg,#dcfce7,#f0fdf4);border:2px solid #16a34a;padding:16px;border-radius:16px;text-align:center"><h2 style="margin:0;color:#16a34a">🎉 TOUT EST GRATUIT !</h2><p style="font-size:14px;margin:8px 0">Publie illimité - 0% commission - À vie</p><div style="background:#fff;padding:10px;border-radius:10px;margin-top:10px;font-size:12px">✅ Produits illimités<br/>✅ 5 photos + vidéo<br/>✅ Badge vérifié<br/>✅ Boost gratuit 24h<br/>✅ Chat interne<br/>✅ 0% commission</div></div><div id="abonnementStatus" style="margin-top:12px"></div></div>
 
-<div id="param-livraison" class="param-panel hidden"><h4>🚚 Livraison</h4><div style="background:#fff;padding:12px;border-radius:10px"><input type="number" placeholder="Douala - 1000F" value="1000"><input type="number" placeholder="Yaoundé - 2000F" value="2000" style="margin-top:6px"><input type="text" placeholder="Adresse par défaut" style="margin-top:6px"><button style="background:#16a34a;margin-top:8px">💾 Sauvegarder</button></div></div>
+<div id="param-profil" class="param-panel hidden"><h3>👤 Mon Profil</h3><div style="background:#fff;padding:16px;border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,.1)"><div style="text-align:center;margin-bottom:12px"><img id="paramProfileImg" src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" style="width:80px;height:80px;border-radius:50%; border:3px solid #16a34a" /><br/><small>Photo de profil</small></div><input type="text" id="editNom" placeholder="Nom"/><input type="text" id="editPrenom" placeholder="Prénom" style="margin-top:8px"/><input type="text" id="editBoutique" placeholder="Nom boutique" style="margin-top:8px"/><input type="text" id="editVille" placeholder="Ville" style="margin-top:8px"/><input type="tel" id="editWhatsapp" placeholder="WhatsApp" style="margin-top:8px"/><textarea id="editDesc" placeholder="Description boutique" rows="3" style="margin-top:8px"></textarea><button onclick="saveProfil()" style="background:#16a34a !important;margin-top:12px; padding:14px">💾 Sauvegarder Profil</button></div></div>
 
-<div id="param-stats" class="param-panel hidden"><h4>📊 Stats</h4><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div style="background:#fff;padding:12px;border-radius:10px;text-align:center;border-left:4px solid #2563eb"><b id="statVentesParam">0</b><br><small>Ventes</small></div><div style="background:#fff;padding:12px;border-radius:10px;text-align:center;border-left:4px solid #16a34a"><b id="statVuesParam">0</b><br><small>Vues</small></div></div><button style="background:#2563eb;margin-top:8px">📊 Stats complètes</button></div>
+<div id="param-notifications" class="param-panel hidden"><h3>🔔 Notifications</h3><div style="background:#fff;padding:16px;border-radius:12px"><div style="display:flex;justify-content:space-between;padding:14px 0; border-bottom:1px solid #eee"><span>💬 Message reçu</span><input type="checkbox" checked style="width:50px;height:26px"/></div><div style="display:flex;justify-content:space-between;padding:14px 0; border-bottom:1px solid #eee"><span>🛒 Nouvelle commande</span><input type="checkbox" checked style="width:50px;height:26px"/></div><div style="display:flex;justify-content:space-between;padding:14px 0; border-bottom:1px solid #eee"><span>⭐ Nouvel avis</span><input type="checkbox" checked style="width:50px;height:26px"/></div><div style="display:flex;justify-content:space-between;padding:14px 0"><span>🔴 LIVE qui démarre</span><input type="checkbox" checked style="width:50px;height:26px"/></div><button style="background:#16a34a !important;margin-top:12px; padding:14px">💾 Sauvegarder</button></div></div>
 
-<div id="param-reponses" class="param-panel hidden"><h4>💬 Réponses Rapides</h4><div style="background:#fff;padding:12px;border-radius:10px"><div style="background:#f0fdf4;padding:8px;border-radius:8px;margin:4px 0">👋 Bonjour ! Livraison dispo</div><div style="background:#f0fdf4;padding:8px;border-radius:8px;margin:4px 0">✅ Stock disponible !</div><input type="text" placeholder="Nouvelle réponse" style="margin-top:8px"><button style="background:#16a34a;margin-top:6px">➕ Ajouter</button></div></div>
+<div id="param-apparence" class="param-panel hidden"><h3>🌙 Apparence</h3><div style="background:#fff;padding:16px;border-radius:12px"><b>Thème</b><div style="display:flex;gap:8px;margin-top:10px"><button style="flex:1; background:#fff !important; color:#111 !important; border:2px solid #111 !important">☀️ Clair</button><button style="flex:1; background:#111 !important; color:#fff !important">🌙 Sombre</button></div><b style="margin-top:16px;display:block">Taille texte</b><div style="display:flex;gap:8px;margin-top:10px"><button style="flex:1">A- Petit</button><button style="flex:1;background:#16a34a !important">A Normal</button><button style="flex:1">A+ Grand</button></div></div></div>
 
-<div id="param-securite" class="param-panel hidden"><h4>🔒 Sécurité</h4><div style="background:#fff;padding:12px;border-radius:10px"><input type="password" placeholder="Ancien mdp"><input type="password" placeholder="Nouveau mdp" style="margin-top:6px"><button style="background:#ef4444;margin-top:6px">🔒 Changer mdp</button><button style="background:#fee2e2;color:#ef4444;margin-top:6px">🗑️ Supprimer compte</button></div></div>
+<div id="param-livraison" class="param-panel hidden"><h3>🚚 Livraison</h3><div style="background:#fff;padding:16px;border-radius:12px"><label style="font-size:12px">Douala (F)</label><input type="number" placeholder="1000" value="1000"/><label style="font-size:12px">Yaoundé (F)</label><input type="number" placeholder="2000" value="2000" style="margin-top:8px"/><label style="font-size:12px">Adresse par défaut</label><input type="text" placeholder="Bonabéri, Douala" style="margin-top:8px"/><button style="background:#16a34a !important;margin-top:12px; padding:14px">💾 Sauvegarder Livraison</button></div></div>
 
-<div id="param-preferences" class="param-panel hidden"><h4>❤️ Préférences</h4><div style="background:#fff;padding:12px;border-radius:10px"><label><input type="checkbox" checked> 📱 Téléphones</label><br><label><input type="checkbox"> 👕 Mode</label><br><input type="range" style="width:100%;margin-top:8px"><button style="background:#16a34a;margin-top:8px">💾 Sauvegarder</button></div></div>
+<div id="param-stats" class="param-panel hidden"><h3>📊 Mes Stats</h3><div style="display:grid;grid-template-columns:1fr 1fr;gap:12px"><div style="background:#fff;padding:16px;border-radius:12px;text-align:center;border-left:5px solid #2563eb"><b id="statVentesParam" style="font-size:24px">0</b><br/><small>Ventes</small></div><div style="background:#fff;padding:16px;border-radius:12px;text-align:center;border-left:5px solid #16a34a"><b id="statVuesParam" style="font-size:24px">0</b><br/><small>Vues</small></div><div style="background:#fff;padding:16px;border-radius:12px;text-align:center;border-left:5px solid #f59e0b"><b style="font-size:24px">0</b><br/><small>Followers</small></div><div style="background:#fff;padding:16px;border-radius:12px;text-align:center;border-left:5px solid #dc2626"><b style="font-size:24px">5.0★</b><br/><small>Note</small></div></div><button style="background:#2563eb !important;margin-top:12px">📊 Voir Stats Complètes</button></div>
 
-<div id="param-commandes" class="param-panel hidden"><h4>🛒 Commandes</h4><div style="background:#fff;padding:12px;border-radius:10px"><div id="orderHistoryParam" style="background:#f9fafb;padding:8px;border-radius:8px;font-size:11px">Aucune commande</div><button style="background:#fee2e2;color:#ef4444;margin-top:8px">🗑️ Vider panier</button></div></div>
+<div id="param-reponses" class="param-panel hidden"><h3>💬 Réponses Rapides</h3><div style="background:#fff;padding:16px;border-radius:12px"><div style="background:#f0fdf4;padding:12px;border-radius:10px;margin:8px 0; border-left:4px solid #16a34a">👋 Bonjour ! Oui livraison dispo aujourd'hui</div><div style="background:#f0fdf4;padding:12px;border-radius:10px;margin:8px 0; border-left:4px solid #16a34a">✅ Oui stock disponible ! Viens inbox</div><div style="background:#f0fdf4;padding:12px;border-radius:10px;margin:8px 0; border-left:4px solid #16a34a">💰 Prix négociable si tu prends 2</div><input type="text" placeholder="Nouvelle réponse rapide..." style="margin-top:12px"/><button style="background:#16a34a !important;margin-top:8px">➕ Ajouter Réponse</button></div></div>
 
-<div id="param-avis" class="param-panel hidden"><h4>⭐ Mes Avis</h4><div style="background:#fff;padding:12px;border-radius:10px"><div id="myReviewsList">Aucun avis</div></div></div>
+<div id="param-securite" class="param-panel hidden"><h3>🔒 Sécurité</h3><div style="background:#fff;padding:16px;border-radius:12px"><input type="password" placeholder="Ancien mot de passe"/><input type="password" placeholder="Nouveau mot de passe" style="margin-top:10px"/><input type="password" placeholder="Confirmer nouveau" style="margin-top:10px"/><button style="background:#dc2626 !important;margin-top:12px">🔒 Changer Mot de Passe</button><div style="border-top:2px solid #fee2e2; margin-top:20px; padding-top:16px"><button style="background:#fee2e2 !important;color:#dc2626 !important; border:2px solid #dc2626 !important">🗑️ Supprimer mon compte</button></div></div></div>
 
-<div id="param-personnalisation" class="param-panel hidden"><h4>🎨 Personnalisation</h4><div style="background:#fff;padding:12px;border-radius:10px"><div style="display:flex;gap:8px"><div style="width:40px;height:40px;background:#16a34a;border-radius:50%"></div><div style="width:40px;height:40px;background:#dc2626;border-radius:50%"></div><div style="width:40px;height:40px;background:#2563eb;border-radius:50%"></div></div><input type="text" placeholder="Bannière promo" style="margin-top:8px"><button style="background:#7c3aed;margin-top:8px">💾 Sauvegarder</button></div></div>
+<div id="param-preferences" class="param-panel hidden"><h3>❤️ Préférences</h3><div style="background:#fff;padding:16px;border-radius:12px"><label style="display:flex;gap:10px;padding:12px; background:#f9fafb; border-radius:8px; margin:6px 0"><input type="checkbox" checked style="width:20px"/> 📱 Téléphones</label><label style="display:flex;gap:10px;padding:12px; background:#f9fafb; border-radius:8px; margin:6px 0"><input type="checkbox" style="width:20px"/> 👕 Mode</label><label style="display:flex;gap:10px;padding:12px; background:#f9fafb; border-radius:8px; margin:6px 0"><input type="checkbox" style="width:20px"/> 💻 Ordi</label><b style="display:block;margin-top:12px">Prix max: <span id="priceVal">100000F</span></b><input type="range" min="1000" max="500000" value="100000" style="width:100%;margin-top:8px" oninput="document.getElementById('priceVal').textContent=this.value+'F'"/><button style="background:#16a34a !important;margin-top:12px">💾 Sauvegarder</button></div></div>
 
-<div id="param-reseaux" class="param-panel hidden"><h4>📲 Réseaux</h4><div style="background:#fff;padding:12px;border-radius:10px"><input type="text" placeholder="Facebook"><input type="text" placeholder="Instagram" style="margin-top:6px"><input type="text" placeholder="TikTok" style="margin-top:6px"><button style="background:#25D366;margin-top:8px">💾 Sauvegarder</button></div></div>
+<div id="param-commandes" class="param-panel hidden"><h3>🛒 Mes Commandes</h3><div style="background:#fff;padding:16px;border-radius:12px"><div id="orderHistoryParam" style="background:#f9fafb;padding:12px;border-radius:8px; min-height:100px">Aucune commande pour l'instant<br/><small style="color:#666">Tes commandes apparaîtront ici</small></div><button style="background:#fee2e2 !important;color:#dc2626 !important;margin-top:12px">🗑️ Vider panier</button></div></div>
 
-<div id="param-aide" class="param-panel hidden"><h4>🆘 Aide</h4><div style="background:#fff;padding:12px;border-radius:10px"><div style="padding:8px;background:#f9fafb;border-radius:6px;margin:4px 0"><b>Comment vendre vite ?</b><br><small>3 photos + prix juste</small></div><button style="background:#25D366" onclick="window.open('https://wa.me/237657181788')">💬 WhatsApp Admin</button><button style="background:#2563eb;margin-top:6px">🎓 Tutoriel</button></div></div>
+<div id="param-avis" class="param-panel hidden"><h3>⭐ Mes Avis</h3><div style="background:#fff;padding:16px;border-radius:12px"><div id="myReviewsList" style="min-height:100px">Aucun avis pour l'instant<br/><small>Les avis de tes clients apparaîtront ici</small></div></div></div>
 
-<div id="param-donnees" class="param-panel hidden"><h4>🗑️ Données</h4><div style="background:#fff;padding:12px;border-radius:10px"><div id="dataInfo" style="font-size:11px;background:#f9fafb;padding:8px;border-radius:6px">Produits: 0 | Panier: 0</div><button style="background:#f59e0b;margin-top:6px">🧹 Vider cache</button><button style="background:#2563eb;margin-top:6px">📥 Exporter Excel</button></div></div>
+<div id="param-personnalisation" class="param-panel hidden"><h3>🎨 Personnalisation</h3><div style="background:#fff;padding:16px;border-radius:12px"><b>Couleur boutique</b><div style="display:flex;gap:12px;margin-top:12px"><div style="width:50px;height:50px;background:#16a34a;border-radius:50%; border:3px solid #111; cursor:pointer"></div><div style="width:50px;height:50px;background:#dc2626;border-radius:50%; cursor:pointer"></div><div style="width:50px;height:50px;background:#2563eb;border-radius:50%; cursor:pointer"></div><div style="width:50px;height:50px;background:#7c3aed;border-radius:50%; cursor:pointer"></div></div><label style="display:block;margin-top:16px;font-size:12px">Bannière promo</label><input type="text" placeholder="Ex: Promo -20% aujourd'hui !" style="margin-top:8px"/><button style="background:#7c3aed !important;margin-top:12px">💾 Sauvegarder Design</button></div></div>
 
-<div id="param-promo" class="param-panel hidden"><h4>🎁 Codes Promo Gratuit</h4><div style="background:#dcfce7;padding:8px;border-radius:8px;font-size:11px">✅ Illimité gratuit</div><div id="promoStatus"></div><input type="text" id="promoCodeInput" placeholder="MABOUTIQUE10"><button id="createPromoBtn">Créer gratuit</button></div>
-<div id="param-partage" class="param-panel hidden"><h4>🔗 Partage</h4><button id="shareProfileBtn">Partager profil</button><button id="shareBoutiqueLinkBtn">Copier lien</button><div id="qrCode"></div></div>
-<div id="param-factures" class="param-panel hidden"><h4>📜 Factures</h4><div id="factureList"></div><button style="background:#2563eb">Générer PDF</button></div>
-<div id="param-boost" class="param-panel hidden"><h4>🚀 Boost Gratuit</h4><p style="background:#dcfce7;padding:8px;border-radius:8px">🎉 Boost gratuit 24h illimité</p><div id="boostList"></div><button onclick="boostAllFree()" style="background:#16a34a">🚀 Booster tous GRATUIT</button></div>
-<div id="param-pwa" class="param-panel hidden"><h4>📲 Télécharger App</h4><div style="background:#f0fdf4;border:2px solid #16a34a;padding:12px;border-radius:12px"><div style="display:flex;gap:12px;align-items:center"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgdmlld0JveD0iMCAwIDQ4IDQ4Ij4KPHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiByeD0iMTIiIGZpbGw9IiNkYzI2MjYiLz4KPHBhdGggZD0iTTE0IDE0IEwzNCAxNCBMMzIgMzQgTDE2IDM0IFoiIGZpbGw9IndoaXRlIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjEiLz4KPHRleHQgeD0iMjQiIHk9IjMwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtd2VpZ2h0PSI5MDAiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiNkYzI2MjYiIHRleHQtYW5jaG9yPSJtaWRkbGUiPlM8L3RleHQ+Cjwvc3ZnPg==" style="width:50px;height:50px;border-radius:12px"><div><b>SHOP ONLINE 237</b><br><small>100% Gratuit</small></div></div><div id="pwaStatus" style="margin:10px 0;padding:8px;background:#fffbeb;border:1px solid #fcd34d;border-radius:8px;text-align:center;font-size:11px">⏳ Vérification...</div><button id="installPWAbtn" style="background:#16a34a;display:none">📲 INSTALLER</button><button id="iosPWAbtn" style="background:#fff;color:#16a34a;border:2px solid #16a34a;display:none">🍎 iPhone: Partager → Écran d'accueil</button></div></div>
-<button id="closeParamsBtn" style="background:#6b7280;margin-top:12px">Fermer</button>
-<button id="btnLogout" style="background:#fee2e2;color:#ef4444;margin-top:6px">Déconnexion</button>
+<div id="param-reseaux" class="param-panel hidden"><h3>📲 Réseaux Sociaux</h3><div style="background:#fff;padding:16px;border-radius:12px"><input type="text" placeholder="Lien Facebook"/><input type="text" placeholder="Lien Instagram" style="margin-top:10px"/><input type="text" placeholder="Lien TikTok" style="margin-top:10px"/><input type="text" placeholder="Lien WhatsApp" style="margin-top:10px"/><button style="background:#25D366 !important;margin-top:12px">💾 Sauvegarder Réseaux</button></div></div>
+
+<div id="param-aide" class="param-panel hidden"><h3>🆘 Aide</h3><div style="background:#fff;padding:16px;border-radius:12px"><div style="padding:12px;background:#f0fdf4;border-radius:8px;margin:8px 0; border-left:4px solid #16a34a"><b>📦 Comment vendre vite ?</b><br/><small>Mets 3 photos claires + prix juste + description</small></div><div style="padding:12px;background:#fef3c7;border-radius:8px;margin:8px 0; border-left:4px solid #f59e0b"><b>🚚 Livraison ?</b><br/><small>Indique si gratuit Douala aujourd'hui, tu vendras 3x plus</small></div><div style="padding:12px;background:#fef2f2;border-radius:8px;margin:8px 0; border-left:4px solid #dc2626"><b>🔴 LIVE ?</b><br/><small>Lance un LIVE, partage le lien WhatsApp, vend en direct</small></div><button style="background:#25D366 !important;margin-top:12px" onclick="window.open('https://wa.me/237657181788')">💬 Contacter Admin WhatsApp</button><button style="background:#2563eb !important;margin-top:8px">🎓 Voir Tutoriel Vidéo</button></div></div>
+
+<div id="param-donnees" class="param-panel hidden"><h3>🗑️ Données</h3><div style="background:#fff;padding:16px;border-radius:12px"><div id="dataInfo" style="font-size:13px;background:#f9fafb;padding:12px;border-radius:8px">📦 Produits: 0<br/>🛒 Panier: 0<br/>❤️ Wishlist: 0<br/>💬 Chats: 0</div><button style="background:#f59e0b !important;margin-top:12px">🧹 Vider cache navigateur</button><button style="background:#2563eb !important;margin-top:8px">📥 Exporter mes données Excel</button><button style="background:#fee2e2 !important;color:#dc2626 !important; border:2px solid #dc2626 !important; margin-top:8px">🗑️ Tout effacer</button></div></div>
+
+<div id="param-promo" class="param-panel hidden"><h3>🎁 Codes Promo Gratuit</h3><div style="background:#dcfce7;padding:12px;border-radius:10px; text-align:center; font-weight:700; color:#16a34a">✅ Tous les codes sont gratuits à vie !</div><div id="promoStatus" style="margin-top:12px"></div><input type="text" id="promoCodeInput" placeholder="Ex: MABOUTIQUE10" style="margin-top:12px"/><button id="createPromoBtn" style="background:#16a34a !important;margin-top:8px">🎁 Créer Code Promo Gratuit</button></div>
+
+<div id="param-partage" class="param-panel hidden"><h3>🔗 Partage Boutique</h3><div style="background:#fff;padding:16px;border-radius:12px; text-align:center"><div style="background:#f0fdf4; border:2px dashed #16a34a; padding:16px; border-radius:12px"><small style="font-size:11px">Ton lien boutique :</small><br/><b style="font-size:13px; word-break:break-all">https://shop-online-237.vercel.app?boutique=...</b></div><button id="shareProfileBtn" style="background:#16a34a !important;margin-top:12px">📲 Partager sur WhatsApp</button><button id="shareBoutiqueLinkBtn" style="background:#fff !important; color:#16a34a !important; border:2px solid #16a34a !important; margin-top:8px">📋 Copier Lien</button><div id="qrCode" style="margin-top:16px; display:flex; justify-content:center"></div></div></div>
+
+<div id="param-factures" class="param-panel hidden"><h3>📜 Factures</h3><div style="background:#fff;padding:16px;border-radius:12px"><div id="factureList" style="min-height:100px">Aucune facture<br/><small>Tes factures apparaîtront ici après commande</small></div><button style="background:#2563eb !important;margin-top:12px">📄 Générer Facture PDF</button></div></div>
+
+<div id="param-boost" class="param-panel hidden"><h3>🚀 Boost Gratuit</h3><div style="background:#dcfce7;padding:12px;border-radius:10px; text-align:center"><b style="color:#16a34a">🎉 Boost gratuit 24h illimité !</b><br/><small>Tous tes produits en haut de la liste</small></div><div id="boostList" style="margin-top:12px; background:#fff; padding:12px; border-radius:10px; min-height:80px">Aucun produit à booster<br/><small>Publie un produit d'abord</small></div><button onclick="if(typeof boostAllFree==='function') boostAllFree()" style="background:#16a34a !important;margin-top:12px; padding:14px; font-size:16px">🚀 Booster TOUS Mes Produits GRATUIT</button></div>
+
+<div id="param-pwa" class="param-panel hidden"><h3>📲 Installer App</h3><div style="background:#fff;padding:16px;border-radius:12px"><div style="display:flex;gap:16px;align-items:center; background:#f0fdf4; padding:12px; border-radius:12px; border:2px solid #16a34a"><img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" style="width:60px;height:60px;border-radius:12px"/><div><b>SHOP ONLINE 237</b><br/><small>100% Gratuit - Boutique en ligne</small><br/><small style="color:#16a34a">✅ 0% commission</small></div></div><div id="pwaStatus" style="margin:16px 0;padding:12px;background:#fffbeb;border:2px solid #fcd34d;border-radius:10px;text-align:center;font-size:13px">⏳ Vérification du navigateur...</div><button id="installPWAbtn" style="background:#16a34a !important; padding:14px; font-size:16px">📲 INSTALLER L'APP SUR TÉLÉPHONE</button><button id="iosPWAbtn" style="background:#fff !important;color:#16a34a !important;border:2px solid #16a34a !important; margin-top:8px; display:none">🍎 iPhone: Partager → Sur l'écran d'accueil</button><div style="background:#f9fafb; padding:12px; border-radius:8px; margin-top:16px; font-size:11px"><b>Avantages app :</b><br/>✓ Icône sur écran d'accueil<br/>✓ Ouvre comme vraie app<br/>✓ Notifications<br/>✓ Marche hors ligne</div></div></div>
+
+  </div>
+
+  <!-- FOOTER FIXE AVEC BOUTON FERMER -->
+  <div style="padding:12px; background:#fff; border-top:2px solid #e5e7eb; display:flex; gap:8px; position:sticky; bottom:0">
+    <button onclick="document.getElementById('paramsModal').classList.add('hidden')" style="flex:1; background:#6b7280 !important; padding:14px; font-size:16px">✕ Fermer Paramètres</button>
+    <button id="btnLogout" style="flex:1; background:#fee2e2 !important;color:#ef4444 !important; border:2px solid #ef4444 !important; padding:14px">🚪 Déconnexion</button>
+  </div>
+
 </div></div>
+
 
 
 <div id="sellerProfilePage" class="hidden" style="max-width:900px;margin:20px auto;padding:10px">
@@ -1480,7 +1254,7 @@ async function loadMyProducts(){
 }
 
 // --- PARAMS, ABONNEMENT, ETC (simplified from previous) ---
-function switchParamTab(tab){ document.querySelectorAll('.param-tab').forEach(b=>b.classList.remove('active')); document.querySelector(`[data-tab="${tab}"]`)?.classList.add('active'); document.querySelectorAll('.param-panel').forEach(p=>p.classList.add('hidden')); document.getElementById('param-'+tab)?.classList.remove('hidden'); }
+function switchParamTab(tab){ const sel=document.getElementById("paramsSelect"); if(sel) sel.value=tab; document.querySelectorAll('.param-tab').forEach(b=>b.classList.remove('active')); document.querySelector(`[data-tab="${tab}"]`)?.classList.add('active'); document.querySelectorAll('.param-panel').forEach(p=>p.classList.add('hidden')); document.getElementById('param-'+tab)?.classList.remove('hidden'); }
 function getDiscountedPrice2(plan){ return getDiscountedPrice(plan); }
 function updateDiscountDisplay(){ const u=getUser(); if(!u) return; const discounts=getPromoDiscounts(); const myDiscount=discounts[u.id]; if(!myDiscount) return; const exp=new Date(myDiscount.expiry); const jours=Math.ceil((exp-new Date())/(1000*60*60*24)); if(jours<=0) return; const basicDiscounted=5000 - (5000*myDiscount.discount2500/100); const proDiscounted=10000 - (10000*myDiscount.discount10000/100); const priceBasicEl=document.getElementById('priceBasic'); if(priceBasicEl) priceBasicEl.textContent=basicDiscounted+'F (au lieu de 5000F)'; const btnBasicEl=document.getElementById('btnPriceBasic'); if(btnBasicEl) btnBasicEl.textContent=basicDiscounted+'F'; const priceProEl=document.getElementById('pricePro'); if(priceProEl) priceProEl.textContent=proDiscounted+'F (au lieu de 10000F)'; const btnProEl=document.getElementById('btnPricePro'); if(btnProEl) btnProEl.textContent=proDiscounted+'F'; }
 async function signalerPaiement(plan,montant){ const u=getUser(); if(!u) return; if(!confirm(`Confirmer paiement ${montant}F par Orange Money 657181788 pour ${plan}?`)) return; if(!SYSTEM_BOUTIQUE_ID) await ensureSystemBoutique(); try{ const vr=await supabaseClient.from('users').select('boutique,prenom,phone').eq('id',u.id).single(); const v=vr.data||{}; await supabaseClient.from('notifications').insert([{user_id:SYSTEM_BOUTIQUE_ID,type:'abonnement_a_valider',title:`Paiement a valider - ${v.boutique||v.prenom||''} - ${montant}F`,message:`Boutique: ${v.boutique||v.prenom||''} (${v.phone}) a signale ${montant}F plan ${plan}. ID: ${u.id}|PLAN:${plan}|MONTANT:${montant}`,from_user_id:u.id,read:false}]);}catch(e){} const d=JSON.parse(localStorage.getItem('shoponline_abonnement_'+u.id)||'{}'); d.statut='en_attente_validation'; d.plan_demande=plan; d.montant_signale=montant; localStorage.setItem('shoponline_abonnement_'+u.id, JSON.stringify(d)); showToast('Paiement signalé !','success'); window.open('https://wa.me/237657181788?text='+encodeURIComponent(`Salut SHOP ONLINE, j ai paye ${montant}F abonnement ${plan}. Boutique: ${u.boutique||u.prenom} Tel: ${u.phone}`), '_blank'); }
@@ -2138,13 +1912,3 @@ setTimeout(initAllImprovements,2000);
 <div id="deliveryModal" class="modal hidden"><div class="modal-content" style="max-width:450px"><h3>🚚 Livreur</h3><div id="deliveryOptions"><div class="delivery-option selected" onclick="selectDelivery('express')"><b>⚡ Express 2h - 2000F</b></div><div class="delivery-option" onclick="selectDelivery('standard')"><b>📦 Standard 24h - 1000F</b></div><div class="delivery-option" onclick="selectDelivery('yango')"><b>🚕 Yango - Prix Yango</b></div><div class="delivery-option" onclick="selectDelivery('retrait')"><b>🏪 Retrait gratuit</b></div></div><input type="text" id="deliveryAddress" placeholder="Adresse exacte"><input type="tel" id="deliveryPhone" placeholder="Téléphone"><button onclick="confirmDelivery()">✅ Confirmer</button><button onclick="document.getElementById('deliveryModal').classList.add('hidden')" style="background:#6b7280 !important">Annuler</button></div></div>
 
 
-<div class="bottom-nav-kingdom" id="bottomNav">
-  <a href="#" class="active" onclick="window.scrollTo({top:0, behavior:'smooth'}); document.querySelectorAll('.bottom-nav-kingdom a').forEach(a=>a.classList.remove('active')); this.classList.add('active'); return false;"><span class="nav-icon">🏠</span><span>Accueil</span></a>
-  <a href="#" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'}); document.querySelectorAll('.bottom-nav-kingdom a').forEach(a=>a.classList.remove('active')); this.classList.add('active'); return false;"><span class="nav-icon">📦</span><span>Produit</span></a>
-  <a href="#" onclick="const sellers={}; allProducts.forEach(p=>{if(p.seller&&p.seller.boutique)sellers[p.vendeur_id]=p.seller;}); const container=document.getElementById('products'); const html=Object.values(sellers).map(s=>`<div class=\'product\' style=\'padding:10px;text-align:center\'><img src=\'${s.logo||'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'}\' style=\'width:60px;height:60px;border-radius:50%;margin:0 auto 8px\'><b style=\'font-size:12px\'>${s.boutique||s.prenom}</b><br><small style=\'font-size:10px;color:#666\'>📍 ${s.ville||''}</small><br><button class=\'btn-add-cart-kingdom\' style=\'margin-top:8px\' onclick=\'openBoutiqueProducts(\\'${s.id||''}\\')\'>Voir boutique</button></div>`).join(''); container.innerHTML=html||'<p style=\'grid-column:1/-1;text-align:center;padding:20px;background:#fff;border-radius:12px\'>Aucune boutique</p>'; window.scrollTo({top:0, behavior:'smooth'}); document.querySelectorAll('.bottom-nav-kingdom a').forEach(a=>a.classList.remove('active')); this.classList.add('active'); return false;"><span class="nav-icon">🏪</span><span>Boutiques</span></a>
-  <a href="#" onclick="openSellerProfile(); document.querySelectorAll('.bottom-nav-kingdom a').forEach(a=>a.classList.remove('active')); this.classList.add('active'); return false;"><span class="nav-icon">👤</span><span>Compte</span></a>
-</div>
-<style>body{padding-bottom:70px !important}</style>
-
-</body>
-</html>
