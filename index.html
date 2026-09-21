@@ -1,18 +1,16 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta name="theme-color" content="#16a34a">
-<link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3081/3081559.png">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-
-
-
-
+<link rel="manifest" href="#"><meta name="theme-color" content="#dc2626">
+<link rel="icon" type="image/png" sizes="32x32" href="https://cdn-icons-png.flaticon.com/512/3081/3081559.png">
+<link rel="manifest" href="#"><meta name="theme-color" content="#dc2626">
+<link rel="icon" type="image/png" sizes="192x192" href="https://cdn-icons-png.flaticon.com/512/3081/3081559.png">
 <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3081/3081559.png">
-
-
+<link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/3081/3081559.png">
+<meta name="theme-color" content="#dc2626">
 
 <title>SHOP ONLINE - 100% GRATUIT - Cameroun</title>
 
@@ -233,7 +231,270 @@ header{display:flex;justify-content:space-between;align-items:center;padding:10p
 .btn-add-cart-kingdom:hover{background:linear-gradient(135deg,#FB8C00,#F57C00) !important; transform:scale(1.02) !important}
 
 /* Bottom nav like Kingdom Market */
+.bottom-nav-kingdom{
+  position:fixed !important;
+  bottom:0 !important;
+  left:0 !important;
+  right:0 !important;
+  background:#fff !important;
+  border-top:1px solid #eee !important;
+  display:flex !important;
+  justify-content:space-around !important;
+  padding:6px 0 calc(6px + env(safe-area-inset-bottom)) 0 !important;
+  z-index:1000 !important;
+  box-shadow:0 -2px 10px rgba(0,0,0,.08) !important;
+}
+.bottom-nav-kingdom a{
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  gap:2px !important;
+  font-size:10px !important;
+  color:#999 !important;
+  text-decoration:none !important;
+  padding:4px 12px !important;
+  border-radius:8px !important;
+  transition:.2s !important;
+}
+.bottom-nav-kingdom a.active{
+  color:#FF9800 !important;
+  background:#fff8e1 !important;
+}
+.bottom-nav-kingdom a .nav-icon{
+  font-size:20px !important;
+}
 
+/* Header Kingdom */
+.header-kingdom{
+  background:#fff !important;
+  padding:8px 12px !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:space-between !important;
+  box-shadow:0 1px 6px rgba(0,0,0,.08) !important;
+  position:sticky !important;
+  top:0 !important;
+  z-index:100 !important;
+}
+.header-kingdom .logo-text{
+  color:#FF9800 !important;
+  font-weight:800 !important;
+  font-size:16px !important;
+}
+.icon-circle{
+  width:36px !important;
+  height:36px !important;
+  border-radius:50% !important;
+  background:#f5f5f5 !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  font-size:14px !important;
+  cursor:pointer !important;
+  border:1px solid #eee !important;
+}
+
+/* Search bar Kingdom */
+.search-bar-kingdom{
+  display:flex !important;
+  align-items:center !important;
+  background:#f5f5f5 !important;
+  border-radius:24px !important;
+  padding:4px 4px 4px 14px !important;
+  margin:10px !important;
+  border:1px solid #eee !important;
+}
+.search-bar-kingdom input{
+  flex:1 !important;
+  border:none !important;
+  background:transparent !important;
+  outline:none !important;
+  font-size:13px !important;
+  padding:8px 0 !important;
+  margin:0 !important;
+}
+.search-bar-kingdom button{
+  background:#FF9800 !important;
+  border:none !important;
+  border-radius:50% !important;
+  width:36px !important;
+  height:36px !important;
+  min-width:36px !important;
+  min-height:36px !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  color:#fff !important;
+  cursor:pointer !important;
+}
+
+/* Sections */
+.section-kingdom{
+  background:#fff !important;
+  margin:8px 0 !important;
+  padding:10px !important;
+  border-radius:12px !important;
+}
+.section-title-kingdom{
+  font-size:14px !important;
+  font-weight:800 !important;
+  margin:0 0 8px 0 !important;
+  display:flex !important;
+  align-items:center !important;
+  gap:6px !important;
+}
+
+/* --- ALL BUTTONS RED --- */
+button, .nav-btn, .backBtn, .editProfileBtn, .seller-profile-btn, .roleButtons button, .seller-actions button, .edit-cover-btn, .photo-edit-btn, .close-profile {
+  background: #dc2626 !important;
+  background-color: #dc2626 !important;
+  background-image: none !important;
+  color: #ffffff !important;
+  border: 2px solid #b91c1c !important;
+  font-weight: bold !important;
+}
+button:hover, .nav-btn:hover {
+  background: #b91c1c !important;
+  background-color: #b91c1c !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(220,38,38,.4) !important;
+}
+button:active {
+  background: #991b1b !important;
+  transform: translateY(0);
+}
+/* Specific overrides that were green/blue */
+#liveCamBtn, #liveMicBtn, #liveSwitchBtn, .editProfileBtn, .seller-profile-btn, .verified-badge, .badge-nouveau, .badge-boost, .badge-livraison {
+  background: #dc2626 !important;
+  background-color: #dc2626 !important;
+}
+/* Keep close buttons distinct but still red */
+.close-profile {
+  background: #dc2626 !important;
+  color: #fff !important;
+}
+/* Cart/wish/chat icons keep red border but white bg becomes red on hover handled above */
+/* Toast success/error/info all red */
+.toast.success, .toast.info, .toast.error {
+  background: #dc2626 !important;
+  background-color: #dc2626 !important;
+  color: #fff !important;
+  border-left: 4px solid #991b1b !important;
+}
+
+
+/* --- RESPONSIVE NAVIGATION FIX - NO OVERFLOW --- */
+header{
+  flex-wrap:wrap !important;
+  gap:8px !important;
+  overflow:hidden !important;
+  max-width:100vw !important;
+}
+#homePage{
+  max-width:100vw !important;
+  overflow-x:hidden !important;
+}
+
+/* Desktop nav */
+.nav-right{
+  display:flex !important;
+  align-items:center !important;
+  gap:8px !important;
+  flex-wrap:wrap !important;
+  max-width:100% !important;
+  justify-content:flex-end !important;
+}
+
+/* Mobile - header becomes 2 rows */
+@media (max-width: 768px){
+  header{
+    padding:8px 10px !important;
+    gap:6px !important;
+    position:sticky !important;
+    top:0 !important;
+    z-index:100 !important;
+  }
+  header > div:first-child{
+    flex:1 1 auto !important;
+    min-width:0 !important;
+  }
+  header h2{
+    font-size:15px !important;
+    white-space:nowrap !important;
+    overflow:hidden !important;
+    text-overflow:ellipsis !important;
+  }
+  header h2 span{
+    font-size:8px !important;
+  }
+  
+  /* Nav-right: grid layout on mobile to avoid overflow */
+  .nav-right{
+    gap:5px !important;
+    width:100% !important;
+    justify-content:flex-start !important;
+    order:2 !important;
+    flex-basis:100% !important;
+    display:grid !important;
+    grid-template-columns:repeat(auto-fit, minmax(40px, 1fr)) !important;
+    max-width:100% !important;
+  }
+  
+  /* Make all nav elements small and equal */
+  .nav-btn{
+    padding:6px 8px !important;
+    font-size:10px !important;
+    min-height:32px !important;
+    white-space:nowrap !important;
+    overflow:hidden !important;
+    text-overflow:ellipsis !important;
+    grid-column: span 2 !important;
+  }
+  
+  .icon-btn{
+    width:38px !important;
+    height:38px !important;
+    min-width:38px !important;
+    min-height:38px !important;
+    font-size:14px !important;
+    padding:0 !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+  }
+  
+  .seller-profile{
+    width:36px !important;
+    height:36px !important;
+    min-width:36px !important;
+    min-height:36px !important;
+  }
+  
+  /* Ensure no horizontal scroll */
+  body{
+    overflow-x:hidden !important;
+    max-width:100vw !important;
+    padding:0 !important;
+  }
+  
+  /* Search filters stack without overflow */
+  #homePage > div[style*="display:flex"]{
+    flex-wrap:wrap !important;
+    gap:6px !important;
+    max-width:100% !important;
+  }
+  
+  #searchProduct{
+    flex:1 1 100% !important;
+    min-width:100% !important;
+    max-width:100% !important;
+  }
+  #filterCategorie, #filterStatut, #filterVille{
+    flex:1 1 calc(50% - 6px) !important;
+    min-width:calc(50% - 6px) !important;
+    max-width:calc(50% - 6px) !important;
+  }
+}
 
 /* Very small phones 320-400px */
 @media (max-width: 480px){
@@ -595,6 +856,7 @@ button:hover{background:#b91c1c !important}
 <div class="input-group"><input type="text" name="nom" placeholder=" " required><label>Nom *</label></div>
 <div class="input-group"><input type="text" name="prenom" placeholder=" " required><label>Prénom *</label></div>
 <div class="input-group"><input type="tel" name="phone" placeholder=" " required><label>Téléphone +237 *</label></div>
+<div class="input-group"><input type="email" name="email" placeholder=" " required><label>Email * (pour code vérification)</label></div>
 <div class="input-group"><input type="text" name="ville" placeholder=" " required><label>Ville * (ex: Douala)</label></div>
 <div id="vendeurFields" class="hidden">
 <input name="boutique" placeholder="Nom de la boutique *">
@@ -606,6 +868,21 @@ button:hover{background:#b91c1c !important}
 <button type="submit">Créer mon compte</button>
 </form>
 <p style="text-align:center;margin-top:10px;font-size:13px;">Déjà inscrit ? <a id="showLoginLink" style="cursor:pointer;color:#2563eb">Se connecter</a></p>
+</div>
+
+
+<!-- VERIFICATION CODE MODAL -->
+<div id="verificationBox" class="card hidden" style="max-width:380px;margin:20px auto;border:2px solid #16a34a;padding:20px;text-align:center;">
+  <h3 style="color:#16a34a;">🔐 Vérification Email</h3>
+  <p style="font-size:12px;color:#666;">Un code unique à 6 chiffres a été envoyé à <b id="verifyEmailDisplay"></b></p>
+  <div id="verificationError" class="error-box"></div>
+  <div style="background:#f0fdf4;border:2px dashed #16a34a;border-radius:10px;padding:15px;margin:15px 0;">
+    <input type="text" id="verificationCodeInput" placeholder="Entre ton code à 6 chiffres" maxlength="6" style="text-align:center;font-size:24px;letter-spacing:8px;font-weight:bold;border:2px solid #16a34a;border-radius:8px;padding:12px;width:100%;">
+  </div>
+  <button id="btnVerifyCode" onclick="verifyAndCreateAccount()" style="background:#16a34a !important;">✅ Valider mon code</button>
+  <button id="btnResendCode" onclick="resendVerificationCode()" style="background:#f59e0b !important;margin-top:8px;">📧 Renvoyer le code</button>
+  <p style="font-size:11px;margin-top:10px;color:#888;">Code expire dans 10 minutes. Vérifie tes spams.</p>
+  <p style="font-size:11px;"><a onclick="cancelVerification()" style="cursor:pointer;color:#dc2626;">Annuler</a></p>
 </div>
 
 <div id="app" class="hidden">
@@ -804,12 +1081,29 @@ let registerRole="client", loginRole="client";
 function selectLoginRole(r){ loginRole=r; document.getElementById('btnClientLogin').classList.toggle('active', r==='client'); document.getElementById('btnSellerLogin').classList.toggle('active', r==='vendeur'); }
 function selectRegisterRole(r){ registerRole=r; document.getElementById('btnClientRegister').classList.toggle('active', r==='client'); document.getElementById('btnSellerRegister').classList.toggle('active', r==='vendeur'); document.getElementById('vendeurFields').classList.toggle('hidden', r!=='vendeur'); }
 
+
+let pendingUserData = null;
+let pendingEmail = null;
+
 async function register(e){
  e.preventDefault();
+ const btn = e.target.querySelector('button[type="submit"]');
+ const originalText = btn ? btn.textContent : '';
+ if(btn){ btn.textContent='⏳ Envoi du code...'; btn.disabled=true; }
+
  const fd=new FormData(e.target);
  const phone=fd.get('phone')?.trim();
- const {data:existe}=await supabaseClient.from('users').select('id').eq('phone', phone).maybeSingle();
- if(existe){ showError('registerError', `Numéro ${phone} existe déjà`); return; }
+ const email=fd.get('email')?.trim().toLowerCase();
+ if(!email || !email.includes('@')){ showError('registerError','Email valide requis pour recevoir le code'); if(btn){btn.textContent=originalText; btn.disabled=false;} return; }
+
+ // Vérifie si phone/email existe déjà
+ try{
+   const {data:existe}=await supabaseClient.from('users').select('id').eq('phone', phone).maybeSingle();
+   if(existe){ showError('registerError', `Numéro ${phone} existe déjà`); if(btn){btn.textContent=originalText; btn.disabled=false;} return; }
+   const {data:existeEmail}=await supabaseClient.from('users').select('id').eq('email', email).maybeSingle();
+   if(existeEmail){ showError('registerError', `Email ${email} existe déjà`); if(btn){btn.textContent=originalText; btn.disabled=false;} return; }
+ }catch(err){}
+
  let logoUrl=null;
  const logoFile=document.getElementById('profilePhoto').files[0];
  if(registerRole==='vendeur' && logoFile){
@@ -817,11 +1111,101 @@ async function register(e){
    const {error:uploadError}=await supabaseClient.storage.from('products').upload(fileName, logoFile);
    if(!uploadError){ const {data}=supabaseClient.storage.from('products').getPublicUrl(fileName); logoUrl=data.publicUrl; }
  }
- const userData={nom:fd.get('nom'),prenom:fd.get('prenom'),phone:phone,ville:fd.get('ville')||null,password:fd.get('password'),role:registerRole,boutique:registerRole==='vendeur'?(fd.get('boutique')||null):null,whatsapp:registerRole==='vendeur'?(fd.get('whatsapp')||null):null,adresse:registerRole==='vendeur'?(fd.get('adresse')||null):null,description:registerRole==='vendeur'?(fd.get('description')||null):null,logo:logoUrl};
- const {data,error}=await supabaseClient.from('users').insert([userData]).select('*').single();
- if(error){ showError('registerError', error.message); return; }
- setUser(data); showToast('Compte créé ! Boutique vide créée', 'success'); e.target.reset(); await renderAll();
+
+ pendingUserData={nom:fd.get('nom'),prenom:fd.get('prenom'),phone:phone,email:email,ville:fd.get('ville')||null,password:fd.get('password'),role:registerRole,boutique:registerRole==='vendeur'?(fd.get('boutique')||null):null,whatsapp:registerRole==='vendeur'?(fd.get('whatsapp')||null):null,adresse:registerRole==='vendeur'?(fd.get('adresse')||null):null,description:registerRole==='vendeur'?(fd.get('description')||null):null,logo:logoUrl};
+ pendingEmail=email;
+
+ // Appelle l'API Vercel qui génère le code et envoie l'email via Gmail
+ try{
+   const res = await fetch('/api/send-code', {
+     method:'POST',
+     headers:{'Content-Type':'application/json'},
+     body: JSON.stringify({email:email, name: fd.get('prenom')})
+   });
+   const json = await res.json();
+   if(!res.ok || !json.success){
+     throw new Error(json.error || 'Erreur envoi email');
+   }
+   // Succès -> affiche le champ OTP
+   document.getElementById('registerBox').classList.add('hidden');
+   document.getElementById('verificationBox').classList.remove('hidden');
+   document.getElementById('verifyEmailDisplay').textContent=email;
+   document.getElementById('verificationCodeInput').value='';
+   document.getElementById('verificationCodeInput').focus();
+   showToast(`Code envoyé à ${email} - Vérifie tes emails et SPAM`, 'success');
+ }catch(err){
+   console.error(err);
+   showError('registerError','Erreur envoi email: '+err.message+'. Vérifie que tu as fait Redeploy dans Vercel après avoir ajouté les 4 variables.');
+   showToast('Erreur envoi code: '+err.message, 'error');
+ }finally{
+   if(btn){ btn.textContent=originalText || 'Créer mon compte'; btn.disabled=false; }
+ }
 }
+
+async function verifyAndCreateAccount(){
+ const inputCode = document.getElementById('verificationCodeInput').value.trim();
+ if(!inputCode || inputCode.length!==6){ showError('verificationError','Entre le code à 6 chiffres reçu par email'); return; }
+
+ document.getElementById('btnVerifyCode').textContent='⏳ Vérification...';
+ document.getElementById('btnVerifyCode').disabled=true;
+
+ try{
+   // Vérifie via API serveur (qui check Supabase verification_codes)
+   const res = await fetch('/api/verify-code', {
+     method:'POST',
+     headers:{'Content-Type':'application/json'},
+     body: JSON.stringify({email: pendingEmail, code: inputCode})
+   });
+   const json = await res.json();
+   if(!json.valid){
+     showError('verificationError','❌ Code incorrect ou expiré. Vérifie ta boîte mail ou clique Renvoyer.');
+     document.getElementById('btnVerifyCode').textContent='✅ Valider mon code';
+     document.getElementById('btnVerifyCode').disabled=false;
+     return;
+   }
+
+   // Code OK -> Crée le compte dans users
+   const {data,error}=await supabaseClient.from('users').insert([pendingUserData]).select('*').single();
+   if(error){ showError('verificationError', error.message); document.getElementById('btnVerifyCode').textContent='✅ Valider mon code'; document.getElementById('btnVerifyCode').disabled=false; return; }
+
+   setUser(data);
+   document.getElementById('verificationBox').classList.add('hidden');
+   showToast('✅ Compte vérifié et créé ! Bienvenue '+data.prenom,'success');
+   document.getElementById('registerForm').reset();
+   pendingUserData=null; pendingEmail=null;
+   await renderAll();
+ }catch(err){
+   showError('verificationError','Erreur: '+err.message);
+   document.getElementById('btnVerifyCode').textContent='✅ Valider mon code';
+   document.getElementById('btnVerifyCode').disabled=false;
+ }
+}
+
+async function resendVerificationCode(){
+ if(!pendingEmail || !pendingUserData){ showError('verificationError','Aucune inscription en cours'); return; }
+ const btn = document.getElementById('btnResendCode');
+ if(btn){ btn.textContent='⏳ Renvoi...'; btn.disabled=true; }
+ try{
+   const res = await fetch('/api/send-code', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({email:pendingEmail, name: pendingUserData.prenom})});
+   const json = await res.json();
+   if(!res.ok) throw new Error(json.error);
+   showToast(`Nouveau code renvoyé à ${pendingEmail}`, 'success');
+   document.getElementById('verificationCodeInput').value='';
+   document.getElementById('verificationCodeInput').focus();
+ }catch(e){
+   showError('verificationError','Erreur renvoi: '+e.message);
+ }finally{
+   if(btn){ btn.textContent='📧 Renvoyer le code'; btn.disabled=false; }
+ }
+}
+
+function cancelVerification(){
+ document.getElementById('verificationBox').classList.add('hidden');
+ document.getElementById('registerBox').classList.remove('hidden');
+ pendingUserData=null; pendingEmail=null;
+ showToast('Vérification annulée','info');
+}
+
 async function login(e){
  e.preventDefault();
  const phone=document.getElementById('loginPhone').value.trim();
@@ -1912,3 +2296,13 @@ setTimeout(initAllImprovements,2000);
 <div id="deliveryModal" class="modal hidden"><div class="modal-content" style="max-width:450px"><h3>🚚 Livreur</h3><div id="deliveryOptions"><div class="delivery-option selected" onclick="selectDelivery('express')"><b>⚡ Express 2h - 2000F</b></div><div class="delivery-option" onclick="selectDelivery('standard')"><b>📦 Standard 24h - 1000F</b></div><div class="delivery-option" onclick="selectDelivery('yango')"><b>🚕 Yango - Prix Yango</b></div><div class="delivery-option" onclick="selectDelivery('retrait')"><b>🏪 Retrait gratuit</b></div></div><input type="text" id="deliveryAddress" placeholder="Adresse exacte"><input type="tel" id="deliveryPhone" placeholder="Téléphone"><button onclick="confirmDelivery()">✅ Confirmer</button><button onclick="document.getElementById('deliveryModal').classList.add('hidden')" style="background:#6b7280 !important">Annuler</button></div></div>
 
 
+<!-- bottom-nav removed --> <div style="display:none" id="bottomNav">
+  <a href="#" class="active" onclick="window.scrollTo({top:0, behavior:'smooth'}); document.querySelectorAll('.bottom-nav-kingdom a').forEach(a=>a.classList.remove('active')); this.classList.add('active'); return false;"><span class="nav-icon">🏠</span><span>Accueil</span></a>
+  <a href="#" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'}); document.querySelectorAll('.bottom-nav-kingdom a').forEach(a=>a.classList.remove('active')); this.classList.add('active'); return false;"><span class="nav-icon">📦</span><span>Produit</span></a>
+  <a href="#" onclick="const sellers={}; allProducts.forEach(p=>{if(p.seller&&p.seller.boutique)sellers[p.vendeur_id]=p.seller;}); const container=document.getElementById('products'); const html=Object.values(sellers).map(s=>`<div class=\'product\' style=\'padding:10px;text-align:center\'><img src=\'${s.logo||'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'}\' style=\'width:60px;height:60px;border-radius:50%;margin:0 auto 8px\'><b style=\'font-size:12px\'>${s.boutique||s.prenom}</b><br><small style=\'font-size:10px;color:#666\'>📍 ${s.ville||''}</small><br><button class=\'btn-add-cart-kingdom\' style=\'margin-top:8px\' onclick=\'openBoutiqueProducts(\\'${s.id||''}\\')\'>Voir boutique</button></div>`).join(''); container.innerHTML=html||'<p style=\'grid-column:1/-1;text-align:center;padding:20px;background:#fff;border-radius:12px\'>Aucune boutique</p>'; window.scrollTo({top:0, behavior:'smooth'}); document.querySelectorAll('.bottom-nav-kingdom a').forEach(a=>a.classList.remove('active')); this.classList.add('active'); return false;"><span class="nav-icon">🏪</span><span>Boutiques</span></a>
+  <a href="#" onclick="openSellerProfile(); document.querySelectorAll('.bottom-nav-kingdom a').forEach(a=>a.classList.remove('active')); this.classList.add('active'); return false;"><span class="nav-icon">👤</span><span>Compte</span></a>
+</div>
+<style>body{padding-bottom:70px !important}</style>
+
+</body>
+</html>
