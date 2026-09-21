@@ -1,7 +1,8 @@
-   {
-     "name": "shop-online",
-     "type": "module",
-     "dependencies": {
-       "nodemailer": "^6.9.13"
-     }
-   }
+{
+  "name": "shop-online-cameroun",
+  "type": "module",
+  "version": "1.0.0",
+  "dependencies": {
+    "nodemailer": "^6.9.13"
+  }
+}
