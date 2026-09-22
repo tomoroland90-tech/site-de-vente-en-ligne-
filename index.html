@@ -4,9 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<link rel="manifest" href="#"><meta name="theme-color" content="#dc2626">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#dc2626">
 <link rel="icon" type="image/png" sizes="32x32" href="https://cdn-icons-png.flaticon.com/512/3081/3081559.png">
-<link rel="manifest" href="#"><meta name="theme-color" content="#dc2626">
+<meta name="theme-color" content="#dc2626">
 <link rel="icon" type="image/png" sizes="192x192" href="https://cdn-icons-png.flaticon.com/512/3081/3081559.png">
 <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3081/3081559.png">
 <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/3081/3081559.png">
@@ -516,14 +517,15 @@ button:hover{background:#b91c1c !important}
     <button onclick="document.getElementById('pushBanner').classList.add('hidden')" style="width:auto;padding:6px 8px;background:rgba(0,0,0,.2) !important">✕</button>
   </div>
 </div>
-<div id="pwaBanner" class="pwa-banner">
-  <div><b>📲 Installer SHOP ONLINE</b><br><small>Comme une vraie app</small></div>
-  <div style="display:flex;gap:8px">
-    <button id="pwaInstallBtn" class="pwa-install-btn" style="width:auto">Installer</button>
-    <button onclick="document.getElementById('pwaBanner').classList.remove('show')" style="width:auto;padding:6px 8px;background:rgba(255,255,255,.2) !important">✕</button>
-  </div>
+
+<div 
+<div id="pwaBanner" class="pwa-banner hidden" style="position:fixed;bottom:0;left:0;right:0;background:linear-gradient(135deg,#16a34a,#dc2626);color:#fff;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;z-index:9998;box-shadow:0 -4px 20px rgba(0,0,0,.3);transform:translateY(100%);transition:transform .3s">
+  <div style="display:flex;align-items:center;gap:10px"><img src="https://cdn-icons-png.flaticon.com/512/3081/3081559.png" style="width:40px;height:40px;border-radius:8px;background:#fff;padding:2px"><div><b>📲 Installer SHOP ONLINE</b><br><small style="font-size:11px;opacity:.9">App sur écran d'accueil - 0% commission</small></div></div>
+  <div style="display:flex;gap:8px"><button onclick="installPWA()" style="width:auto;padding:8px 16px;background:#fff !important;color:#16a34a !important;border:none;font-weight:900;border-radius:20px">Installer</button><button onclick="document.getElementById('pwaBanner').classList.add('hidden'); document.getElementById('pwaBanner').classList.remove('show'); localStorage.setItem('pwaDismissed','true')" style="width:32px;height:32px;padding:0;background:rgba(255,255,255,.2) !important;border-radius:50%">✕</button></div>
 </div>
-<div id="storiesBar" class="stories-bar hidden">
+<style>.pwa-banner.show{transform:translateY(0) !important; display:flex !important} .pwa-banner.hidden{transform:translateY(100%) !important}</style>
+
+id="storiesBar" class="stories-bar hidden">
   <div class="story-item" onclick="openStoryModal()">
     <div class="story-add">+</div>
     <small style="font-size:9px">Ma story</small>
@@ -767,7 +769,14 @@ button:hover{background:#b91c1c !important}
 
 <div id="param-boost" class="param-panel hidden"><h3>🚀 Boost Gratuit</h3><div style="background:#f0f0f0;padding:12px;border-radius:10px; text-align:center"><b style="color:#86efac">🎉 Boost gratuit 24h illimité !</b><br/><small>Tous tes produits en haut de la liste</small></div><div id="boostList" style="margin-top:12px; background:#fff; padding:12px; border-radius:10px; min-height:80px">Aucun produit à booster<br/><small>Publie un produit d'abord</small></div><button onclick="if(typeof boostAllFree==='function') boostAllFree()" style="background:#86efac !important;margin-top:12px; padding:14px; font-size:16px">🚀 Booster TOUS Mes Produits GRATUIT</button></div>
 
-<div id="param-pwa" class="param-panel hidden"><h3>📲 Installer App</h3><div style="background:#fff;padding:16px;border-radius:12px"><div style="display:flex;gap:16px;align-items:center; background:#f9fafb; padding:12px; border-radius:12px; border:2px solid #86efac"><img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" style="width:60px;height:60px;border-radius:12px"/><div><b>SHOP ONLINE 237</b><br/><small>100% Gratuit - Boutique en ligne</small><br/><small style="color:#86efac">✅ 0% commission</small></div></div><div id="pwaStatus" style="margin:16px 0;padding:12px;background:#fffbeb;border:2px solid #fcd34d;border-radius:10px;text-align:center;font-size:13px">⏳ Vérification du navigateur...</div><button id="installPWAbtn" style="background:#86efac !important; padding:14px; font-size:16px">📲 INSTALLER L'APP SUR TÉLÉPHONE</button><button id="iosPWAbtn" style="background:#fff !important;color:#86efac !important;border:2px solid #86efac !important; margin-top:8px; display:none">🍎 iPhone: Partager → Sur l'écran d'accueil</button><div style="background:#f9fafb; padding:12px; border-radius:8px; margin-top:16px; font-size:11px"><b>Avantages app :</b><br/>✓ Icône sur écran d'accueil<br/>✓ Ouvre comme vraie app<br/>✓ Notifications<br/>✓ Marche hors ligne</div></div></div>
+<div id="param-pwa" class="param-panel hidden"><h3>📲 Installer App PWA</h3><div style="background:#fff;padding:16px;border-radius:12px"><div style="display:flex;gap:16px;align-items:center; background:#f0fdf4; padding:14px; border-radius:12px; border:2px solid #16a34a"><img src="https://cdn-icons-png.flaticon.com/512/3081/3081559.png" style="width:64px;height:64px;border-radius:16px;background:#fff;padding:4px;box-shadow:0 2px 8px rgba(0,0,0,.1)"/><div><b style="font-size:16px">SHOP ONLINE 237</b><br/><small>100% Gratuit - Marketplace Cameroun</small><br/><small style="color:#16a34a;font-weight:800">✅ Vrai PWA - Hors ligne - Notifications</small><br/><small id="pwaCompat" style="font-size:10px;color:#666"></small></div></div><div id="pwaStatus" style="margin:16px 0;padding:12px;background:#fffbeb;border:2px solid #fcd34d;border-radius:10px;text-align:center;font-size:13px">⏳ Vérification...</div><button id="installPwaBtn" onclick="installPWA()" style="background:linear-gradient(135deg,#16a34a,#22c55e) !important; padding:16px; font-size:16px; font-weight:900; border:3px solid #111 !important"><span id="installPwaText">📲 INSTALLER L'APP SUR TÉLÉPHONE</span></button><button id="iosPWAbtn" onclick="alert('Sur iPhone:
+1. Clique icône Partage en bas (carré avec flèche)
+2. Fais défiler et clique \'Sur l\'écran d\'accueil\'
+3. Clique Ajouter en haut à droite
+
+Tu auras l\'icône SHOP ONLINE comme WhatsApp !')" style="background:#fff !important;color:#111 !important;border:2px solid #111 !important; margin-top:10px;"><span>🍎 iPhone: Comment installer ?</span></button><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px"><button onclick="if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then(r=>{alert('SW actifs: '+r.length+'
+Cache: shop-online-v2
+Status: '+ (r[0] ? 'OK' : 'Pas encore'))})}" style="background:#f3f4f6 !important;color:#111 !important;border:1px solid #111 !important;font-size:11px;padding:8px">🔧 Vérifier SW</button><button onclick="if(confirm('Vider cache PWA ?')){caches.keys().then(k=>k.forEach(n=>caches.delete(n))); localStorage.removeItem('pwaDismissed'); location.reload()}" style="background:#fef2f2 !important;color:#dc2626 !important;border:1px solid #dc2626 !important;font-size:11px;padding:8px">🗑️ Vider cache</button></div><div style="background:#f9fafb; padding:12px; border-radius:8px; margin-top:16px; font-size:11px; border-left:4px solid #16a34a"><b>✅ Avantages app installée :</b><br/>✓ Icône sur écran d'accueil comme WhatsApp<br/>✓ S'ouvre sans barre d'adresse (vraie app)<br/>✓ Marche même hors ligne (produits en cache)<br/>✓ Notifications push ventes<br/>✓ Raccourcis: Publier, Commandes, Aide IA<br/>✓ 10x plus rapide</div></div></div>
 
   </div>
 
@@ -2058,7 +2067,85 @@ function submitKYC(){showToast('🔵 Demande envoyée','success');document.getEl
 function openStatsModal(){document.getElementById('statsModal').classList.remove('hidden');}
 function renderStats(){}
 let deferredPrompt=null;
-function initPWA(){window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;document.getElementById('pwaBanner')?.classList.add('show');});}
+function initPWA(){
+  // Enregistre le Service Worker pour vrai PWA
+  if('serviceWorker' in navigator){
+    navigator.serviceWorker.register('/sw.js')
+      .then(reg => { console.log('✅ SW enregistré', reg.scope); })
+      .catch(err => console.log('SW erreur', err));
+  }
+  window.addEventListener('beforeinstallprompt',e=>{
+    e.preventDefault();
+    deferredPrompt=e;
+    console.log('📲 PWA install prompt prêt');
+    document.getElementById('pwaBanner')?.classList.add('show');
+    document.getElementById('pwaBanner')?.classList.remove('hidden');
+    // Affiche aussi bouton dans param-pwa
+    const pwaBtn = document.getElementById('installPwaBtn');
+    if(pwaBtn) pwaBtn.classList.remove('hidden');
+  });
+  window.addEventListener('appinstalled',()=>{
+    console.log('✅ PWA installée');
+    deferredPrompt=null;
+    document.getElementById('pwaBanner')?.classList.add('hidden');
+    showToast('✅ SHOP ONLINE installée !','success');
+  });
+}
+function installPWA(){
+  if(!deferredPrompt){
+    showToast('Utilise menu navigateur > Installer ou Ajouter à écran d\'accueil','info');
+    // Fallback instructions
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    if(isIOS){
+      alert('Sur iPhone:\n1. Clique Partage en bas\n2. Ajouter à l\'écran d\'accueil\n3. Ajouter');
+    }else{
+      alert('Sur Android Chrome:\n1. Menu ⋮ en haut\n2. Installer l\'application\n3. Installer');
+    }
+    return;
+  }
+  deferredPrompt.prompt();
+  deferredPrompt.userChoice.then(choice=>{
+    if(choice.outcome==='accepted'){
+      showToast('✅ Installation en cours...','success');
+    }else{
+      showToast('Installation annulée','info');
+    }
+    deferredPrompt=null;
+    document.getElementById('pwaBanner')?.classList.add('hidden');
+  });
+}
+
+
+function updatePWAStatus(){
+  const statusEl = document.getElementById('pwaStatus');
+  const compatEl = document.getElementById('pwaCompat');
+  const iosBtn = document.getElementById('iosPWAbtn');
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+  
+  if(compatEl){
+    compatEl.textContent = isIOS ? 'iPhone détecté - Installation manuelle' : (isStandalone ? 'Déjà installée ✅' : 'Chrome/Edge - Installable');
+  }
+  if(isIOS && iosBtn){ iosBtn.style.display='block'; }
+  
+  if(statusEl){
+    if(isStandalone){
+      statusEl.innerHTML='✅ <b>App déjà installée !</b><br><small>Tu utilises SHOP ONLINE comme une vraie app</small>';
+      statusEl.style.background='#f0fdf4'; statusEl.style.borderColor='#16a34a';
+    }else if(deferredPrompt){
+      statusEl.innerHTML='✅ <b>Prête à installer !</b><br><small>Clique le bouton vert ci-dessous</small>';
+      statusEl.style.background='#f0fdf4'; statusEl.style.borderColor='#16a34a';
+    }else if(isIOS){
+      statusEl.innerHTML='🍎 <b>iPhone : installation manuelle</b><br><small>Partage → Sur l\'écran d\'accueil</small>';
+      statusEl.style.background='#f0f7ff'; statusEl.style.borderColor='#3b82f6';
+    }else{
+      statusEl.innerHTML='⏳ <b>En attente...</b><br><small>Si bouton ne s\'active pas: Menu Chrome ⋮ → Installer l\'app</small>';
+    }
+  }
+}
+setInterval(updatePWAStatus, 2000);
+setTimeout(updatePWAStatus, 1000);
+
 function initAllImprovements(){try{initBannerCarousel();initVoiceSearch();checkPushBanner();initDarkMode();renderStoriesBar();updateComparatorBar();initPWA();const h=document.querySelector('header');if(h&&!document.getElementById('darkModeToggle')){const b=document.createElement('button');b.id='darkModeToggle';b.className='dark-toggle';b.innerHTML='<span id="darkModeIcon">🌙</span>';b.onclick=toggleDarkMode;b.style.width='auto';b.style.padding='6px 10px';const n=h.querySelector('.nav-right');if(n)n.prepend(b);}const s=document.getElementById('searchProduct');if(s&&!document.getElementById('voiceBtn')){const vb=document.createElement('button');vb.id='voiceBtn';vb.className='voice-btn';vb.innerHTML='🎤';vb.onclick=toggleVoiceSearch;vb.style.width='44px';s.parentNode.insertBefore(vb,s.nextSibling);s.parentNode.style.display='flex';}console.log('✅ 15 améliorations OK');}catch(e){console.error(e);}}
 setTimeout(initAllImprovements,2000);
 
