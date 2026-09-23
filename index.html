@@ -353,15 +353,22 @@ body.dark-mode .card, body.dark-mode header, body.dark-mode .modal-content{backg
 body.dark-mode input, body.dark-mode select, body.dark-mode textarea{background:#374151 !important;color:#fff !important;border-color:#4b5563 !important}
 body.dark-mode .product{background:#1f2937 !important;color:#fff !important}
 .dark-toggle{width:40px;height:40px;border-radius:50%;background:#111 !important;color:#fff !important;border:2px solid #fff !important;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px}
-.stories-bar{display:flex;gap:12px;overflow-x:auto;padding:12px 8px;margin-bottom:12px;scrollbar-width:none;background:#fff;border-radius:12px;border:1px solid #eee}
+.stories-bar{display:flex;gap:12px;overflow-x:auto;padding:12px 8px;margin-bottom:12px;scrollbar-width:none;background:#fff;border-radius:16px;border:1px solid #f0f0f0;box-shadow:0 2px 8px rgba(0,0,0,.04)}
 .stories-bar::-webkit-scrollbar{display:none}
-.story-item{flex:0 0 62px;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;position:relative}
+.story-item{flex:0 0 66px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;position:relative}
 .story-ring{width:62px;height:62px;border-radius:50%;padding:3px;background:#e5e7eb;display:flex;align-items:center;justify-content:center;transition:.2s}
-.story-ring.has-story{background:linear-gradient(135deg,#dc2626 0%,#ff0000 50%,#dc2626 100%) !important;padding:3px;box-shadow:0 0 0 2px #fff, 0 0 0 5px #dc2626;animation:storyPulse 2s infinite}
-@keyframes storyPulse{0%{box-shadow:0 0 0 2px #fff, 0 0 0 5px #dc2626}50%{box-shadow:0 0 0 2px #fff, 0 0 0 7px rgba(220,38,38,.5)}100%{box-shadow:0 0 0 2px #fff, 0 0 0 5px #dc2626}}
+.story-ring.has-story{background:linear-gradient(135deg,#dc2626 0%,#ff0000 50%,#dc2626 100%) !important;padding:3px;box-shadow:0 0 0 2px #fff, 0 0 0 4px #dc2626 !important;animation:storyPulse 2s infinite}
+@keyframes storyPulse{0%{box-shadow:0 0 0 2px #fff, 0 0 0 4px #dc2626}50%{box-shadow:0 0 0 2px #fff, 0 0 0 6px rgba(220,38,38,.4)}100%{box-shadow:0 0 0 2px #fff, 0 0 0 4px #dc2626}}
 .story-ring img{width:100%;height:100%;border-radius:50%;border:2px solid #fff;object-fit:cover;background:#fff}
 .story-ring.seen{opacity:.6;background:#e5e7eb !important;box-shadow:none !important;animation:none !important}
-.story-add{width:62px;height:62px;border-radius:50%;background:#f0fdf4;border:2px dashed #16a34a;display:flex;align-items:center;justify-content:center;font-size:26px;color:#16a34a;cursor:pointer;position:relative}
+.story-add{width:62px;height:62px;border-radius:50%;background:#f0fdf4;border:2px dashed #16a34a;display:flex;align-items:center;justify-content:center;font-size:28px;color:#16a34a;cursor:pointer;position:relative}
+.story-name{font-size:9px;font-weight:700;color:#111;max-width:66px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:center}
+.product-avatar-story{width:34px;height:34px;border-radius:50%;padding:2px;background:#e5e7eb;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.product-avatar-story.has-story{background:#dc2626 !important;box-shadow:0 0 0 2px #fff, 0 0 0 3px #dc2626 !important}
+.product-avatar-story img{width:100%;height:100%;border-radius:50%;border:1.5px solid #fff;object-fit:cover}
+.follow-btn{width:auto !important;padding:6px 14px !important;font-size:11px !important;border-radius:20px !important;min-height:32px !important}
+.follow-btn.following{background:#e5e7eb !important;color:#111 !important;border:1px solid #d1d5db !important}
+.follow-btn.not-following{background:#1877F2 !important;color:#fff !important;border:none !important}
 .story-add::after{content:'+';position:absolute;bottom:-2px;right:-2px;width:20px;height:20px;background:#16a34a;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;border:2px solid #fff;line-height:1}
 .story-name{font-size:9px;font-weight:600;color:#111;max-width:62px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:center}
 .product-avatar-story{width:32px;height:32px;border-radius:50%;padding:2px;background:#e5e7eb;flex-shrink:0}
@@ -1118,18 +1125,19 @@ function productHTML(p, index){
  const oldPrice = hasDiscount ? Math.round(p.prix * 100 / (100 - discount)) : 0;
  const isBestSeller = (index % 3 === 0) || (p.vues||0) > 20;
  const vendeurId=p.vendeur_id||seller.id||'';
- const hasStory = hasActiveStory(vendeurId);
+ const hasStory = typeof hasActiveStory==='function' ? hasActiveStory(vendeurId) : false;
  const sellerLogo = seller.logo||'https://cdn-icons-png.flaticon.com/512/3135/3135715.png';
+ const isFollowed = typeof getFollowedBoutiques==='function' ? getFollowedBoutiques().includes(String(vendeurId)) : false;
  
  return `
- <div class="product" data-pid="${p.id}" onclick="openProductDetail('${p.id}'); if('${vendeurId}') followBoutique('${vendeurId}')">
+ <div class="product" data-pid="${p.id}">
    ${hasDiscount?`<div class="badge-discount">-${discount}%</div>`:''}
    ${isBoosted?'<div style="position:absolute;top:8px;right:8px;background:#FF9800;color:#fff;padding:2px 6px;border-radius:6px;font-size:9px;font-weight:800;z-index:2">🚀 BOOST</div>':''}
-   <div style="position:absolute;top:8px;left:8px;z-index:3;display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.9);padding:3px 6px 3px 3px;border-radius:20px;border:1px solid #eee">
+   <div style="position:absolute;top:8px;left:8px;z-index:3;display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.95);padding:3px 8px 3px 3px;border-radius:20px;border:1px solid #eee;backdrop-filter:blur(4px)">
      <div class="product-avatar-story ${hasStory?'has-story':''}" data-vendeur-id="${vendeurId}" onclick="event.stopPropagation(); viewBoutiqueStories('${vendeurId}')"><img src="${escapeHTML(sellerLogo)}" alt="Boutique" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png'"></div>
      <small style="font-size:9px;font-weight:800;max-width:60px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${escapeHTML((seller.boutique||seller.prenom||'Boutique').substring(0,12))}</small>
    </div>
-   <img src="${escapeHTML(mainImage)}" alt="${escapeHTML(p.nom)}" loading="lazy">
+   <img src="${escapeHTML(mainImage)}" alt="${escapeHTML(p.nom)}" loading="lazy" onclick="openProductDetail('${p.id}')">
    <div class="product-info-kingdom">
      <div class="product-title-kingdom">${escapeHTML(p.nom||'Produit')}</div>
      <div class="product-price-kingdom">${Number(p.prix||0).toLocaleString('fr-FR')} FCFA ${hasDiscount?`<span class="product-price-old">${Number(oldPrice).toLocaleString('fr-FR')}</span>`:''}</div>
@@ -1137,14 +1145,19 @@ function productHTML(p, index){
        ${inStock?`<div class="stock-badge-kingdom"><span style="width:6px;height:6px;background:#86efac;border-radius:50%;display:inline-block"></span> En stock</div>`:`<div style="color:#222222;font-size:10px">Rupture</div>`}
        ${isBestSeller?`<div class="meilleure-vente-badge">⭐ Meilleure vente</div>`:''}
      </div>
-     <button class="btn-add-cart-kingdom" onclick="event.stopPropagation(); addToCart('${p.id}'); event.preventDefault();"><span>🛒</span> Ajouter au panier</button>
+     <div style="display:flex;gap:6px;margin-top:6px">
+       <button class="btn-add-cart-kingdom" style="flex:1" onclick="event.stopPropagation(); addToCart('${p.id}');"><span>🛒</span> Panier</button>
+       <button class="follow-btn ${isFollowed?'following':'not-following'}" data-follow-btn="${vendeurId}" style="padding:7px 10px !important;font-size:10px !important" onclick="event.stopPropagation(); toggleFollow('${vendeurId}')">${isFollowed?'✓ Suivi':'Suivre'}</button>
+     </div>
    </div>
  </div>`;
 }
 function viewBoutiqueStories(vendeurId){
   const boutiqueStories = stories.filter(s=>String(s.vendeur_id||s.user?.id)===String(vendeurId) && s.expires>Date.now());
-  if(boutiqueStories.length){ viewStory(boutiqueStories[0].id); } else { showToast('Pas de story active pour cette boutique','info'); }
+  if(boutiqueStories.length){ viewStory(boutiqueStories[0].id); } else { showToast('Pas de story active','info'); }
 }
+
+
 
 
 function displayProducts(products){
@@ -1170,13 +1183,14 @@ function searchProducts(){ displayProducts(allProducts); }
 
 // --- CART / WISH ---
 function updateCartBadge(){ const b=document.getElementById('cartBadge'); if(!b) return; if(cart.length){ b.textContent=cart.length; b.style.display='flex'; document.getElementById('cartBtn').style.display='flex'; } else { b.style.display='none'; } }
-function updateWishBadge(){ const b=document.getElementById('wishBadge'); if(!b) return; if(wishlist.length){ b.textContent=wishlist.length; b.style.display='flex'; document.getElementById('profileBtn') /* wish removed */ || document.getElementById('profileBtn').style.display='flex'; } else { b.style.display='none'; } }
+function updateWishBadge(){ const b=document.getElementById('wishBadge_REMOVED'); if(!b) return; if(wishlist.length){ b.textContent=wishlist.length; b.style.display='flex'; document.getElementById('profileBtn') /* wish removed */ || document.getElementById('profileBtn').style.display='flex'; } else { b.style.display='none'; } }
 function addToCart(id){ if(cart.find(x=>String(x.id)===String(id))){ showToast('Déjà dans panier','info'); return; } const p=allProducts.find(x=>String(x.id)===String(id)); if(!p) return; cart.push(p); localStorage.setItem('shop_cart', JSON.stringify(cart)); updateCartBadge(); showToast('Ajouté au panier','success'); }
 function addToWishlist(id){ if(wishlist.find(x=>String(x.id)===String(id))){ const idx=wishlist.findIndex(x=>String(x.id)===String(id)); wishlist.splice(idx,1); localStorage.setItem('shop_wish', JSON.stringify(wishlist)); updateWishBadge(); showToast('Retiré wishlist','info'); return; } const p=allProducts.find(x=>String(x.id)===String(id)); if(!p) return; wishlist.push(p); localStorage.setItem('shop_wish', JSON.stringify(wishlist)); updateWishBadge(); showToast('Ajouté wishlist','success'); }
 function renderCart(){ const c=document.getElementById('cartContent'); if(!c) return; if(!cart.length){ c.innerHTML='<p>Panier vide</p>'; document.getElementById('cartTotal').textContent=''; return; } let total=0; c.innerHTML=cart.map(p=>{ total+=Number(p.prix||0)+(Number(p.frais_livraison||2000)); return `<div class="cart-item"><img src="${escapeHTML(p.image||p.images?.[0]||'')}" style="width:50px;height:50px;object-fit:cover;border-radius:6px"><div style="flex:1"><b>${escapeHTML(p.nom)}</b><br>${p.prix}F + Liv ${p.frais_livraison||2000}F</div><button class="btnRemoveCart" data-id="${p.id}" style="width:auto;padding:4px 8px;background:#fee2e2;color:#222222">✕</button></div>`; }).join(''); document.getElementById('cartTotal').textContent='Total avec livraison: '+total.toLocaleString('fr-FR')+' FCFA (commission 2% incluse pour vendeur)'; }
 function renderWishlist(){ const c=document.getElementById('wishlistContent'); if(!c) return; if(!wishlist.length){ c.innerHTML='<p>Wishlist vide</p>'; return; } c.innerHTML=wishlist.map(p=>`<div class="cart-item"><img src="${escapeHTML(p.image||p.images?.[0]||'')}" style="width:50px;height:50px;object-fit:cover;border-radius:6px"><div style="flex:1"><b>${escapeHTML(p.nom)}</b><br>${p.prix}F</div><button class="btnRemoveWish" data-id="${p.id}" style="width:auto;padding:4px 8px;background:#fee2e2;color:#222222">✕</button></div>`).join(''); }
 
 // --- PRODUCT DETAIL ---
+function function _origOpenProductDetail(id){ return openProductDetail(id); }
 function openProductDetail(id){
  const p=allProducts.find(x=>String(x.id)===String(id)); if(!p) return; currentDetailProduct=p;
  const images=p.images||[p.image];
@@ -1185,6 +1199,7 @@ function openProductDetail(id){
  const avgRating=getAvgRating(p.id);
  const reviewCount=getReviewCount(p.id);
  const content=document.getElementById('productDetailContent');
+  const __vendeurIdForFollow = allProducts.find(x=>String(x.id)===String(id))?.vendeur_id;
  content.innerHTML=`
  <div style="position:relative"><div class="carousel" style="height:250px">${images.map((img,i)=>`<img src="${escapeHTML(img)}" class="${i===0?'active':''}" style="height:250px">`).join('')}</div><button onclick="closeModal('productDetailModal')" style="position:absolute;top:10px;right:10px;width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,.6);color:#fff;border:none">✕</button></div>
  <div style="padding:10px">
@@ -2119,70 +2134,60 @@ function hasActiveStory(vendeurId){if(!vendeurId)return false;return stories.som
 function isStorySeen(storyId){try{const seen=JSON.parse(localStorage.getItem('shop_stories_seen')||'[]');return seen.includes(String(storyId))}catch(e){return false}}
 function markStorySeen(storyId){let seen=[];try{seen=JSON.parse(localStorage.getItem('shop_stories_seen')||'[]')}catch(e){}const id=String(storyId);if(!seen.includes(id)){seen.push(id);localStorage.setItem('shop_stories_seen',JSON.stringify(seen))}}
 
+function getFollowedBoutiques(){try{return JSON.parse(localStorage.getItem('shop_follows')||'[]')}catch(e){return []}}
+function followBoutique(vendeurId){if(!vendeurId)return;let f=getFollowedBoutiques();const id=String(vendeurId);if(!f.includes(id)){f.push(id);localStorage.setItem('shop_follows',JSON.stringify(f));showToast('✅ Boutique suivie - ses stories apparaîtront','success');renderStoriesBar();updateFollowButtons();}else{showToast('Déjà suivie','info')}}
+function unfollowBoutique(vendeurId){let f=getFollowedBoutiques();const id=String(vendeurId);f=f.filter(x=>x!==id);localStorage.setItem('shop_follows',JSON.stringify(f));showToast('Boutique non suivie','info');renderStoriesBar();updateFollowButtons();}
+function toggleFollow(vendeurId){const f=getFollowedBoutiques();if(f.includes(String(vendeurId))) unfollowBoutique(vendeurId); else followBoutique(vendeurId);}
+function hasActiveStory(vendeurId){if(!vendeurId)return false;return stories.some(s=>String(s.user?.id||s.vendeur_id)===String(vendeurId) && s.expires>Date.now())}
+function isStorySeen(storyId){try{const seen=JSON.parse(localStorage.getItem('shop_stories_seen')||'[]');return seen.includes(String(storyId))}catch(e){return false}}
+function markStorySeen(storyId){let seen=[];try{seen=JSON.parse(localStorage.getItem('shop_stories_seen')||'[]')}catch(e){}const id=String(storyId);if(!seen.includes(id)){seen.push(id);localStorage.setItem('shop_stories_seen',JSON.stringify(seen))}}
+function updateFollowButtons(){document.querySelectorAll('[data-follow-btn]').forEach(btn=>{const vid=btn.getAttribute('data-follow-btn');const followed=getFollowedBoutiques().includes(String(vid));btn.textContent=followed?'✓ Suivi':'Suivre';btn.className='follow-btn '+(followed?'following':'not-following');})}
+
 function renderStoriesBar(){
   const bar=document.getElementById('storiesBar');
   if(!bar)return;
   const u=getUser();
   stories=stories.filter(s=>s.expires>Date.now());
   localStorage.setItem('shop_stories',JSON.stringify(stories));
-  // Clean expired
   const followed=getFollowedBoutiques();
   let visibleStories=[];
   if(u && u.role==='vendeur'){
-    // Vendeur voit toutes les stories + sa propre story
     visibleStories=stories;
   } else {
-    // Client ne voit que les stories des boutiques suivies
-    if(followed.length===0){
-      // Si aucun suivi, ne montre rien (ou montre vide avec message)
-      visibleStories=[];
-    } else {
-      visibleStories=stories.filter(s=>followed.includes(String(s.user?.id||s.vendeur_id)));
-    }
+    if(followed.length===0){ visibleStories=[]; }
+    else { visibleStories=stories.filter(s=>followed.includes(String(s.user?.id||s.vendeur_id))); }
   }
-  // Toujours afficher la barre si vendeur (pour ajouter) ou si il y a des stories visibles
   const isVendeur = u && u.role==='vendeur';
-  if(visibleStories.length===0 && !isVendeur){
-    bar.classList.add('hidden');
-    bar.innerHTML='';
-    return;
-  }
+  if(visibleStories.length===0 && !isVendeur){ bar.classList.add('hidden'); bar.innerHTML=''; return; }
   bar.classList.remove('hidden');
   let html='';
   if(isVendeur){
     const myStory = stories.find(s=>String(s.user?.id)===String(u.id));
     const hasMyStory = !!myStory;
     html+=`<div class="story-item" onclick="openStoryModal()">
-      <div class="${hasMyStory?'story-ring has-story':'story-add'}">
-        ${hasMyStory?`<img src="${myStory.image||u.logo||'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'}" alt="Ma story">`:'+'}
-      </div>
+      <div class="${hasMyStory?'story-ring has-story':'story-add'}">${hasMyStory?`<img src="${myStory.image||u.logo||'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'}" alt="Ma story">`:'+'}</div>
       <div class="story-name">Ma story</div>
     </div>`;
   }
   visibleStories.forEach(s=>{
     const sid=s.user?.id||s.vendeur_id;
-    if(isVendeur && String(sid)===String(u.id))return; // déjà affiché
+    if(isVendeur && String(sid)===String(u.id))return;
     const seen=isStorySeen(s.id);
     const boutiqueName=s.user?.boutique||s.user?.prenom||'Boutique';
     const logo=s.user?.logo||'https://cdn-icons-png.flaticon.com/512/3135/3135715.png';
     html+=`<div class="story-item" onclick="viewStory(${s.id})">
       <div class="story-ring ${seen?'seen':'has-story'}"><img src="${logo}" alt="${boutiqueName}" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png'"></div>
-      <div class="story-name">${(boutiqueName||'').substring(0,12)}</div>
+      <div class="story-name">${(boutiqueName||'').substring(0,11)}</div>
     </div>`;
   });
-  // Si client sans follow mais il y a des stories, propose message
-  if(html==='' && !isVendeur){
-    bar.classList.add('hidden');
-  } else {
-    bar.innerHTML=html;
-  }
-  // Mettre à jour les avatars produits avec cercle rouge
+  bar.innerHTML=html;
+  setTimeout(()=>updateFollowButtons(),100);
   document.querySelectorAll('[data-vendeur-id]').forEach(el=>{
     const vid=el.getAttribute('data-vendeur-id');
-    if(hasActiveStory(vid)) el.classList.add('has-story');
-    else el.classList.remove('has-story');
+    if(hasActiveStory(vid)) el.classList.add('has-story'); else el.classList.remove('has-story');
   });
 }
+
 function viewStory(id){
   const s=stories.find(x=>String(x.id)===String(id));
   if(!s)return;
@@ -2195,7 +2200,8 @@ function viewStory(id){
   if(infoEl){
     const u=s.user||{};
     const logo=u.logo||'https://cdn-icons-png.flaticon.com/512/3135/3135715.png';
-    infoEl.innerHTML=`<div style="display:flex;align-items:center;gap:8px"><div class="story-ring has-story" style="width:36px;height:36px;padding:2px"><img src="${logo}" style="width:100%;height:100%;border-radius:50%;object-fit:cover"></div><div><b style="font-size:12px">${u.boutique||u.prenom||'Boutique'}</b><br><small style="font-size:9px;opacity:.8">${new Date(s.created_at).toLocaleTimeString('fr-FR')}</small></div></div>`;
+    const isFollowed=getFollowedBoutiques().includes(String(u.id||s.vendeur_id));
+    infoEl.innerHTML=`<div style="display:flex;align-items:center;justify-content:space-between;width:100%"><div style="display:flex;align-items:center;gap:8px"><div class="story-ring has-story" style="width:38px;height:38px;padding:2px"><img src="${logo}"></div><div><b style="font-size:13px">${u.boutique||u.prenom||'Boutique'}</b><br><small style="font-size:10px;opacity:.8">${new Date(s.created_at).toLocaleTimeString('fr-FR')} • 24h</small></div></div><button class="follow-btn ${isFollowed?'following':'not-following'}" onclick="toggleFollow('${u.id||s.vendeur_id}'); event.stopPropagation(); setTimeout(()=>{const el=document.getElementById('storyViewerInfo'); if(el){ const u2=s.user||{}; const f=getFollowedBoutiques().includes(String(u2.id||s.vendeur_id)); el.querySelector('button').textContent=f?'✓ Suivi':'Suivre'; el.querySelector('button').className='follow-btn '+(f?'following':'not-following'); }},100)">${isFollowed?'✓ Suivi':'Suivre'}</button></div>`;
   }
   document.getElementById('storyViewerModal').classList.remove('hidden');
   setTimeout(()=>renderStoriesBar(),300);
@@ -2425,7 +2431,7 @@ async function sendAIMessage(){
       }
     }catch(e){ /* fallback local */ }
 
-    typingDiv.innerHTML = '<b>🤖 Ia:</b> '+answer;
+    typingDiv.innerHTML = '<b>🤖 IA:</b> '+answer;
     messagesDiv.scrollTop = messagesDiv.scrollHeight;
   }, 600);
 }
