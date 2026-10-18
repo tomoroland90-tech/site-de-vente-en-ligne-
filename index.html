@@ -17,7 +17,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">function checkSW(){if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then(r=>{alert('SW actifs: '+r.length+'\nCache: shop-online-v2\nStatus: '+(r[0]?'OK':'Pas encore'));});}}
 </script>
-<script src="https://unpkg.com/peerjs@1.5.0/dist/peerjs.min.js"></script>
+<script src="https://unpkg.com/peerjs@1.5.0/dist/peerjs.main.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
 
@@ -495,7 +495,7 @@ button:hover{background:#b91c1c !important}
 <body>
 
 <header>
-<div style="display:flex;align-items:center;gap:10px"><img src="container:///mnt/data/logo-rouge-48.png" alt="Logo" style="width:42px;height:42px;border-radius:12px;background:#fff;padding:3px;border:2px solid #86efac;box-shadow:0 2px 8px rgba(0,0,0,.15)"><h2 style="margin:0">SHOP ONLINE</h2><span style="background:#facc15;color:#111;padding:2px 6px;border-radius:10px;font-size:9px;font-weight:900">ULTIMATE</span></div>
+<div style="display:flex;align-items:center;gap:10px"><img src="https://cdn-icons-png.flaticon.com/512/3081/3081559.png" alt="Logo" style="width:42px;height:42px;border-radius:12px;background:#fff;padding:3px;border:2px solid #86efac;box-shadow:0 2px 8px rgba(0,0,0,.15)"><h2 style="margin:0">SHOP ONLINE</h2><span style="background:#facc15;color:#111;padding:2px 6px;border-radius:10px;font-size:9px;font-weight:900">ULTIMATE</span></div>
 <div class="nav-right" style="display:flex;align-items:center;gap:6px;flex-wrap:nowrap;white-space:nowrap">
 <button class="nav-btn" id="btnConnexion">Connexion</button>
 <button class="nav-btn" id="btnDeconnexion" style="display:none;background:#fee2e2;color:#222222">Déconnexion</button>
@@ -1158,7 +1158,7 @@ function searchProducts(){ displayProducts(allProducts); }
 
 // --- CART / WISH ---
 function updateCartBadge(){ const b=document.getElementById('cartBadge'); if(!b) return; if(cart.length){ b.textContent=cart.length; b.style.display='flex'; document.getElementById('cartBtn').style.display='flex'; } else { b.style.display='none'; } }
-function updateWishBadge(){ const b=document.getElementById('wishBadge'); if(!b) return; if(wishlist.length){ b.textContent=wishlist.length; b.style.display='flex'; document.getElementById('profileBtn') /* wish removed */ || document.getElementById('profileBtn').style.display='flex'; } else { b.style.display='none'; } }
+function updateWishBadge(){ const b=document.getElementById('wishBadge'); if(!b) return; if(wishlist.length){ b.textContent=wishlist.length; b.style.display='flex'; } else { b.style.display='none'; } }
 function addToCart(id){ if(cart.find(x=>String(x.id)===String(id))){ showToast('Déjà dans panier','info'); return; } const p=allProducts.find(x=>String(x.id)===String(id)); if(!p) return; cart.push(p); localStorage.setItem('shop_cart', JSON.stringify(cart)); updateCartBadge(); showToast('Ajouté au panier','success'); }
 function addToWishlist(id){ if(wishlist.find(x=>String(x.id)===String(id))){ const idx=wishlist.findIndex(x=>String(x.id)===String(id)); wishlist.splice(idx,1); localStorage.setItem('shop_wish', JSON.stringify(wishlist)); updateWishBadge(); showToast('Retiré wishlist','info'); return; } const p=allProducts.find(x=>String(x.id)===String(id)); if(!p) return; wishlist.push(p); localStorage.setItem('shop_wish', JSON.stringify(wishlist)); updateWishBadge(); showToast('Ajouté wishlist','success'); }
 function renderCart(){ const c=document.getElementById('cartContent'); if(!c) return; if(!cart.length){ c.innerHTML='<p>Panier vide</p>'; document.getElementById('cartTotal').textContent=''; return; } let total=0; c.innerHTML=cart.map(p=>{ total+=Number(p.prix||0)+(Number(p.frais_livraison||2000)); return `<div class="cart-item"><img src="${escapeHTML(p.image||p.images?.[0]||'')}" style="width:50px;height:50px;object-fit:cover;border-radius:6px"><div style="flex:1"><b>${escapeHTML(p.nom)}</b><br>${p.prix}F + Liv ${p.frais_livraison||2000}F</div><button class="btnRemoveCart" data-id="${p.id}" style="width:auto;padding:4px 8px;background:#fee2e2;color:#222222">✕</button></div>`; }).join(''); document.getElementById('cartTotal').textContent='Total avec livraison: '+total.toLocaleString('fr-FR')+' FCFA (commission 2% incluse pour vendeur)'; }
@@ -1496,7 +1496,7 @@ async function renderAll(){
  const u=getUser();
  const authBox=document.getElementById('authBox'); const registerBox=document.getElementById('registerBox'); const app=document.getElementById('app');
  const btnConn=document.getElementById('btnConnexion'); const btnDeco=document.getElementById('btnDeconnexion'); const profileBtn=document.getElementById('profileBtn');
- const cartBtn=document.getElementById('cartBtn'); const wishBtn=document.getElementById('profileBtn') /* wish removed */ || document.getElementById('profileBtn'); const notifBtn=document.getElementById('notifBtn'); const paramsBtn=document.getElementById('paramsBtn'); const chatBtn=document.getElementById('chatBtn');
+ const cartBtn=document.getElementById('cartBtn'); const wishBtn=document.getElementById('profileBtn') // wish removed document.getElementById('profileBtn'); const notifBtn=document.getElementById('notifBtn'); const paramsBtn=document.getElementById('paramsBtn'); const chatBtn=document.getElementById('chatBtn');
  if(!u){
    if(app) app.classList.add('hidden'); if(authBox) authBox.classList.remove('hidden'); if(registerBox) registerBox.classList.add('hidden');
    if(profileBtn) profileBtn.style.display='none'; if(btnConn) btnConn.style.display='inline-block'; if(btnDeco) btnDeco.style.display='none';
@@ -1569,7 +1569,7 @@ document.addEventListener('DOMContentLoaded', function(){
  document.getElementById('filterVille')?.addEventListener('change', searchProducts);
  document.getElementById('cartBtn')?.addEventListener('click', ()=>{ renderCart(); document.getElementById('cartModal').classList.remove('hidden'); });
  document.getElementById('closeCartBtn')?.addEventListener('click', ()=>closeModal('cartModal'));
- document.getElementById('profileBtn') /* wish removed */ || document.getElementById('profileBtn')?.addEventListener('click', ()=>{ renderWishlist(); document.getElementById('wishlistModal').classList.remove('hidden'); });
+ document.getElementById('profileBtn') // wish removed document.getElementById('profileBtn')?.addEventListener('click', ()=>{ renderWishlist(); document.getElementById('wishlistModal').classList.remove('hidden'); });
  document.getElementById('closeWishBtn')?.addEventListener('click', ()=>closeModal('wishlistModal'));
  document.getElementById('notifBtn')?.addEventListener('click', ()=>{ document.getElementById('notifModal').classList.remove('hidden'); });
  document.getElementById('closeNotifBtn')?.addEventListener('click', ()=>closeModal('notifModal'));
