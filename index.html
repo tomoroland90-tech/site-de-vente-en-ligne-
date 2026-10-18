@@ -15,7 +15,8 @@
 
 <title>SHOP ONLINE - 100% GRATUIT - Cameroun</title>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">function checkSW(){if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then(r=>{alert('SW actifs: '+r.length+'\nCache: shop-online-v2\nStatus: '+(r[0]?'OK':'Pas encore'));});}}
+</script>
 <script src="https://unpkg.com/peerjs@1.5.0/dist/peerjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
@@ -243,7 +244,10 @@ header{display:flex;justify-content:space-between;align-items:center;padding:8px
   header h2{
     font-size:14px !important;
   }
-  .nav-right{display:flex !important; gap:4px !important; flex-wrap:nowrap !important}
+  .nav-right{
+    grid-template-columns:repeat(4, 1fr) !important;
+    gap:4px !important;
+  }
   .nav-btn{
     font-size:9px !important;
     padding:4px 6px !important;
@@ -271,7 +275,9 @@ header{display:flex;justify-content:space-between;align-items:center;padding:8px
 
 /* Ultra small 320px */
 @media (max-width: 360px){
-  .nav-right{display:flex !important; gap:4px !important; flex-wrap:nowrap !important}
+  .nav-right{
+    grid-template-columns:repeat(3, 1fr) !important;
+  }
   header h2{
     font-size:13px !important;
   }
@@ -353,27 +359,12 @@ body.dark-mode .card, body.dark-mode header, body.dark-mode .modal-content{backg
 body.dark-mode input, body.dark-mode select, body.dark-mode textarea{background:#374151 !important;color:#fff !important;border-color:#4b5563 !important}
 body.dark-mode .product{background:#1f2937 !important;color:#fff !important}
 .dark-toggle{width:40px;height:40px;border-radius:50%;background:#111 !important;color:#fff !important;border:2px solid #fff !important;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px}
-.stories-bar{display:flex;gap:12px;overflow-x:auto;padding:12px 8px;margin-bottom:12px;scrollbar-width:none;background:#fff;border-radius:16px;border:1px solid #f0f0f0;box-shadow:0 2px 8px rgba(0,0,0,.04)}
-.stories-bar::-webkit-scrollbar{display:none}
-.story-item{flex:0 0 66px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;position:relative}
-.story-ring{width:62px;height:62px;border-radius:50%;padding:3px;background:#e5e7eb;display:flex;align-items:center;justify-content:center;transition:.2s}
-.story-ring.has-story{background:linear-gradient(135deg,#dc2626 0%,#ff0000 50%,#dc2626 100%) !important;padding:3px;box-shadow:0 0 0 2px #fff, 0 0 0 4px #dc2626 !important;animation:storyPulse 2s infinite}
-@keyframes storyPulse{0%{box-shadow:0 0 0 2px #fff, 0 0 0 4px #dc2626}50%{box-shadow:0 0 0 2px #fff, 0 0 0 6px rgba(220,38,38,.4)}100%{box-shadow:0 0 0 2px #fff, 0 0 0 4px #dc2626}}
+.stories-bar{display:flex;gap:10px;overflow-x:auto;padding:10px 0;margin-bottom:12px;scrollbar-width:none}
+.story-item{flex:0 0 60px;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer}
+.story-ring{width:56px;height:56px;border-radius:50%;padding:3px;background:linear-gradient(135deg,#dc2626,#16a34a)}
+.story-ring.has-story{background:linear-gradient(135deg,#dc2626,#f59e0b,#16a34a)}
 .story-ring img{width:100%;height:100%;border-radius:50%;border:2px solid #fff;object-fit:cover;background:#fff}
-.story-ring.seen{opacity:.6;background:#e5e7eb !important;box-shadow:none !important;animation:none !important}
-.story-add{width:62px;height:62px;border-radius:50%;background:#f0fdf4;border:2px dashed #16a34a;display:flex;align-items:center;justify-content:center;font-size:28px;color:#16a34a;cursor:pointer;position:relative}
-.story-name{font-size:9px;font-weight:700;color:#111;max-width:66px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:center}
-.product-avatar-story{width:34px;height:34px;border-radius:50%;padding:2px;background:#e5e7eb;flex-shrink:0;display:flex;align-items:center;justify-content:center}
-.product-avatar-story.has-story{background:#dc2626 !important;box-shadow:0 0 0 2px #fff, 0 0 0 3px #dc2626 !important}
-.product-avatar-story img{width:100%;height:100%;border-radius:50%;border:1.5px solid #fff;object-fit:cover}
-.follow-btn{width:auto !important;padding:6px 14px !important;font-size:11px !important;border-radius:20px !important;min-height:32px !important}
-.follow-btn.following{background:#e5e7eb !important;color:#111 !important;border:1px solid #d1d5db !important}
-.follow-btn.not-following{background:#1877F2 !important;color:#fff !important;border:none !important}
-.story-add::after{content:'+';position:absolute;bottom:-2px;right:-2px;width:20px;height:20px;background:#16a34a;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;border:2px solid #fff;line-height:1}
-.story-name{font-size:9px;font-weight:600;color:#111;max-width:62px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:center}
-.product-avatar-story{width:32px;height:32px;border-radius:50%;padding:2px;background:#e5e7eb;flex-shrink:0}
-.product-avatar-story.has-story{background:#dc2626 !important;box-shadow:0 0 0 2px #fff, 0 0 0 4px #dc2626}
-.product-avatar-story img{width:100%;height:100%;border-radius:50%;border:1px solid #fff;object-fit:cover}
+.story-add{width:56px;height:56px;border-radius:50%;background:#f0fdf4;border:2px dashed #16a34a;display:flex;align-items:center;justify-content:center;font-size:24px;color:#16a34a;cursor:pointer}
 .chat-media{max-width:150px;border-radius:10px;margin:4px 0}
 .chat-audio{display:flex;align-items:center;gap:6px;background:#f0fdf4;padding:6px 10px;border-radius:20px;border:1px solid #16a34a}
 .chat-input-bar{display:flex;gap:6px;align-items:center;padding:8px;background:#fff;border-radius:12px;border:2px solid #16a34a;margin-top:8px}
@@ -534,7 +525,12 @@ button:hover{background:#b91c1c !important}
 </div>
 <style>.pwa-banner.show{transform:translateY(0) !important; display:flex !important} .pwa-banner.hidden{transform:translateY(100%) !important}</style>
 
-<div id="storiesBar" class="stories-bar hidden"></div>
+id="storiesBar" class="stories-bar hidden">
+  <div class="story-item" onclick="openStoryModal()">
+    <div class="story-add">+</div>
+    <small style="font-size:9px">Ma story</small>
+  </div>
+</div>
 <div id="homeEnhanced" style="position:relative" style="margin-bottom:16px">
   <div class="banner-carousel" id="bannerCarousel">
     <div class="banner-slide active" style="background:linear-gradient(135deg,#111111,#b91c1c)">
@@ -679,7 +675,7 @@ button:hover{background:#b91c1c !important}
 
 <div id="cartModal" class="modal hidden"><div class="modal-content"><h3>🛒 Panier</h3><div id="cartContent"></div><div id="cartTotal" style="font-weight:bold;margin-top:10px"></div><button id="checkoutBtn" style="background:#4ade80">Commander tout + Facture PDF</button><button id="closeCartBtn" style="background:#6b7280">Fermer</button></div></div>
 
-<div id="wishlistModal" style="display:none" class="modal hidden"><div class="modal-content"><h3>❤️ Wishlist</h3><div id="wishlistContent"></div><button id="closeWishBtn" style="background:#6b7280">Fermer</button></div></div>
+<div id="wishlistModal" class="modal hidden"><div class="modal-content"><h3>❤️ Wishlist</h3><div id="wishlistContent"></div><button id="closeWishBtn" style="background:#6b7280">Fermer</button></div></div>
 
 <div id="notifModal" class="modal hidden"><div class="modal-content"><h3>🔔 Notifications (propositions prix, boosts, avis)</h3><div id="notifContent"></div><button id="closeNotifBtn" style="background:#6b7280">Fermer</button></div></div>
 
@@ -773,14 +769,7 @@ button:hover{background:#b91c1c !important}
 
 <div id="param-boost" class="param-panel hidden"><h3>🚀 Boost Gratuit</h3><div style="background:#f0f0f0;padding:12px;border-radius:10px; text-align:center"><b style="color:#86efac">🎉 Boost gratuit 24h illimité !</b><br/><small>Tous tes produits en haut de la liste</small></div><div id="boostList" style="margin-top:12px; background:#fff; padding:12px; border-radius:10px; min-height:80px">Aucun produit à booster<br/><small>Publie un produit d'abord</small></div><button onclick="if(typeof boostAllFree==='function') boostAllFree()" style="background:#86efac !important;margin-top:12px; padding:14px; font-size:16px">🚀 Booster TOUS Mes Produits GRATUIT</button></div>
 
-<div id="param-pwa" class="param-panel hidden"><h3>📲 Installer App PWA</h3><div style="background:#fff;padding:16px;border-radius:12px"><div style="display:flex;gap:16px;align-items:center; background:#f0fdf4; padding:14px; border-radius:12px; border:2px solid #16a34a"><img src="https://cdn-icons-png.flaticon.com/512/3081/3081559.png" style="width:64px;height:64px;border-radius:16px;background:#fff;padding:4px;box-shadow:0 2px 8px rgba(0,0,0,.1)"/><div><b style="font-size:16px">SHOP ONLINE 237</b><br/><small>100% Gratuit - Marketplace Cameroun</small><br/><small style="color:#16a34a;font-weight:800">✅ Vrai PWA - Hors ligne - Notifications</small><br/><small id="pwaCompat" style="font-size:10px;color:#666"></small></div></div><div id="pwaStatus" style="margin:16px 0;padding:12px;background:#fffbeb;border:2px solid #fcd34d;border-radius:10px;text-align:center;font-size:13px">⏳ Vérification...</div><button id="installPwaBtn" onclick="installPWA()" style="background:linear-gradient(135deg,#16a34a,#22c55e) !important; padding:16px; font-size:16px; font-weight:900; border:3px solid #111 !important"><span id="installPwaText">📲 INSTALLER L'APP SUR TÉLÉPHONE</span></button><button id="iosPWAbtn" onclick="alert('Sur iPhone:
-1. Clique icône Partage en bas (carré avec flèche)
-2. Fais défiler et clique \'Sur l\'écran d\'accueil\'
-3. Clique Ajouter en haut à droite
-
-Tu auras l\'icône SHOP ONLINE comme WhatsApp !')" style="background:#fff !important;color:#111 !important;border:2px solid #111 !important; margin-top:10px;"><span>🍎 iPhone: Comment installer ?</span></button><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px"><button onclick="if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then(r=>{alert('SW actifs: '+r.length+'
-Cache: shop-online-v2
-Status: '+ (r[0] ? 'OK' : 'Pas encore'))})}" style="background:#f3f4f6 !important;color:#111 !important;border:1px solid #111 !important;font-size:11px;padding:8px">🔧 Vérifier SW</button><button onclick="if(confirm('Vider cache PWA ?')){caches.keys().then(k=>k.forEach(n=>caches.delete(n))); localStorage.removeItem('pwaDismissed'); location.reload()}" style="background:#fef2f2 !important;color:#dc2626 !important;border:1px solid #dc2626 !important;font-size:11px;padding:8px">🗑️ Vider cache</button></div><div style="background:#f9fafb; padding:12px; border-radius:8px; margin-top:16px; font-size:11px; border-left:4px solid #16a34a"><b>✅ Avantages app installée :</b><br/>✓ Icône sur écran d'accueil comme WhatsApp<br/>✓ S'ouvre sans barre d'adresse (vraie app)<br/>✓ Marche même hors ligne (produits en cache)<br/>✓ Notifications push ventes<br/>✓ Raccourcis: Publier, Commandes, Aide IA<br/>✓ 10x plus rapide</div></div></div>
+<div id="param-pwa" class="param-panel hidden"><h3>📲 Installer App PWA</h3><div style="background:#fff;padding:16px;border-radius:12px"><div style="display:flex;gap:16px;align-items:center; background:#f0fdf4; padding:14px; border-radius:12px; border:2px solid #16a34a"><img src="https://cdn-icons-png.flaticon.com/512/3081/3081559.png" style="width:64px;height:64px;border-radius:16px;background:#fff;padding:4px;box-shadow:0 2px 8px rgba(0,0,0,.1)"/><div><b style="font-size:16px">SHOP ONLINE 237</b><br/><small>100% Gratuit - Marketplace Cameroun</small><br/><small style="color:#16a34a;font-weight:800">✅ Vrai PWA - Hors ligne - Notifications</small><br/><small id="pwaCompat" style="font-size:10px;color:#666"></small></div></div><div id="pwaStatus" style="margin:16px 0;padding:12px;background:#fffbeb;border:2px solid #fcd34d;border-radius:10px;text-align:center;font-size:13px">⏳ Vérification...</div><button id="installPwaBtn" onclick="installPWA()" style="background:linear-gradient(135deg,#16a34a,#22c55e) !important; padding:16px; font-size:16px; font-weight:900; border:3px solid #111 !important"><span id="installPwaText">📲 INSTALLER L'APP SUR TÉLÉPHONE</span></button><button id="iosPWAbtn" onclick="showIosInstallHelp()" style="background:#fff !important;color:#111 !important;border:2px solid #111 !important; margin-top:10px;"><span>🍎 iPhone: Comment installer ?</span></button><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px"><button onclick="checkSW()" style="background:#f3f4f6 !important;color:#111 !important;border:1px solid #111 !important;font-size:11px;padding:8px">🔧 Vérifier SW</button><button onclick="if(confirm('Vider cache PWA ?')){caches.keys().then(k=>k.forEach(n=>caches.delete(n))); localStorage.removeItem('pwaDismissed'); location.reload()}" style="background:#fef2f2 !important;color:#dc2626 !important;border:1px solid #dc2626 !important;font-size:11px;padding:8px">🗑️ Vider cache</button></div><div style="background:#f9fafb; padding:12px; border-radius:8px; margin-top:16px; font-size:11px; border-left:4px solid #16a34a"><b>✅ Avantages app installée :</b><br/>✓ Icône sur écran d'accueil comme WhatsApp<br/>✓ S'ouvre sans barre d'adresse (vraie app)<br/>✓ Marche même hors ligne (produits en cache)<br/>✓ Notifications push ventes<br/>✓ Raccourcis: Publier, Commandes, Aide IA<br/>✓ 10x plus rapide</div></div></div>
 
   </div>
 
@@ -1082,7 +1071,7 @@ async function loadProducts(){
  if(sellerIds.length){
    const {data:sellers}=await supabaseClient.from('users').select('id,nom,prenom,ville,boutique,whatsapp,adresse,description,logo').in('id', sellerIds);
    const sellerMap=new Map((sellers||[]).map(s=>[s.id,s]));
-   allProducts=allProducts.map(p=>({...p, seller:sellerMap.get(p.vendeur_id)||{}})); setTimeout(()=>renderStoriesBar(),500));
+   allProducts=allProducts.map(p=>({...p, seller:sellerMap.get(p.vendeur_id)||{}}));
  }
  // Tri boost + date
  allProducts.sort((a,b)=>{
@@ -1120,24 +1109,18 @@ function productHTML(p, index){
  const isBoosted=boosts[p.id] && new Date(boosts[p.id])>new Date();
  const stock=p.stock||10;
  const inStock = stock>0;
- const discount = p.discount || ( (parseInt(String(p.id).slice(-2),10) % 5) * 10 + 10 );
+ // Fake discount for Kingdom look - 10% to 50% random but stable based on id
+ const discount = p.discount || ( (parseInt(String(p.id).slice(-2),10) % 5) * 10 + 10 ); // 10-50%
  const hasDiscount = discount >= 20;
  const oldPrice = hasDiscount ? Math.round(p.prix * 100 / (100 - discount)) : 0;
  const isBestSeller = (index % 3 === 0) || (p.vues||0) > 20;
- const vendeurId=p.vendeur_id||seller.id||'';
- const hasStory = typeof hasActiveStory==='function' ? hasActiveStory(vendeurId) : false;
- const sellerLogo = seller.logo||'https://cdn-icons-png.flaticon.com/512/3135/3135715.png';
- const isFollowed = typeof getFollowedBoutiques==='function' ? getFollowedBoutiques().includes(String(vendeurId)) : false;
+ const avgRating = getAvgRating(p.id);
  
  return `
- <div class="product" data-pid="${p.id}">
+ <div class="product" data-pid="${p.id}" onclick="openProductDetail('${p.id}')">
    ${hasDiscount?`<div class="badge-discount">-${discount}%</div>`:''}
    ${isBoosted?'<div style="position:absolute;top:8px;right:8px;background:#FF9800;color:#fff;padding:2px 6px;border-radius:6px;font-size:9px;font-weight:800;z-index:2">🚀 BOOST</div>':''}
-   <div style="position:absolute;top:8px;left:8px;z-index:3;display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.95);padding:3px 8px 3px 3px;border-radius:20px;border:1px solid #eee;backdrop-filter:blur(4px)">
-     <div class="product-avatar-story ${hasStory?'has-story':''}" data-vendeur-id="${vendeurId}" onclick="event.stopPropagation(); viewBoutiqueStories('${vendeurId}')"><img src="${escapeHTML(sellerLogo)}" alt="Boutique" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png'"></div>
-     <small style="font-size:9px;font-weight:800;max-width:60px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${escapeHTML((seller.boutique||seller.prenom||'Boutique').substring(0,12))}</small>
-   </div>
-   <img src="${escapeHTML(mainImage)}" alt="${escapeHTML(p.nom)}" loading="lazy" onclick="openProductDetail('${p.id}')">
+   <img src="${escapeHTML(mainImage)}" alt="${escapeHTML(p.nom)}" loading="lazy">
    <div class="product-info-kingdom">
      <div class="product-title-kingdom">${escapeHTML(p.nom||'Produit')}</div>
      <div class="product-price-kingdom">${Number(p.prix||0).toLocaleString('fr-FR')} FCFA ${hasDiscount?`<span class="product-price-old">${Number(oldPrice).toLocaleString('fr-FR')}</span>`:''}</div>
@@ -1145,19 +1128,10 @@ function productHTML(p, index){
        ${inStock?`<div class="stock-badge-kingdom"><span style="width:6px;height:6px;background:#86efac;border-radius:50%;display:inline-block"></span> En stock</div>`:`<div style="color:#222222;font-size:10px">Rupture</div>`}
        ${isBestSeller?`<div class="meilleure-vente-badge">⭐ Meilleure vente</div>`:''}
      </div>
-     <div style="display:flex;gap:6px;margin-top:6px">
-       <button class="btn-add-cart-kingdom" style="flex:1" onclick="event.stopPropagation(); addToCart('${p.id}');"><span>🛒</span> Panier</button>
-       <button class="follow-btn ${isFollowed?'following':'not-following'}" data-follow-btn="${vendeurId}" style="padding:7px 10px !important;font-size:10px !important" onclick="event.stopPropagation(); toggleFollow('${vendeurId}')">${isFollowed?'✓ Suivi':'Suivre'}</button>
-     </div>
+     <button class="btn-add-cart-kingdom" onclick="event.stopPropagation(); addToCart('${p.id}'); event.preventDefault();"><span>🛒</span> Ajouter au panier</button>
    </div>
  </div>`;
 }
-function viewBoutiqueStories(vendeurId){
-  const boutiqueStories = stories.filter(s=>String(s.vendeur_id||s.user?.id)===String(vendeurId) && s.expires>Date.now());
-  if(boutiqueStories.length){ viewStory(boutiqueStories[0].id); } else { showToast('Pas de story active','info'); }
-}
-
-
 
 
 function displayProducts(products){
@@ -1183,14 +1157,13 @@ function searchProducts(){ displayProducts(allProducts); }
 
 // --- CART / WISH ---
 function updateCartBadge(){ const b=document.getElementById('cartBadge'); if(!b) return; if(cart.length){ b.textContent=cart.length; b.style.display='flex'; document.getElementById('cartBtn').style.display='flex'; } else { b.style.display='none'; } }
-function updateWishBadge(){ const b=document.getElementById('wishBadge_REMOVED'); if(!b) return; if(wishlist.length){ b.textContent=wishlist.length; b.style.display='flex'; document.getElementById('profileBtn') /* wish removed */ || document.getElementById('profileBtn').style.display='flex'; } else { b.style.display='none'; } }
+function updateWishBadge(){ const b=document.getElementById('wishBadge'); if(!b) return; if(wishlist.length){ b.textContent=wishlist.length; b.style.display='flex'; document.getElementById('profileBtn') /* wish removed */ || document.getElementById('profileBtn').style.display='flex'; } else { b.style.display='none'; } }
 function addToCart(id){ if(cart.find(x=>String(x.id)===String(id))){ showToast('Déjà dans panier','info'); return; } const p=allProducts.find(x=>String(x.id)===String(id)); if(!p) return; cart.push(p); localStorage.setItem('shop_cart', JSON.stringify(cart)); updateCartBadge(); showToast('Ajouté au panier','success'); }
 function addToWishlist(id){ if(wishlist.find(x=>String(x.id)===String(id))){ const idx=wishlist.findIndex(x=>String(x.id)===String(id)); wishlist.splice(idx,1); localStorage.setItem('shop_wish', JSON.stringify(wishlist)); updateWishBadge(); showToast('Retiré wishlist','info'); return; } const p=allProducts.find(x=>String(x.id)===String(id)); if(!p) return; wishlist.push(p); localStorage.setItem('shop_wish', JSON.stringify(wishlist)); updateWishBadge(); showToast('Ajouté wishlist','success'); }
 function renderCart(){ const c=document.getElementById('cartContent'); if(!c) return; if(!cart.length){ c.innerHTML='<p>Panier vide</p>'; document.getElementById('cartTotal').textContent=''; return; } let total=0; c.innerHTML=cart.map(p=>{ total+=Number(p.prix||0)+(Number(p.frais_livraison||2000)); return `<div class="cart-item"><img src="${escapeHTML(p.image||p.images?.[0]||'')}" style="width:50px;height:50px;object-fit:cover;border-radius:6px"><div style="flex:1"><b>${escapeHTML(p.nom)}</b><br>${p.prix}F + Liv ${p.frais_livraison||2000}F</div><button class="btnRemoveCart" data-id="${p.id}" style="width:auto;padding:4px 8px;background:#fee2e2;color:#222222">✕</button></div>`; }).join(''); document.getElementById('cartTotal').textContent='Total avec livraison: '+total.toLocaleString('fr-FR')+' FCFA (commission 2% incluse pour vendeur)'; }
 function renderWishlist(){ const c=document.getElementById('wishlistContent'); if(!c) return; if(!wishlist.length){ c.innerHTML='<p>Wishlist vide</p>'; return; } c.innerHTML=wishlist.map(p=>`<div class="cart-item"><img src="${escapeHTML(p.image||p.images?.[0]||'')}" style="width:50px;height:50px;object-fit:cover;border-radius:6px"><div style="flex:1"><b>${escapeHTML(p.nom)}</b><br>${p.prix}F</div><button class="btnRemoveWish" data-id="${p.id}" style="width:auto;padding:4px 8px;background:#fee2e2;color:#222222">✕</button></div>`).join(''); }
 
 // --- PRODUCT DETAIL ---
-function function _origOpenProductDetail(id){ return openProductDetail(id); }
 function openProductDetail(id){
  const p=allProducts.find(x=>String(x.id)===String(id)); if(!p) return; currentDetailProduct=p;
  const images=p.images||[p.image];
@@ -1199,7 +1172,6 @@ function openProductDetail(id){
  const avgRating=getAvgRating(p.id);
  const reviewCount=getReviewCount(p.id);
  const content=document.getElementById('productDetailContent');
-  const __vendeurIdForFollow = allProducts.find(x=>String(x.id)===String(id))?.vendeur_id;
  content.innerHTML=`
  <div style="position:relative"><div class="carousel" style="height:250px">${images.map((img,i)=>`<img src="${escapeHTML(img)}" class="${i===0?'active':''}" style="height:250px">`).join('')}</div><button onclick="closeModal('productDetailModal')" style="position:absolute;top:10px;right:10px;width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,.6);color:#fff;border:none">✕</button></div>
  <div style="padding:10px">
@@ -1523,21 +1495,17 @@ async function renderAll(){
  const u=getUser();
  const authBox=document.getElementById('authBox'); const registerBox=document.getElementById('registerBox'); const app=document.getElementById('app');
  const btnConn=document.getElementById('btnConnexion'); const btnDeco=document.getElementById('btnDeconnexion'); const profileBtn=document.getElementById('profileBtn');
- const cartBtn=document.getElementById('cartBtn'); const notifBtn=document.getElementById('notifBtn'); const paramsBtn=document.getElementById('paramsBtn'); const chatBtn=document.getElementById('chatBtn');
- const navPhoto=document.getElementById('navProfilePhoto');
+ const cartBtn=document.getElementById('cartBtn'); const wishBtn=document.getElementById('profileBtn') /* wish removed */ || document.getElementById('profileBtn'); const notifBtn=document.getElementById('notifBtn'); const paramsBtn=document.getElementById('paramsBtn'); const chatBtn=document.getElementById('chatBtn');
  if(!u){
    if(app) app.classList.add('hidden'); if(authBox) authBox.classList.remove('hidden'); if(registerBox) registerBox.classList.add('hidden');
-   if(profileBtn){ profileBtn.style.display='flex'; if(navPhoto) navPhoto.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png'; }
-   if(btnConn) btnConn.style.display='inline-flex'; if(btnDeco) btnDeco.style.display='none';
-   [cartBtn,notifBtn,paramsBtn,chatBtn].forEach(b=>{ if(b) b.style.display='flex'; });
+   if(profileBtn) profileBtn.style.display='none'; if(btnConn) btnConn.style.display='inline-block'; if(btnDeco) btnDeco.style.display='none';
+   [cartBtn,wishBtn,notifBtn,paramsBtn,chatBtn].forEach(b=>{ if(b) b.style.display='none'; });
    return;
  }
  if(authBox) authBox.classList.add('hidden'); if(registerBox) registerBox.classList.add('hidden'); if(app) app.classList.remove('hidden');
- if(btnConn) btnConn.style.display='none'; if(btnDeco) btnDeco.style.display='inline-flex';
- if(profileBtn){ profileBtn.style.display='flex'; if(navPhoto) navPhoto.src=u.logo||u.photo||u.avatar||'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'; }
- [cartBtn,notifBtn,paramsBtn,chatBtn].forEach(b=>{ if(b) b.style.display='flex'; });
- updateCartBadge();
- try{ updateWishBadge(); }catch(e){}
+ if(btnConn) btnConn.style.display='none'; if(btnDeco) btnDeco.style.display='inline-block'; if(profileBtn){ profileBtn.style.display='block'; document.getElementById('navProfilePhoto').src=u.logo||'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'; }
+ [cartBtn,wishBtn,notifBtn,paramsBtn,chatBtn].forEach(b=>{ if(b) b.style.display='flex'; });
+ updateCartBadge(); updateWishBadge();
  await loadProducts(); await loadMyProducts();
  if(u.role==='vendeur'){ document.getElementById('vendeurView').classList.remove('hidden'); document.getElementById('clientView').classList.add('hidden'); await loadSellerProfile(); } else { document.getElementById('clientView').classList.remove('hidden'); document.getElementById('vendeurView').classList.add('hidden'); }
  updateDiscountDisplay();
@@ -2128,84 +2096,8 @@ function initDarkMode(){if(localStorage.getItem('darkMode')==='true'){document.b
 let stories=JSON.parse(localStorage.getItem('shop_stories')||'[]');
 function openStoryModal(){document.getElementById('storyModal').classList.remove('hidden');}
 function publishStory(){const f=document.getElementById('storyFile').files[0];const t=document.getElementById('storyText').value;if(!f&&!t){showToast('Ajoute photo/texte','error');return;}const save=(img)=>{const s={id:Date.now(),image:img,text:t,user:getUser()?.boutique||'Boutique',time:Date.now(),expires:Date.now()+86400000};stories.push(s);localStorage.setItem('shop_stories',JSON.stringify(stories));showToast('📸 Story 24h','success');document.getElementById('storyModal').classList.add('hidden');renderStoriesBar();};if(f){const r=new FileReader();r.onload=e=>save(e.target.result);r.readAsDataURL(f);}else save(null);}
-function getFollowedBoutiques(){try{return JSON.parse(localStorage.getItem('shop_follows')||'[]')}catch(e){return []}}
-function followBoutique(vendeurId){if(!vendeurId)return;let f=getFollowedBoutiques();const id=String(vendeurId);if(!f.includes(id)){f.push(id);localStorage.setItem('shop_follows',JSON.stringify(f));showToast('✅ Boutique suivie - tu verras ses stories','success');renderStoriesBar();}}
-function hasActiveStory(vendeurId){if(!vendeurId)return false;return stories.some(s=>String(s.user?.id||s.vendeur_id)===String(vendeurId) && s.expires>Date.now())}
-function isStorySeen(storyId){try{const seen=JSON.parse(localStorage.getItem('shop_stories_seen')||'[]');return seen.includes(String(storyId))}catch(e){return false}}
-function markStorySeen(storyId){let seen=[];try{seen=JSON.parse(localStorage.getItem('shop_stories_seen')||'[]')}catch(e){}const id=String(storyId);if(!seen.includes(id)){seen.push(id);localStorage.setItem('shop_stories_seen',JSON.stringify(seen))}}
-
-function getFollowedBoutiques(){try{return JSON.parse(localStorage.getItem('shop_follows')||'[]')}catch(e){return []}}
-function followBoutique(vendeurId){if(!vendeurId)return;let f=getFollowedBoutiques();const id=String(vendeurId);if(!f.includes(id)){f.push(id);localStorage.setItem('shop_follows',JSON.stringify(f));showToast('✅ Boutique suivie - ses stories apparaîtront','success');renderStoriesBar();updateFollowButtons();}else{showToast('Déjà suivie','info')}}
-function unfollowBoutique(vendeurId){let f=getFollowedBoutiques();const id=String(vendeurId);f=f.filter(x=>x!==id);localStorage.setItem('shop_follows',JSON.stringify(f));showToast('Boutique non suivie','info');renderStoriesBar();updateFollowButtons();}
-function toggleFollow(vendeurId){const f=getFollowedBoutiques();if(f.includes(String(vendeurId))) unfollowBoutique(vendeurId); else followBoutique(vendeurId);}
-function hasActiveStory(vendeurId){if(!vendeurId)return false;return stories.some(s=>String(s.user?.id||s.vendeur_id)===String(vendeurId) && s.expires>Date.now())}
-function isStorySeen(storyId){try{const seen=JSON.parse(localStorage.getItem('shop_stories_seen')||'[]');return seen.includes(String(storyId))}catch(e){return false}}
-function markStorySeen(storyId){let seen=[];try{seen=JSON.parse(localStorage.getItem('shop_stories_seen')||'[]')}catch(e){}const id=String(storyId);if(!seen.includes(id)){seen.push(id);localStorage.setItem('shop_stories_seen',JSON.stringify(seen))}}
-function updateFollowButtons(){document.querySelectorAll('[data-follow-btn]').forEach(btn=>{const vid=btn.getAttribute('data-follow-btn');const followed=getFollowedBoutiques().includes(String(vid));btn.textContent=followed?'✓ Suivi':'Suivre';btn.className='follow-btn '+(followed?'following':'not-following');})}
-
-function renderStoriesBar(){
-  const bar=document.getElementById('storiesBar');
-  if(!bar)return;
-  const u=getUser();
-  stories=stories.filter(s=>s.expires>Date.now());
-  localStorage.setItem('shop_stories',JSON.stringify(stories));
-  const followed=getFollowedBoutiques();
-  let visibleStories=[];
-  if(u && u.role==='vendeur'){
-    visibleStories=stories;
-  } else {
-    if(followed.length===0){ visibleStories=[]; }
-    else { visibleStories=stories.filter(s=>followed.includes(String(s.user?.id||s.vendeur_id))); }
-  }
-  const isVendeur = u && u.role==='vendeur';
-  if(visibleStories.length===0 && !isVendeur){ bar.classList.add('hidden'); bar.innerHTML=''; return; }
-  bar.classList.remove('hidden');
-  let html='';
-  if(isVendeur){
-    const myStory = stories.find(s=>String(s.user?.id)===String(u.id));
-    const hasMyStory = !!myStory;
-    html+=`<div class="story-item" onclick="openStoryModal()">
-      <div class="${hasMyStory?'story-ring has-story':'story-add'}">${hasMyStory?`<img src="${myStory.image||u.logo||'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'}" alt="Ma story">`:'+'}</div>
-      <div class="story-name">Ma story</div>
-    </div>`;
-  }
-  visibleStories.forEach(s=>{
-    const sid=s.user?.id||s.vendeur_id;
-    if(isVendeur && String(sid)===String(u.id))return;
-    const seen=isStorySeen(s.id);
-    const boutiqueName=s.user?.boutique||s.user?.prenom||'Boutique';
-    const logo=s.user?.logo||'https://cdn-icons-png.flaticon.com/512/3135/3135715.png';
-    html+=`<div class="story-item" onclick="viewStory(${s.id})">
-      <div class="story-ring ${seen?'seen':'has-story'}"><img src="${logo}" alt="${boutiqueName}" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png'"></div>
-      <div class="story-name">${(boutiqueName||'').substring(0,11)}</div>
-    </div>`;
-  });
-  bar.innerHTML=html;
-  setTimeout(()=>updateFollowButtons(),100);
-  document.querySelectorAll('[data-vendeur-id]').forEach(el=>{
-    const vid=el.getAttribute('data-vendeur-id');
-    if(hasActiveStory(vid)) el.classList.add('has-story'); else el.classList.remove('has-story');
-  });
-}
-
-function viewStory(id){
-  const s=stories.find(x=>String(x.id)===String(id));
-  if(!s)return;
-  markStorySeen(id);
-  const imgEl=document.getElementById('storyViewerImg');
-  const textEl=document.getElementById('storyViewerText');
-  const infoEl=document.getElementById('storyViewerInfo');
-  if(imgEl) imgEl.src=s.image||'';
-  if(textEl) textEl.textContent=s.text||'';
-  if(infoEl){
-    const u=s.user||{};
-    const logo=u.logo||'https://cdn-icons-png.flaticon.com/512/3135/3135715.png';
-    const isFollowed=getFollowedBoutiques().includes(String(u.id||s.vendeur_id));
-    infoEl.innerHTML=`<div style="display:flex;align-items:center;justify-content:space-between;width:100%"><div style="display:flex;align-items:center;gap:8px"><div class="story-ring has-story" style="width:38px;height:38px;padding:2px"><img src="${logo}"></div><div><b style="font-size:13px">${u.boutique||u.prenom||'Boutique'}</b><br><small style="font-size:10px;opacity:.8">${new Date(s.created_at).toLocaleTimeString('fr-FR')} • 24h</small></div></div><button class="follow-btn ${isFollowed?'following':'not-following'}" onclick="toggleFollow('${u.id||s.vendeur_id}'); event.stopPropagation(); setTimeout(()=>{const el=document.getElementById('storyViewerInfo'); if(el){ const u2=s.user||{}; const f=getFollowedBoutiques().includes(String(u2.id||s.vendeur_id)); el.querySelector('button').textContent=f?'✓ Suivi':'Suivre'; el.querySelector('button').className='follow-btn '+(f?'following':'not-following'); }},100)">${isFollowed?'✓ Suivi':'Suivre'}</button></div>`;
-  }
-  document.getElementById('storyViewerModal').classList.remove('hidden');
-  setTimeout(()=>renderStoriesBar(),300);
-}
+function renderStoriesBar(){const bar=document.getElementById('storiesBar');if(!bar)return;stories=stories.filter(s=>s.expires>Date.now());if(stories.length===0){bar.classList.add('hidden');return;}bar.classList.remove('hidden');}
+function viewStory(id){const s=stories.find(x=>x.id===id);if(!s)return;document.getElementById('storyViewerImg').src=s.image||'';document.getElementById('storyViewerText').textContent=s.text||'';document.getElementById('storyViewerModal').classList.remove('hidden');}
 function deleteStory(id){stories=stories.filter(s=>s.id!==id);localStorage.setItem('shop_stories',JSON.stringify(stories));renderStoriesBar();showToast('Supprimée','info');}
 let compareList=JSON.parse(localStorage.getItem('shop_compare')||'[]');
 function toggleCompare(pid){const i=compareList.indexOf(pid);if(i>-1)compareList.splice(i,1);else{if(compareList.length>=3){showToast('Max 3','error');return;}compareList.push(pid);}localStorage.setItem('shop_compare',JSON.stringify(compareList));updateComparatorBar();}
@@ -2246,6 +2138,11 @@ function initPWA(){
     showToast('✅ SHOP ONLINE installée !','success');
   });
 }
+
+function showIosInstallHelp(){
+  alert("Sur iPhone:\n1. Clique icone Partage en bas (carre avec fleche)\n2. Fais defiler et clique Sur l ecran d accueil\n3. Clique Ajouter en haut a droite\n\nTu auras l icone SHOP ONLINE comme WhatsApp !");
+}
+
 function installPWA(){
   if(!deferredPrompt){
     showToast('Utilise menu navigateur > Installer ou Ajouter à écran d\'accueil','info');
