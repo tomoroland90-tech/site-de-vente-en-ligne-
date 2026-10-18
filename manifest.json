@@ -1,7 +1,7 @@
 {
-  "name": "SHOP ONLINE - 100% GRATUIT Cameroun",
-  "short_name": "SHOP ONLINE",
-  "description": "Marketplace Cameroun 100% gratuit - Vends et achète à Douala, Yaoundé. Livraison Express, Paiement Orange Money, LIVE Shopping",
+  "name": "SHOP ONLINE 237 - Acheter en ligne Cameroun",
+  "short_name": "SHOP 237",
+  "description": "Marketplace Cameroun 100% gratuit - Vends et achete a Douala, Yaounde. Livraison Express, Paiement Orange Money, LIVE Shopping",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
@@ -9,11 +9,7 @@
   "orientation": "any",
   "scope": "/",
   "lang": "fr",
-  "categories": [
-    "shopping",
-    "business",
-    "lifestyle"
-  ],
+  "categories": ["shopping", "business", "lifestyle"],
   "icons": [
     {
       "src": "https://cdn-icons-png.flaticon.com/512/3081/3081559.png",
@@ -29,31 +25,7 @@
     },
     {
       "src": "https://cdn-icons-png.flaticon.com/512/3081/3081559.png",
-      "sizes": "128x128",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "https://cdn-icons-png.flaticon.com/512/3081/3081559.png",
-      "sizes": "144x144",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "https://cdn-icons-png.flaticon.com/512/3081/3081559.png",
-      "sizes": "152x152",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "https://cdn-icons-png.flaticon.com/512/3081/3081559.png",
       "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "https://cdn-icons-png.flaticon.com/512/3081/3081559.png",
-      "sizes": "384x384",
       "type": "image/png",
       "purpose": "any maskable"
     },
@@ -62,44 +34,6 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
-    }
-  ],
-  "shortcuts": [
-    {
-      "name": "Publier un produit",
-      "short_name": "Publier",
-      "description": "Vends vite à Douala",
-      "url": "/?action=publish",
-      "icons": [
-        {
-          "src": "https://cdn-icons-png.flaticon.com/512/3081/3081559.png",
-          "sizes": "96x96"
-        }
-      ]
-    },
-    {
-      "name": "Mes commandes",
-      "short_name": "Commandes",
-      "description": "Voir mes achats",
-      "url": "/?action=orders",
-      "icons": [
-        {
-          "src": "https://cdn-icons-png.flaticon.com/512/3081/3081559.png",
-          "sizes": "96x96"
-        }
-      ]
-    },
-    {
-      "name": "Centre d'aide IA",
-      "short_name": "Aide IA",
-      "description": "IA qui répond à tout",
-      "url": "/?action=help",
-      "icons": [
-        {
-          "src": "https://cdn-icons-png.flaticon.com/512/3081/3081559.png",
-          "sizes": "96x96"
-        }
-      ]
     }
   ]
 }
