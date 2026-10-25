@@ -1,47 +1,52 @@
-const CACHE_NAME = 'shop-online-v2';
-const urlsToCache = [
-  '/',
-  '/index.html',
-  '/manifest.json'
-];
+const CACHE_NAME = 'shop-online-v4';
+const URLS_TO_CACHE = ['/', '/index.html', '/manifest.json'];
 
 self.addEventListener('install', event => {
+  console.log('[SW] Install');
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(urlsToCache))
+    caches.open(CACHE_NAME).then(cache => {
+      return cache.addAll(URLS_TO_CACHE);
+    })
   );
   self.skipWaiting();
 });
 
 self.addEventListener('activate', event => {
+  console.log('[SW] Activate');
   event.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
-        cacheNames.map(name => {
-          if (name !== CACHE_NAME) return caches.delete(name);
-        })
-      );
+    caches.keys().then(keys => {
+      return Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k)));
     })
   );
   self.clients.claim();
 });
 
 self.addEventListener('fetch', event => {
-  // Ne pas cacher les API Supabase, Vercel, PeerJS
-  if (event.request.url.includes('supabase') || event.request.url.includes('/api/') || event.request.url.includes('peerjs')) {
-    return;
-  }
+  if(event.request.method !== 'GET') return;
+  if(event.request.url.includes('supabase') || event.request.url.includes('/api/')) return;
+  
   event.respondWith(
-    caches.match(event.request)
-      .then(response => {
-        if (response) return response;
-        return fetch(event.request).then(res => {
-          if (!res || res.status !== 200 || res.type !== 'basic') return res;
-          const resToCache = res.clone();
-          caches.open(CACHE_NAME).then(cache => cache.put(event.request, resToCache));
-          return res;
-        });
-      })
-      .catch(() => caches.match('/index.html'))
+    caches.match(event.request).then(cached => {
+      const networkFetch = fetch(event.request).then(networkResponse => {
+        if(networkResponse && networkResponse.status === 200 && networkResponse.type === 'basic'){
+          const clone = networkResponse.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
+        }
+        return networkResponse;
+      }).catch(() => cached);
+      
+      return cached || networkFetch;
+    })
+  );
+});
+
+self.addEventListener('push', event => {
+  const data = event.data ? event.data.text() : 'Nouvelle notif SHOP ONLINE';
+  event.waitUntil(
+    self.registration.showNotification('SHOP ONLINE Cameroun', {
+      body: data,
+      icon: 'https://cdn-icons-png.flaticon.com/512/3081/3081559.png',
+      badge: 'https://cdn-icons-png.flaticon.com/512/3081/3081559.png'
+    })
   );
 });
