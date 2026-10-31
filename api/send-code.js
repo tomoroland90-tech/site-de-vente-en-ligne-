@@ -8,10 +8,12 @@ module.exports = async (req, res) => {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const { email, name } = req.body;
-  if (!email) return res.status(400).json({ error: 'Email requis' });
+  const { email, name } = req.body || {};
+  if (!email || !String(email).includes('@')) {
+    return res.status(400).json({ error: 'Email valide requis' });
+  }
 
-  const cleanEmail = email.toLowerCase().trim();
+  const cleanEmail = String(email).toLowerCase().trim();
   const code = Math.floor(100000 + Math.random() * 900000).toString();
   const expiresAt = new Date(Date.now() + 10 * 60 * 1000).toISOString();
 
@@ -22,14 +24,18 @@ module.exports = async (req, res) => {
   }
   const supabase = createClient(supabaseUrl, supabaseKey);
 
-  // Supprime anciens codes
+  // Supprime les anciens codes de cet email
   await supabase.from('verification_codes').delete().eq('email', cleanEmail);
 
-  // Insère nouveau code
-  const { error: insertError } = await supabase.from('verification_codes').insert([{ email: cleanEmail, code: code, expires_at: expiresAt }]);
-  if (insertError) return res.status(500).json({ error: 'Supabase insert error', details: insertError.message });
+  // Enregistre le nouveau code
+  const { error: insertError } = await supabase
+    .from('verification_codes')
+    .insert([{ email: cleanEmail, code: code, expires_at: expiresAt }]);
+  if (insertError) {
+    return res.status(500).json({ error: 'Supabase insert error', details: insertError.message });
+  }
 
-  // Envoie email via Gmail
+  // Envoi de l'email via Gmail
   const gmailUser = process.env.GMAIL_USER;
   const gmailPass = process.env.GMAIL_APP_PASSWORD;
   if (!gmailUser || !gmailPass) {
